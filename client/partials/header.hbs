@@ -1,0 +1,20 @@
+<div class="home">
+    <a href="/">home</a>
+</div>
+
+{{#if data}}
+<div class="user">
+    <div class="name">
+        Hello, {{data.username}}
+    </div>
+    <div class="avatar">
+        <img src="{{data.avatar}}" alt="loading...">
+
+        <div class="option">
+            <div class="logout">
+                <a href="/logout">logout</a>
+            </div>
+        </div>
+    </div>
+</div>
+{{/if}}

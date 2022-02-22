@@ -1,0 +1,64 @@
+@import 'variables.scss';
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: $my-font-size;
+}
+
+a {
+    color: black;
+    opacity: 0.5;
+    text-decoration: none;
+}
+
+a:hover{
+    text-decoration: underline;
+    color: rgb(234, 0, 255);
+}
+
+#main {
+    width: 90vw;
+    margin: 72px auto 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.title-container {
+    text-align: center;
+}
+
+.title {
+    display: inline-block;
+    box-shadow: 0 0 4px #ccc;
+    border-radius: 6px;
+    background-color: aqua;
+    padding: 4px;
+    font-size: calc($my-font-size* 1.5);
+    text-transform: uppercase;
+}
+
+.btn-submit {
+    text-align: left;
+    padding: 4px;
+}
+
+.btn-submit span {
+    display: inline-block;
+    background-color: aqua;
+    border-radius: 6px;
+    padding: 4px;
+    border: 2px solid black;
+}
+
+.btn-submit span:hover {
+    opacity: 0.5;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+}

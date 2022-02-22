@@ -1,0 +1,71 @@
+@import 'variables.scss';
+
+#main .all-users {
+    width: 30%;
+    box-shadow: 0 0 4px #ccc;
+    border-radius: 6px;
+    height: calc(20 * var(--my-px));
+}
+
+#main .chat-box {
+    width: 65%;
+    min-height: $height-chat-box;
+    box-shadow: 0 0 4px #ccc;
+    border-radius: 6px;
+}
+
+.chat-box,
+.all-users {
+    text-align: center;
+}
+
+.chat-box>* {
+    margin: 8px;
+}
+
+.chat-box .container {
+    width: 80%;
+    height: 85%;
+    box-shadow: 0 0 4px #ccc;
+    border-radius: 6px;
+    margin: 0 auto;
+    overflow: scroll;
+}
+
+.chat-box form>* {
+    padding: 8px;
+}
+
+form input {
+    width: 65%;
+    text-align: center;
+}
+
+form button {
+    background-color: aqua;
+}
+
+button:hover {
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+.sender-name {
+    color: green;
+}
+
+span.sender-message {
+    background-color: rgb(209, 61, 177);
+}
+
+span.my-message {
+    background-color: rgb(102, 112, 207);
+}
+
+.left {
+    text-align: left;
+}
+
+.right {
+    text-align: right;
+}

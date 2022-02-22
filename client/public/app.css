@@ -1,0 +1,181 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-size: 25px;
+}
+
+a {
+  color: black;
+  opacity: 0.5;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+  color: #ea00ff;
+}
+
+#main {
+  width: 90vw;
+  margin: 72px auto 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.title-container {
+  text-align: center;
+}
+
+.title {
+  display: inline-block;
+  box-shadow: 0 0 4px #ccc;
+  border-radius: 6px;
+  background-color: aqua;
+  padding: 4px;
+  font-size: 37.5px;
+  text-transform: uppercase;
+}
+
+.btn-submit {
+  text-align: left;
+  padding: 4px;
+}
+
+.btn-submit span {
+  display: inline-block;
+  background-color: aqua;
+  border-radius: 6px;
+  padding: 4px;
+  border: 2px solid black;
+}
+
+.btn-submit span:hover {
+  opacity: 0.5;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+header {
+  display: flex;
+  justify-content: center;
+  background-color: black;
+  column-gap: 50px;
+  position: fixed;
+  right: 0;
+  left: 0;
+  top: 0;
+  height: 56px;
+  text-transform: uppercase;
+}
+
+header a {
+  color: white;
+  opacity: 1;
+  line-height: 56px;
+}
+
+#main .all-users {
+  width: 30%;
+  box-shadow: 0 0 4px #ccc;
+  border-radius: 6px;
+  height: calc(20 * var(--my-px));
+}
+
+#main .chat-box {
+  width: 65%;
+  min-height: 70%;
+  box-shadow: 0 0 4px #ccc;
+  border-radius: 6px;
+}
+
+.chat-box,
+.all-users {
+  text-align: center;
+}
+
+.chat-box > * {
+  margin: 8px;
+}
+
+.chat-box .container {
+  width: 80%;
+  height: 85%;
+  box-shadow: 0 0 4px #ccc;
+  border-radius: 6px;
+  margin: 0 auto;
+  overflow: scroll;
+}
+
+.chat-box form > * {
+  padding: 8px;
+}
+
+form input {
+  width: 65%;
+  text-align: center;
+}
+
+form button {
+  background-color: aqua;
+}
+
+button:hover {
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+.sender-name {
+  color: green;
+}
+
+span.sender-message {
+  background-color: #d13db1;
+}
+
+span.my-message {
+  background-color: #6670cf;
+}
+
+.left {
+  text-align: left;
+}
+
+.right {
+  text-align: right;
+}
+
+form {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  margin: 16px auto;
+  text-align: center;
+  box-shadow: 0 0 4px #8b8b8b;
+}
+
+form > * {
+  margin: 8px 4px 8px;
+}
+
+form label {
+  display: block;
+  text-align: left;
+}
+
+form input {
+  width: 80%;
+  padding: 8px;
+  margin-top: 4px;
+}
+
+.others {
+  font-size: 16.6666666667px;
+}
+
+/*# sourceMappingURL=app.css.map */
