@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const SiteController = {
     //[GET] /register
     register: (req, res) => {

@@ -7,6 +7,7 @@ const path = require('path');
 const handlebars = require('express-handlebars');
 require('dotenv').config();
 
+
 const routes = require('./routes');
 const URL = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@my-cluster.rrdfw.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`
 const db = require('./config/connectDb');

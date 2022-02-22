@@ -1,7 +1,7 @@
-const userRouter = require('./user.route');
+const authRouter = require('./auth.route');
 const siteRouter = require('./site.route');
 
 module.exports = function routes(app) {
-    app.use('/user', userRouter);
-    app.use('/', siteRouter);
+    app.use('/api/auth', authRouter);
+    app.use('/api', siteRouter);
 }

@@ -13,6 +13,7 @@
   "devDependencies": {
     "dotenv": "^16.0.0",
     "express-handlebars": "^6.0.2",
+    "express-session": "^1.17.2",
     "sass": "^1.49.8"
   },
   "scripts": {
