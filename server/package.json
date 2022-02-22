@@ -1,0 +1,26 @@
+{
+  "name": "app-chat",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.17.3",
+    "http": "^0.0.1-security",
+    "mongoose": "^6.2.2",
+    "nodemon": "^2.0.15",
+    "socket.io": "^4.4.1"
+  },
+  "devDependencies": {
+    "dotenv": "^16.0.0",
+    "express-handlebars": "^6.0.2",
+    "sass": "^1.49.8"
+  },
+  "scripts": {
+    "start": "nodemon server.js",
+    "watch": "sass --watch ../client/style/style.scss ../client/public/app.css",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
