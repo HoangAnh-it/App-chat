@@ -1,20 +1,90 @@
 @import 'variables.scss';
 
-header {
+.header-container {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: $height-header;
+    color: white;
+    background-color: black;
     display: flex;
     justify-content: center;
-    background-color: rgb(0, 0, 0);
-    column-gap: 50px;
-    position: fixed;
-    right:0;
-    left:0;
-    top:0;
-    height: $height-header;
+}
+
+.header-container .welcome {
+    margin: auto 4px;
+}
+
+.logo, 
+.avatar {
+    border-radius:50%;
+    margin:0 4px;
+    height:$height-header;
+    width:$height-header;
+}
+
+.info .option {
+    display: none;
+}
+
+.empty {
+    flex-grow: 1;
+}
+
+.header-container > div {
+    display: flex;
+}
+
+.home a {
+    color:white;
+    opacity: 1;
+    line-height:$height-header;
     text-transform: uppercase;
 }
 
-header a{
-    color: white;
+.user {
+    margin: 0 16px;
+}
+
+.user .name {
+    margin: auto 0;
+    padding: 0 8px;
+}
+
+.avatar:hover {
+    opacity: 0.5;
+    cursor: pointer;
+    transition: opacity 0.2s linear;
+}
+
+.info {
+    position: relative;
+}
+
+.info .option {
+    width: 200%;
+    display: none;
+    box-shadow: 0 0 4px black;
+    position: absolute;
+    top:100%;
+    right: 0;
+    // transform: translateX(-100%);
+    margin-top: 4px;
+    text-align: center;
+}
+
+.option a {
     opacity: 1;
-    line-height: 56px;
+    text-decoration: none;
+}
+
+.option > div {
+    padding:2px;
+}
+
+.option > div:hover {
+    color: rgb(234, 0, 255);
+    background-color:#ccc;
+    cursor:pointer;
 }

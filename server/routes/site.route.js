@@ -1,7 +1,10 @@
 const siteController = require('../controllers/SiteController');
 const router = require('express').Router();
 
-router.get('/register', siteController.register);
-router.get('/login', siteController.login);
+router.route('/register')
+    .get(siteController.register)
+
+router.route('/login')
+    .get(siteController.login)
 
 module.exports = router;

@@ -1,15 +1,17 @@
- <div class="all-users">
-    <div class="title">Users online</div>
-</div>
+ <div class="chat-box-wrapper">
+     <div class="all-users">
+        <div class="title">Users online</div>
+        <div class="no-users-online">{{usersOnline}} online</div>
+     </div>
 
-<div class="chat-box">
-    <div class="title">App Chat</div>
-
-    <div class="container"></div>
-
-    <div class="info"></div>
-    <form >
-        <input type="text" class="input-message">
-        <button type="submit" class="btn-send-message">Send</button>
-    </form>
-</div>
+     <div class="empty"></div>
+     
+     <div class="chat-box">
+        <div class="title">Chat box</div>
+        <div class="msg-container"></div>
+        <form class="input-message">
+            <input type="text" class="input-message" placeholder="Type your message">
+            <div class="btn-send-message">Send</div>
+        </form>
+     </div>
+ </div>

@@ -1,71 +1,66 @@
 @import 'variables.scss';
 
-#main .all-users {
-    width: 30%;
-    box-shadow: 0 0 4px #ccc;
-    border-radius: 6px;
-    height: calc(20 * var(--my-px));
+.chat-box-wrapper {
+    display: flex;
+    justify-content: space-between;
 }
 
-#main .chat-box {
-    width: 65%;
-    min-height: $height-chat-box;
-    box-shadow: 0 0 4px #ccc;
-    border-radius: 6px;
+.chat-box-wrapper > div {
+    margin: 0 8px;
 }
 
-.chat-box,
 .all-users {
+    flex-shrink: 1;
+    box-shadow: 0 0 4px black;
+    padding: 8px;
     text-align: center;
 }
 
-.chat-box>* {
-    margin: 8px;
+.all-users .title {
+    font-size: calc($my-font-size * 4/5);
 }
 
-.chat-box .container {
+.all-users .no-users-online {
+    font-size: calc($my-font-size * 2/3);
+}
+
+.chat-box {
+    padding: 8px;
+    text-align: center;
+    flex-grow: 4;
+    margin: 0 16px;
+    box-shadow: 0 0 4px black;
+    height: 500px;
+}
+
+.msg-container {
     width: 80%;
-    height: 85%;
-    box-shadow: 0 0 4px #ccc;
-    border-radius: 6px;
-    margin: 0 auto;
+    height: 70%;
+    margin: 16px auto;
+    box-shadow: 0 0 4px black;
     overflow: scroll;
 }
 
-.chat-box form>* {
-    padding: 8px;
+.input-message {
+    width: 70%;
+    flex-direction: row;
+    justify-content: space-evenly;
+    box-shadow: none;
 }
 
-form input {
-    width: 65%;
+.input-message input {
     text-align: center;
 }
 
-form button {
-    background-color: aqua;
+.input-message .btn-send-message {
+    border: 1px solid black;
+    padding: 4px;
+    background-color:aqua;
+    font-size:calc($my-font-size * 2/3);
 }
 
-button:hover {
-    opacity: 0.5;
+.input-message .btn-send-message:hover {
     cursor: pointer;
-}
-
-.sender-name {
-    color: green;
-}
-
-span.sender-message {
-    background-color: rgb(209, 61, 177);
-}
-
-span.my-message {
-    background-color: rgb(102, 112, 207);
-}
-
-.left {
-    text-align: left;
-}
-
-.right {
-    text-align: right;
+    opacity: 0.5;
+    transition: opacity 0.2s linear;
 }

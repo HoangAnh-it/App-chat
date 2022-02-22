@@ -1,20 +1,45 @@
-<div class="home">
-    <a href="/">home</a>
+{{#if data}}
+<div>
+    <img class="logo"  src="https://cdn-icons-png.flaticon.com/512/924/924874.png" alt="_icon_">
+    <div class="home">
+        <a href="/">home</a>
+    </div>
 </div>
 
-{{#if data}}
+<div class="empty"></div>
+
 <div class="user">
     <div class="name">
-        Hello, {{data.username}}
+        Hi, {{data.username}}
     </div>
-    <div class="avatar">
-        <img src="{{data.avatar}}" alt="loading...">
+    <div class="info">
+        <img class="avatar" src="{{data.avatar}}" alt="loading...">
 
         <div class="option">
+            <div class="profile">
+                <a class="text-black" href="/logout">Profile</a>
+            </div>
+
             <div class="logout">
-                <a href="/logout">logout</a>
+                <a class="text-black" href="/logout">Logout</a>
             </div>
         </div>
     </div>
 </div>
+
+{{else}}
+    <img class="logo"  src="https://cdn-icons-png.flaticon.com/512/924/924874.png" alt="_icon_">
+    <div class="welcome">Welcome to Chat box</div>
 {{/if}}
+
+<script>
+    const avatar = document.querySelector('.avatar');
+    const option = document.querySelector('.option');
+    avatar.onclick = function() {
+        if(option.style.display =='' || option.style.display == 'none'){
+            option.style.display = 'inline-block';
+        }else{
+            option.style.display = 'none';
+        }
+    }
+</script>

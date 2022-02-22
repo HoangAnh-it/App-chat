@@ -23,12 +23,14 @@ const AuthController = {
 
         const newUser = new User({ name, email, password});
         newUser.save().then(() => {
-            res.status(StatusCodes.OK).json({
-                success: true,
-                message: 'Created account successfully',
-                username: name,
-            });
+            res.redirect(`/api/user/chat-area?id=${newUser._id}`);
         }).catch(console.err);
+
+        // return res.status(StatusCodes.OK).json({
+        //     user: {
+        //         name,
+        //     },
+        // })
     },
 
     // [POST] api/auth/login
