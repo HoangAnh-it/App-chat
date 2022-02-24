@@ -56,15 +56,15 @@ User.methods.checkPassword = async function(password) {
 
 User.methods.generateToken = function(){
     const payload = {
-        id: this._id,        
+        id: this._id,
     }
 
     const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, { expiresIn: process.env.ACCESS_TOKEN_LIFE });
-    const refreshToken = jwt.sign(payload, process.env.REFRESHTOKEN_SECRET, { expiresIn: process.env.REFRESHTOKEN_LIFE });
+    const refreshToken = jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET, { expiresIn: process.env.REFRESH_TOKEN_LIFE });
     
     return { 
-        accessToken,
-        refreshToken,
+        accessToken : `Bearer ${accessToken}`,
+        refreshToken: `Bearer ${refreshToken}`,
     }
 }
 

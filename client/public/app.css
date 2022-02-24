@@ -140,6 +140,7 @@ a:hover {
   right: 0;
   margin-top: 4px;
   text-align: center;
+  background-color: white;
 }
 
 .option a {
@@ -187,7 +188,7 @@ a:hover {
   flex-grow: 4;
   margin: 0 16px;
   box-shadow: 0 0 4px black;
-  height: 500px;
+  height: 80vh;
 }
 
 .msg-container {

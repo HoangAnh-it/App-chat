@@ -34,7 +34,7 @@ const AuthController = {
     },
 
     // [POST] api/auth/login
-    login: async(req, res) => {
+    login: async (req, res) => {
         const { email, password } = req.body;
         const userExists = await User.findOne({ email });
         if (!userExists) {
@@ -51,9 +51,13 @@ const AuthController = {
                 message: 'Password do not match',
             });
         } else {
-            const token = userExists.generateToken();
-            
-            return res.redirect('/chat-box');
+            const token = userExists.generateToken(); // both of access_token and refresh token
+            req.session.token = token.refreshToken;
+            res.cookie('access_token', token.accessToken, {
+                httpOnly: true,
+                signed: true,
+            });
+            return res.redirect(`/api/user/chat-area?id=${userExists._id}`);
         }
     },
 

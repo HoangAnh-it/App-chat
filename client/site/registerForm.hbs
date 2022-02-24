@@ -21,7 +21,7 @@
         <input type="password" id="retype-password" placeholder="Retype your password" name="confirmPassword">
     </div>
 
-    <div class="btn-submit"><span>Register</span></div>
+    <div class="btn-submit btn-submit-register"><span>Register</span></div>
 
     <div class="others">
         You've already had an account? <a href="/api/login">Login</a>
@@ -29,7 +29,7 @@
 </form>
 
 <script>
-    document.querySelector('.btn-submit').onclick = function submitForm() {
+    document.querySelector('.btn-submit-register').onclick = function submitForm() {
         document.querySelector('.register-form').submit();
     }
 </script>
