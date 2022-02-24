@@ -33,13 +33,15 @@
 {{/if}}
 
 <script>
-    const avatar = document.querySelector('.avatar');
-    const option = document.querySelector('.option');
-    avatar.onclick = function() {
-        if(option.style.display =='' || option.style.display == 'none'){
-            option.style.display = 'inline-block';
-        }else{
-            option.style.display = 'none';
+    {{!-- document.addEventListener('DOMContentLoaded', (event) => { --}}
+        const avatar = document.querySelector('.avatar');
+        const option = document.querySelector('.option');
+        avatar.onclick = function() {
+            if(option.style.display =='' || option.style.display == 'none'){
+                option.style.display = 'inline-block';
+            }else{
+                option.style.display = 'none';
+            }
         }
-    }
+    {{!-- }); --}}
 </script>

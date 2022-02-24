@@ -8,6 +8,7 @@ const handlebars = require('express-handlebars');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 require('dotenv').config();
+const methodOverride = require('method-override');
 
 const routes = require('./routes');
 const URL = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@my-cluster.rrdfw.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`
@@ -25,6 +26,7 @@ app.use(express.static(path.join(__dirname, '../client/public/')));
 
 app.use(express.urlencoded({ extended: true, }));
 app.use(express.json());
+app.use(methodOverride('_method'));
 app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(session({
     resave: false,

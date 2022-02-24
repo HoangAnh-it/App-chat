@@ -38,7 +38,12 @@ const UserController = {
                 data: {
                     userId,
                     username: user.name,
-                    avatar: user.avatar || process.env.DEFAULT_AVATAR
+                    avatar: user.avatar || process.env.DEFAULT_AVATAR,
+
+                    nickname: user.nickname,
+                    address: user.address,
+                    phoneNumber: user.phoneNumber,
+                    email: user.email,
                 },
                 
             });
@@ -48,6 +53,17 @@ const UserController = {
                 message: 'Something went wrong!',
             });
         }
+    },
+
+    updateInfo: (req, res) => {
+        const userId = req.params.id;
+        const newData = req.body;
+        User.findOneAndUpdate({ _id: userId }, newData)
+            .then(() => {
+                return res.redirect(`/api/user/profile?id=${userId}`)
+            })
+            .catch(console.error);
+        
     },
 
     // [GET] /api/user/logout

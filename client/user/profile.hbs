@@ -1,8 +1,71 @@
-<div class="profile-avatar">
-    <img src="profile.avatar" alt="">
-    <div></div>
+<div class="profile-wrapper">
+    <div class="profile-avatar">
+        <img src="{{data.avatar}}" alt="avatar can not load...">
+    </div>
+    
+<div class="profile-info">
+    <form class="form-update-info" method="POST" action="/api/user/profile/update-info/{{data.userId}}?_method=PATCH">
+            <table>
+                <caption class="name"><input class="detail-info input-disabled" type="text" value="{{data.username}}" name="name"></caption>
+                <thead></thead>
+
+                <tbody>
+                    <tr>
+                        <td class="td-title">Nick name:</td>
+                        <td><input class="detail-info input-disabled" type="text" value="{{data.nickname}}" name="nickname"></td>
+                    </tr>
+                    <tr>
+                        <td class="td-title">Address:</td>
+                        <td><input class="detail-info input-disabled" type="text" value="{{data.address}}" name="address"></td>
+                    </tr>
+                    <tr>
+                        <td class="td-title">Email:</td>
+                        <td><input class="detail-info input-disabled" type="text" value="{{data.email}}" name="email"></td>
+                    </tr>
+                    <tr>
+                        <td class="td-title">Phone number:</td>
+                        <td><input class="detail-info input-disabled" type="text" value="{{data.phoneNumber}}" name="phoneNumber"></td>
+                    </tr>
+                </tbody>
+
+                <tfoot>
+                    <tr>
+                        <td colspan="2" class="btn-control">
+                            <div class="btn btn-edit" onclick="editing('{{data.userId}}')">Edit</div>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </form>
+    </div>
 </div>
 
-<div class="profile-info">
-    Hello
-</div>
+
+<script>
+    const inputs = document.getElementsByClassName('detail-info');
+    const firstValues = {};
+
+    function editing(userId) {
+        for(const input of inputs) {
+            firstValues[input.name] = input.value;
+            input.classList.remove('input-disabled');
+        }
+        document.querySelector('.btn-control').innerHTML =
+            `
+                <div class="btn btn-update" onclick="update('${userId}')">Update</div>
+                <div class="btn btn-cancel" onclick="cancel('${userId}')">Cancel</div>
+            `
+    }
+
+    function update(userId){
+        document.querySelector('.form-update-info').submit();
+    }
+
+    function cancel(userId) {
+        for(const input of inputs) {
+            input.value =  firstValues[input.name];
+            input.classList.add('input-disabled');
+        }
+        document.querySelector('.btn-control').innerHTML = `<div class="btn btn-update" onclick="editing('${userId}')">Edit</div>`
+    }
+</script>

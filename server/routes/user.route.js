@@ -5,6 +5,9 @@ const { verifyToken } = require('../middleware/authenticateToken');
 router.route('/chat-area')
     .get(userController.home)
 
+router.route('/profile/update-info/:id')
+        .patch(userController.updateInfo)
+
 router.route('/profile')
     .get(userController.profile)
 
