@@ -50,13 +50,23 @@
 
 .input-message input {
     text-align: center;
+    margin-top:20px;
 }
 
 .input-message .btn-send-message {
+    width: 50px;
+    height: 40px;
     border: 1px solid black;
-    padding: 4px;
     background-color:aqua;
-    font-size:calc($my-font-size * 2/3);
+    font-size:calc($my-font-size * 3 / 4);
+    position: relative;
+}
+
+.input-message .btn-send-message span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .input-message .btn-send-message:hover {

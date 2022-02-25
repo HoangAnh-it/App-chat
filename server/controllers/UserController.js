@@ -3,10 +3,9 @@ const { User } = require('../models');
 require('dotenv').config();
 
 const UserController = {
-    // [GET] /api/user/home
+    // [GET] /api/user/chat-area
     home: async (req, res, next) => {
-        const { id: userId } = req.query;
-        const user = await User.findOne({ _id: userId });
+        const user = await User.findOne({ _id: req.userId });
         if (!user) {
             return res.status(StatusCodes.BAD_REQUEST).json({
                 success: false,
@@ -16,9 +15,9 @@ const UserController = {
 
         res.render('chat-area', {
             data: {
-                userId,
+                userId: user._id,
                 username: user.name,
-                avatar: user.avatar || process.env.DEFAULT_AVATAR,
+                avatar: user.avatar,
             }
         });
     },
@@ -38,7 +37,7 @@ const UserController = {
                 data: {
                     userId,
                     username: user.name,
-                    avatar: user.avatar || process.env.DEFAULT_AVATAR,
+                    avatar: user.avatar,
 
                     nickname: user.nickname,
                     address: user.address,

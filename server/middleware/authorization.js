@@ -3,7 +3,7 @@ const { StatusCodes } = require('http-status-codes');
 require('dotenv').config();
 const { isExpired } = require('../helpers/token');
 
-function verifyToken(req, res, next) {
+async function verifyToken(req, res, next) {
     const token = req.signedCookies.access_token.split(' ')[1];
     
     if (!token) {
@@ -12,24 +12,23 @@ function verifyToken(req, res, next) {
             message: 'Access denied',
         });
     } else {
-        try {
-            if (isExpired(token, process.env.ACCESS_TOKEN_SECRET)) {
+        const isExpiredToken = await isExpired(token, process.env.ACCESS_TOKEN_SECRET).catch(err => {
+            console.error(error);
+            return res.status(StatusCodes.BAD_REQUEST).json({
+                success: false,
+                message: 'Invalid token',
+            });
+        });
+
+            if (isExpiredToken) {
                 return res.status(StatusCodes.UNAUTHORIZED).json({
                     success: false,
                     message: 'Token expired',
                 });    
             }
             const payload = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
-            console.log('verify: => ', payload);
             req.userId = payload.id;
             next();
-        } catch (error) {
-            console.error(error);
-            return res.status(StatusCodes.BAD_REQUEST).json({
-            success: false,
-            message: 'Invalid token',
-        })
-        }
     }
 }
 

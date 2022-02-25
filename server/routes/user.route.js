@@ -1,9 +1,9 @@
 const router = require('express').Router();
 const userController = require('../controllers/UserController');
-const { verifyToken } = require('../middleware/authenticateToken');
+const { verifyToken } = require('../middleware/authorization');
 
 router.route('/chat-area')
-    .get(userController.home)
+    .get(verifyToken, userController.home)
 
 router.route('/profile/update-info/:id')
         .patch(userController.updateInfo)

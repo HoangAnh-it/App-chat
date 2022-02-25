@@ -52,6 +52,10 @@
     padding: 0 8px;
 }
 
+.user .avatar {
+    box-shadow: 0 0 8px white;
+}
+
 .avatar:hover {
     opacity: 0.5;
     cursor: pointer;

@@ -17,6 +17,10 @@ html {
   color: black;
 }
 
+.invisible {
+  display: none;
+}
+
 a {
   color: black;
   opacity: 0.5;
@@ -121,6 +125,10 @@ a:hover {
   padding: 0 8px;
 }
 
+.user .avatar {
+  box-shadow: 0 0 8px white;
+}
+
 .avatar:hover {
   opacity: 0.5;
   cursor: pointer;
@@ -208,13 +216,23 @@ a:hover {
 
 .input-message input {
   text-align: center;
+  margin-top: 20px;
 }
 
 .input-message .btn-send-message {
+  width: 50px;
+  height: 40px;
   border: 1px solid black;
-  padding: 4px;
   background-color: aqua;
-  font-size: 16.6666666667px;
+  font-size: 18.75px;
+  position: relative;
+}
+
+.input-message .btn-send-message span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .input-message .btn-send-message:hover {
@@ -262,6 +280,7 @@ form input {
 .profile-avatar {
   width: 30%;
   text-align: center;
+  position: relative;
 }
 
 .profile-avatar img {
@@ -269,6 +288,17 @@ form input {
   height: 400px;
   border-radius: 50%;
   margin: 8px auto 8px;
+  box-shadow: 0 0 4px black;
+}
+
+.edit-avatar {
+  font-size: 16.6666666667px;
+  box-shadow: none;
+  display: inline-block;
+}
+
+input#change-avatar {
+  display: none;
 }
 
 .profile-info {
@@ -326,6 +356,12 @@ table input {
   background-color: #ccc;
   border: 1px solid black;
   font-size: 20px;
+}
+
+table input:focus,
+table input:active {
+  outline: none;
+  border-color: #2094c2;
 }
 
 .input-disabled {

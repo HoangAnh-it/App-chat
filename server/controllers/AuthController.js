@@ -1,5 +1,6 @@
 const { StatusCodes } = require('http-status-codes');
 const { User } = require('../models');
+const { storeToken } = require('../helpers/token');
 // const { CustomApiError, Unauthorized, NotFound } = require('../error');
 
 const AuthController = {
@@ -23,6 +24,7 @@ const AuthController = {
 
         const newUser = new User({ name, email, password});
         newUser.save().then(() => {
+            storeToken(req, res, newUser);            
             res.redirect(`/api/user/chat-area?id=${newUser._id}`);
         }).catch(console.err);
 
@@ -51,13 +53,8 @@ const AuthController = {
                 message: 'Password do not match',
             });
         } else {
-            const token = userExists.generateToken(); // both of access_token and refresh token
-            req.session.token = token.refreshToken;
-            res.cookie('access_token', token.accessToken, {
-                httpOnly: true,
-                signed: true,
-            });
-            return res.redirect(`/api/user/chat-area?id=${userExists._id}`);
+            storeToken(req, res, userExists);            
+            return res.redirect(`/api/user/chat-area`);
         }
     },
 
