@@ -9,7 +9,7 @@ router.route('/profile/update-info/:id')
         .patch(userController.updateInfo)
 
 router.route('/profile')
-    .get(userController.profile)
+    .get( userController.profile)
 
 router.route('/logout')
     .get( userController.logout)

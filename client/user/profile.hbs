@@ -82,12 +82,10 @@
             if(btnChangeAvatar.files && btnChangeAvatar.files[0]) {
                 const reader = new FileReader();
                 reader.onload = function (e) {
-                    console.log(e.target)
                     userAvatar.src = e.target.result;
                     document.querySelector('.new-avatar').value = userAvatar.src;
                 }
                 reader.readAsDataURL(btnChangeAvatar.files[0]);
-                console.log(btnChangeAvatar.files[0]);
                 document.querySelector('.edit-avatar').innerHTML = 
                 `
                     <input class="new-avatar invisible" name="avatar" value="">

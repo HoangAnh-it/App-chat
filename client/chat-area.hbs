@@ -1,17 +1,70 @@
  <div class="chat-box-wrapper">
      <div class="all-users">
         <div class="title">Users online</div>
-        <div class="no-users-online">{{usersOnline}} online</div>
+        <div class="no-users-online">{{data.usersOnline}} online</div>
      </div>
 
      <div class="empty"></div>
      
      <div class="chat-box">
         <div class="title">Chat box</div>
-        <div class="msg-container"></div>
+        <div class="msg-container">
+        </div>
         <form class="input-message">
-            <input type="text" class="input-message" placeholder="Type your message">
-            <div class="btn btn-send-message"><span>Send</span></div>
+            <input type="text" class="input-new-message" placeholder="Type your message">
+            <div class="btn btn-send-message" data-avatar="{{data.avatar}}">Send</div>
         </form>
      </div>
  </div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    const socket = io();
+    socket.on('connect', () => {
+        console.log('A user connected');
+    });
+
+    const inputMessage = document.querySelector('.input-new-message');
+    const btnSend = document.querySelector('.btn-send-message');
+    const msgContainer = document.querySelector('.msg-container');
+
+    btnSend.onclick = (e) => {
+        e.preventDefault();
+        const newMsg = inputMessage.value;
+        inputMessage.value = '';
+        if(newMsg) {
+            console.log('sending', newMsg)
+            const data = {
+                message: newMsg,
+                avatarSender: btnSend.dataset.avatar,
+            }
+            createNewMessage(data, true);
+            socket.emit('send-message', data);
+        }
+    }
+
+    socket.on('new-message', data => {
+        createNewMessage(data, false);
+    });
+
+    function createNewMessage(data, isSelf = false) {
+        const newDiv = document.createElement('div');
+        newDiv.classList.add('message');
+
+        if(isSelf) {
+            newDiv.innerHTML = 
+            `
+                <span class="message-content">${data.message}</span>
+            `;
+            newDiv.classList.add('self');
+        } else {
+            newDiv.innerHTML = 
+            `
+                <img src="${data.avatarSender}" alt="..."></img>
+                <span class="message-content">${data.message}</span>
+            `;
+            newDiv.classList.add('others');
+        }
+        msgContainer.appendChild(newDiv);
+    }
+</script>

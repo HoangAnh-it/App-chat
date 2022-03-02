@@ -1,9 +1,10 @@
 const { StatusCodes } = require('http-status-codes');
 const { User } = require('../models');
 require('dotenv').config();
+// [GET] /api/user/chat-area
 
 const UserController = {
-    // [GET] /api/user/chat-area
+    
     home: async (req, res, next) => {
         const user = await User.findOne({ _id: req.userId });
         if (!user) {
@@ -22,6 +23,7 @@ const UserController = {
         });
     },
 
+    // [GET] api/user/profile?id
     profile: async (req, res) => {
         try {
             const { id: userId } = req.query;
@@ -54,6 +56,7 @@ const UserController = {
         }
     },
 
+    // [POST] /api/user/update-info/:id
     updateInfo: (req, res) => {
         const userId = req.params.id;
         const newData = req.body;

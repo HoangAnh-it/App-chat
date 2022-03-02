@@ -2,7 +2,6 @@ const express = require('express');
 const app = express();
 const http = require('http');
 const server = http.createServer(app);
-const io = require('socket.io')(server);
 const path = require('path');
 const handlebars = require('express-handlebars');
 const session = require('express-session');
@@ -16,6 +15,7 @@ const db = require('./config/connectDb');
 db.connectMongoDb(URL);
 
 const createStoreRedis = require('./config/redisStorage');
+const chatting = require('./controllers/MessageController');
 
 // config views for handlebars
 const hbs = handlebars.create({ extname: '.hbs' });
@@ -24,8 +24,8 @@ app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, '../client'));
 app.use(express.static(path.join(__dirname, '../client/public/')));
 
-app.use(express.urlencoded({ extended: true, }));
-app.use(express.json());
+app.use(express.urlencoded({ limit: '10mb', extended: true, }));
+app.use(express.json({ limit: '10mb', }));
 app.use(methodOverride('_method'));
 app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(session({
@@ -40,32 +40,7 @@ app.use(session({
 }));
 
 routes(app);
-
-
-let users = [];
-
-io.on('connection', socket => {
-    let newUser;
-    socket.on('new-user', data => {
-        newUser = data.username;
-        if (users.includes(newUser)) {
-            socket.emit('user-exists', { message: `This name: ${newUser} already exists` });
-        } else {
-            users.push(newUser);
-            console.log(`${newUser} joined`);
-            console.log(users);
-        }
-    });
-
-    socket.on('send-message', data => {
-        socket.broadcast.emit('receive-new-message', { username: data.username, message: data.message,});
-    })
-
-    socket.on('disconnect', () => {
-        console.log(`${newUser} disconnected`);
-        users = users.filter(user => user !== newUser);
-    })
-});
+chatting(server);
 
 server.listen(3000, () => console.log('Listening on port 3000'));
 
