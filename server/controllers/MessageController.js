@@ -7,7 +7,6 @@ function chatting(server) {
         console.log('A user connected', socket.id);
         socket.on('disconnect', () => {
             console.log('A user disconnected', socket.id);
-            console.log('---------')
         });
 
         socket.on('send-message', data => {

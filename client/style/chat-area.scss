@@ -38,7 +38,6 @@
     height: 70%;
     margin: 16px auto;
     box-shadow: 0 0 4px black;
-    overflow-x: scroll;
     overflow-y: scroll;
 }
 
@@ -69,6 +68,7 @@
     width: 50%;
     height: 30px;
     display:flex;
+    margin-top: 20px
 }
 
 .message img {
@@ -86,6 +86,10 @@
     margin: auto 0;
 }
 
+.message .content {
+    position: relative;
+}
+
 .self {
     justify-content: flex-end;
     margin-left: 50%;
@@ -93,4 +97,15 @@
 
 .others {
     justify-content: flex-start;
+}
+
+.sender-name {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translateY(calc(-100% - 4px));
+    z-index: 111;
+    font-size: calc($my-font-size / 2);
+    width: 200px;
+    text-align: left;
 }
