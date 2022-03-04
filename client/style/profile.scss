@@ -65,20 +65,7 @@ tfoot td {
     text-align: left !important;
 }
 
-.btn {
-    display:inline-block;
-    background-color:aqua;
-    padding: 4px;
-    border: 1px solid black;
-    border-radius:8px;
-    margin-top: 8px;
-}
 
-.btn:hover {
-    opacity: 0.5;
-    cursor: pointer;
-    transition: opacity 0.2s linear
-}
 
 table input {
     width: 80%;

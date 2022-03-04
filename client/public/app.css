@@ -21,6 +21,11 @@ html {
   display: none;
 }
 
+.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
 a {
   color: black;
   opacity: 0.5;
@@ -52,6 +57,7 @@ a:hover {
   padding: 4px;
   font-size: 37.5px;
   text-transform: uppercase;
+  margin-top: 4px;
 }
 
 .btn-submit {
@@ -71,6 +77,21 @@ a:hover {
   opacity: 0.5;
   cursor: pointer;
   transition: opacity 0.2s ease;
+}
+
+.btn {
+  display: inline-block;
+  background-color: aqua;
+  padding: 4px;
+  border: 1px solid black;
+  border-radius: 8px;
+  margin-top: 8px;
+}
+
+.btn:hover {
+  opacity: 0.5;
+  cursor: pointer;
+  transition: opacity 0.2s linear;
 }
 
 .header-container {
@@ -175,11 +196,20 @@ a:hover {
   margin: 0 8px;
 }
 
+.info-room {
+  display: flex;
+  flex-direction: column;
+  width: 15%;
+  justify-content: space-around;
+}
+
 .all-users {
   flex-shrink: 1;
   box-shadow: 0 0 4px black;
   padding: 8px;
   text-align: center;
+  height: 30%;
+  overflow-y: scroll;
 }
 
 .all-users .title {
@@ -188,6 +218,67 @@ a:hover {
 
 .all-users .no-users-online {
   font-size: 16.6666666667px;
+}
+
+.user-rooms {
+  flex-shrink: 1;
+  box-shadow: 0 0 4px black;
+  padding: 8px;
+  text-align: center;
+  height: 30%;
+}
+
+.user-rooms .title {
+  font-size: 20px;
+}
+
+.user-rooms .container {
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  height: 70%;
+  width: 80%;
+  box-shadow: 0 0 4px black;
+  margin: 16px auto 0;
+}
+
+.user-rooms .container .room-item {
+  font-size: 16.6666666667px;
+  width: 80%;
+  margin: 2px auto;
+}
+
+.room-management {
+  flex-shrink: 1;
+  box-shadow: 0 0 4px black;
+  padding: 8px;
+  text-align: center;
+  height: 20%;
+  display: flex;
+  flex-direction: column;
+  align-content: space-around;
+}
+
+.room-management .title {
+  font-size: 20px;
+}
+
+.room-management .options {
+  margin: 4px 2px;
+  font-size: 16.6666666667px;
+}
+
+.room-management .form-action-room {
+  display: initial;
+  width: 100%;
+  box-shadow: none;
+  margin: 4px auto;
+}
+
+.form-action-room .input-room-action {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .chat-box {
@@ -199,12 +290,30 @@ a:hover {
   height: 80vh;
 }
 
+.chatting {
+  width: 15%;
+  display: flex;
+  flex-direction: column;
+}
+
+.chatting .title {
+  font-size: 20px;
+  margin-top: 8px;
+}
+
+.chatting .partner {
+  height: 30%;
+  text-align: center;
+  box-shadow: 0 0 4px black;
+}
+
 .msg-container {
   width: 80%;
   height: 70%;
   margin: 16px auto;
   box-shadow: 0 0 4px black;
   overflow-y: scroll;
+  overflow-wrap: break-word;
 }
 
 .input-message {
@@ -231,8 +340,9 @@ a:hover {
 
 .message {
   font-size: 16.6666666667px;
-  width: 50%;
-  height: 30px;
+  min-width: 20%;
+  max-width: 50%;
+  height: auto;
   display: flex;
   margin-top: 20px;
 }
@@ -245,11 +355,14 @@ a:hover {
 }
 
 .message .message-content {
+  display: block;
   background-color: aqua;
   padding: 4px;
   border-radius: 8px;
-  text-align: center;
   margin: auto 0;
+  max-width: 200px;
+  text-align: justify;
+  word-wrap: break-word;
 }
 
 .message .content {
@@ -369,21 +482,6 @@ tfoot td {
   text-align: left !important;
 }
 
-.btn {
-  display: inline-block;
-  background-color: aqua;
-  padding: 4px;
-  border: 1px solid black;
-  border-radius: 8px;
-  margin-top: 8px;
-}
-
-.btn:hover {
-  opacity: 0.5;
-  cursor: pointer;
-  transition: opacity 0.2s linear;
-}
-
 table input {
   width: 80%;
   height: 30px;
@@ -407,6 +505,48 @@ table input:active {
 
 form.form-update-info {
   width: 100%;
+}
+
+.modal {
+  background-color: rgba(0, 0, 0, 0.2);
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal .container {
+  width: 40%;
+  min-height: 30%;
+  background-color: #7e7b7b;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  border-radius: 16px;
+}
+
+.container .title {
+  width: 50%;
+  margin: 0 auto;
+}
+
+.container .message {
+  flex-grow: 2;
+  margin: 0 auto;
+  width: 70%;
+  flex-direction: column;
+  margin-top: 16px;
+  font-size: 25px;
+  color: white;
+}
+
+.container .btn {
+  width: 30%;
+  margin: 2px auto;
 }
 
 /*# sourceMappingURL=app.css.map */

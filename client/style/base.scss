@@ -23,6 +23,11 @@ html {
     display:none;
 }
 
+.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
 a {
     color: black;
     opacity: 0.5;
@@ -54,6 +59,7 @@ a:hover{
     padding: 4px;
     font-size: calc($my-font-size* 1.5);
     text-transform: uppercase;
+    margin-top: 4px;
 }
 
 .btn-submit {
@@ -73,4 +79,19 @@ a:hover{
     opacity: 0.5;
     cursor: pointer;
     transition: opacity 0.2s ease;
+}
+
+.btn {
+    display: inline-block;
+    background-color: aqua;
+    padding: 4px;
+    border: 1px solid black;
+    border-radius: 8px;
+    margin-top: 8px;
+}
+
+.btn:hover {
+    opacity: 0.5;
+    cursor: pointer;
+    transition: opacity 0.2s linear
 }

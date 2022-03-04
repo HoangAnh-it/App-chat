@@ -9,11 +9,20 @@
     margin: 0 8px;
 }
 
+.info-room {
+    display:flex;
+    flex-direction: column;
+    width: 15%;
+    justify-content:space-around;
+}
+
 .all-users {
     flex-shrink: 1;
     box-shadow: 0 0 4px black;
     padding: 8px;
     text-align: center;
+    height: 30%;
+    overflow-y:scroll;
 }
 
 .all-users .title {
@@ -24,6 +33,69 @@
     font-size: calc($my-font-size * 2/3);
 }
 
+.user-rooms {
+    flex-shrink: 1;
+    box-shadow: 0 0 4px black;
+    padding: 8px;
+    text-align: center;
+    height: 30%;
+}
+
+.user-rooms .title {
+    font-size: calc($my-font-size * 4/5);
+}
+
+.user-rooms .container {
+    display:flex;
+    flex-direction: column;
+    overflow-y:scroll;
+    height: 70%;
+    width: 80%;
+    box-shadow: 0 0 4px black;
+    margin:16px auto 0;
+}
+
+.user-rooms .container  .room-item {
+    font-size: calc($my-font-size * 2/3);
+    width: 80%;
+    margin: 2px auto;
+}
+
+.room-management {
+    flex-shrink: 1;
+    box-shadow: 0 0 4px black;
+    padding: 8px;
+    text-align: center;
+    height: 20%;
+    display:flex;
+    flex-direction: column;
+    align-content: space-around;
+}
+
+.room-management .title {
+    font-size: calc($my-font-size * 4/5);
+}
+
+.room-management .options {
+    margin:4px 2px;
+    font-size: calc($my-font-size * 2/3);
+}
+
+.room-management .form-action-room {
+    display: initial;
+    width: 100%;
+    box-shadow: none;
+    margin: 4px auto;
+}
+
+.form-action-room .input-room-action {
+    width: 100%;
+    // display:inline-block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
 .chat-box {
     padding: 8px;
     text-align: center;
@@ -33,12 +105,31 @@
     height: 80vh;
 }
 
+.chatting {
+    width: 15%;
+    display: flex;
+    flex-direction: column;
+}
+
+.chatting .title {
+    font-size: calc($my-font-size * 4/5);
+    margin-top: 8px;
+}
+
+.chatting .partner {
+    height: 30%;
+    text-align: center;
+    box-shadow: 0 0 4px black;
+}
+
 .msg-container {
     width: 80%;
     height: 70%;
     margin: 16px auto;
     box-shadow: 0 0 4px black;
+    // overflow-x: hidden;
     overflow-y: scroll;
+    overflow-wrap: break-word;
 }
 
 .input-message {
@@ -65,10 +156,11 @@
 
 .message {
     font-size: calc($my-font-size * 2/3);
-    width: 50%;
-    height: 30px;
+    min-width: 20%;
+    max-width: 50%;
+    height: auto;
     display:flex;
-    margin-top: 20px
+    margin-top: 20px;
 }
 
 .message img {
@@ -79,11 +171,14 @@
 }
 
 .message .message-content {
+    display:block;
     background-color: aqua;
     padding: 4px;
     border-radius: 8px;
-    text-align: center;
     margin: auto 0;
+    max-width: 200px;
+    text-align: justify;
+    word-wrap: break-word;
 }
 
 .message .content {
@@ -109,3 +204,4 @@
     width: 200px;
     text-align: left;
 }
+

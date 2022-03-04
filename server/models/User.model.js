@@ -26,7 +26,7 @@ const User = new mongoose.Schema(
 
         phoneNumber: {
             type: String,
-            trim:true,
+            trim: true,
             default: '',
         },
 
@@ -45,6 +45,16 @@ const User = new mongoose.Schema(
         avatar: {
             type: String,
             default: process.env.DEFAULT_AVATAR,
+        },
+
+        rooms: {
+            type: [mongoose.Types.ObjectId],
+            ref: 'room',
+        },
+
+        friends: {
+            type: [mongoose.Types.ObjectId],
+            ref: 'user',
         }
     },
     {
@@ -84,6 +94,17 @@ User.methods.generateToken = function(){
         accessToken : `Bearer ${accessToken}`,
         refreshToken: `Bearer ${refreshToken}`,
     }
+}
+
+User.methods.getAllRooms = async function () {
+    const roomIds = this.rooms;
+    const allRooms = [];
+    for (const roomId of roomIds) {
+        const room = await mongoose.model('room').findOne({ _id: roomId });
+        if (room)
+            allRooms.push(room);
+    }
+    return allRooms;
 }
 
 module.exports = mongoose.model('user', User);

@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const userController = require('../controllers/UserController');
+const roomController = require('../controllers/RoomController');
 const { verifyToken } = require('../middleware/authorization');
 
 router.route('/chat-area')
@@ -12,6 +13,9 @@ router.route('/profile')
     .get( userController.profile)
 
 router.route('/logout')
-    .get( userController.logout)
+    .get(userController.logout)
+    
+router.route('/room')
+    .post(verifyToken, userController.roomAction)
     
 module.exports = router;

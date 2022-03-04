@@ -1,80 +1,56 @@
- <div class="chat-box-wrapper">
-     <div class="all-users">
-        <div class="title">Users online</div>
-        <div class="no-users-online">{{data.usersOnline}} online</div>
-     </div>
-
-     <div class="empty"></div>
-     
-     <div class="chat-box">
-        <div class="title">Chat box</div>
-        <div class="msg-container">
+<div class="chat-box-wrapper">
+    <div class="info-room">
+        <div class="all-users">
+            <div class="title">Your friends</div>
+            <div class="no-users-online">{{data.usersOnline}} online</div>
         </div>
+
+        <div class="room-management">
+            <div class="title">Room</div>
+                <form class="form-action-room" action="/api/user/room" method="POST">
+                    <div>
+                        <select class="options" name="action">
+                            <option value="none">--Action--</option>
+                            <option value="create">Create</option>
+                            <option value="join">Join</option>
+                        </select>
+                        <button class="btn btn-submit-room-action disabled" type="submit">Submit</button>
+                    </div>
+                    <input class="invisible input-room-action" type="text" name="infoRoom">
+                </form>
+            </div>
+            <div class="user-rooms">
+                <div class="title">Your rooms</div>
+                <div class="container">
+                    {{#each data.rooms}}
+                        <div class="room-item btn">{{this.name}}</div>
+                    {{/each}}
+                </div>
+            </div>
+    </div>
+
+    <div class="empty"></div>
+    
+    <div class="chat-box">
+        <div class="title">Chat box</div>
+        <div class="msg-container"></div>
         <form class="input-message">
             <input type="text" class="input-new-message" placeholder="Type your message">
             <div class="btn btn-send-message" data-sender_avatar="{{data.avatar}}" data-sender_name="{{data.username}}">Send</div>
         </form>
-     </div>
- </div>
+    </div>
+
+    <div class="empty"></div>
+
+    <div class="chatting">
+        <div class="partner">
+            <div class="title">Chatting with...</div>
+            <div class="info-partner"></div>
+        </div>
+
+        <div class="empty"></div>
+    </div>
+</div>
 
 <script src="/socket.io/socket.io.js"></script>
-<script>
-    const socket = io();
-    socket.on('connect', () => {
-        console.log('A user connected');
-    });
-
-    const inputMessage = document.querySelector('.input-new-message');
-    const btnSend = document.querySelector('.btn-send-message');
-    const msgContainer = document.querySelector('.msg-container');
-
-    btnSend.onclick = (e) => {
-        e.preventDefault();
-        const newMsg = inputMessage.value;
-        inputMessage.value = '';
-        if(newMsg) {
-            console.log('sending', newMsg)
-            const data = {
-                message: newMsg,
-                sender: {
-                    name: btnSend.dataset.sender_name,
-                    avatar: btnSend.dataset.sender_avatar,
-                }
-            }
-            createNewMessage(data, true);
-            socket.emit('send-message', data);
-        }
-    }
-
-    socket.on('new-message', data => {
-        createNewMessage(data, false);
-    });
-
-    function createNewMessage(data, isSelf = false) {
-        const newDiv = document.createElement('div');
-        newDiv.classList.add('message');
-
-        if(isSelf) {
-            newDiv.innerHTML = 
-            `
-                    <span class="message-content">
-                        ${data.message}
-                    </span>
-            `;
-            newDiv.classList.add('self');
-        } else {
-            newDiv.innerHTML = 
-            `
-                <img src="${data.sender.avatar}" alt="..."></img>
-                <div class="content">
-                    <p class="sender-name">${data.sender.name}</p>
-                    <span class="message-content">
-                        ${data.message}
-                    </span>
-                </div>
-            `;
-            newDiv.classList.add('others');
-        }
-        msgContainer.appendChild(newDiv);
-    }
-</script>
+<script src="/js/chatArea.js"></script>
