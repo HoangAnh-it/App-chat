@@ -94,6 +94,17 @@ a:hover {
   transition: opacity 0.2s linear;
 }
 
+.icon {
+  width: 15px;
+  height: 15px;
+  background-color: transparent;
+  border: none;
+}
+
+.icon::content {
+  content: "Hello";
+}
+
 .header-container {
   position: fixed;
   top: 0;
@@ -200,16 +211,20 @@ a:hover {
   display: flex;
   flex-direction: column;
   width: 15%;
-  justify-content: space-around;
+  justify-content: space-between;
+}
+
+.info-room .empty {
+  flex-grow: initial;
+  height: 10%;
 }
 
 .all-users {
-  flex-shrink: 1;
   box-shadow: 0 0 4px black;
   padding: 8px;
   text-align: center;
-  height: 30%;
   overflow-y: scroll;
+  flex-grow: 1;
 }
 
 .all-users .title {
@@ -221,11 +236,14 @@ a:hover {
 }
 
 .user-rooms {
-  flex-shrink: 1;
   box-shadow: 0 0 4px black;
   padding: 8px;
   text-align: center;
-  height: 30%;
+  flex-grow: 2;
+}
+
+.user-rooms * {
+  opacity: 1;
 }
 
 .user-rooms .title {
@@ -240,23 +258,31 @@ a:hover {
   width: 80%;
   box-shadow: 0 0 4px black;
   margin: 16px auto 0;
+  opacity: 1;
 }
 
 .user-rooms .container .room-item {
   font-size: 16.6666666667px;
-  width: 80%;
+  width: 90%;
   margin: 2px auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.room-item:hover {
+  opacity: 1 !important;
+  cursor: default;
 }
 
 .room-management {
-  flex-shrink: 1;
   box-shadow: 0 0 4px black;
   padding: 8px;
   text-align: center;
-  height: 20%;
   display: flex;
   flex-direction: column;
   align-content: space-around;
+  height: 20%;
 }
 
 .room-management .title {
@@ -305,6 +331,10 @@ a:hover {
   height: 30%;
   text-align: center;
   box-shadow: 0 0 4px black;
+}
+
+.chatting .empty {
+  height: 20px;
 }
 
 .msg-container {
@@ -387,6 +417,58 @@ a:hover {
   font-size: 12.5px;
   width: 200px;
   text-align: left;
+}
+
+.info-partner {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 16px 8px;
+}
+
+.info-partner img {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: 1px solid black;
+}
+
+.info-partner a {
+  text-decoration: none;
+  opacity: 1;
+  font-size: 16.6666666667px;
+}
+
+.icon.room-options {
+  padding: 8px;
+  position: relative;
+  margin-right: 8px;
+  margin-bottom: 4px;
+}
+
+.icon.room-options form {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  margin: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  box-shadow: none;
+  font-size: 20px;
+}
+
+.icon.room-options {
+  transition: background-color 0.2s ease;
+  border-radius: 8px;
+}
+
+.icon.room-options a:hover {
+  color: red !important;
+  opacity: 1;
+  font-weight: bold;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 form {

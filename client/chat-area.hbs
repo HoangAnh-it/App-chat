@@ -5,28 +5,22 @@
             <div class="no-users-online">{{data.usersOnline}} online</div>
         </div>
 
+        <div class="empty"></div>
+
         <div class="room-management">
             <div class="title">Room</div>
-                <form class="form-action-room" action="/api/user/room" method="POST">
-                    <div>
-                        <select class="options" name="action">
-                            <option value="none">--Action--</option>
-                            <option value="create">Create</option>
-                            <option value="join">Join</option>
-                        </select>
-                        <button class="btn btn-submit-room-action disabled" type="submit">Submit</button>
-                    </div>
-                    <input class="invisible input-room-action" type="text" name="infoRoom">
-                </form>
-            </div>
-            <div class="user-rooms">
-                <div class="title">Your rooms</div>
-                <div class="container">
-                    {{#each data.rooms}}
-                        <div class="room-item btn">{{this.name}}</div>
-                    {{/each}}
+            <form class="form-action-room" action="/api/user/room" method="POST">
+                <div>
+                    <select class="options" name="action">
+                        <option value="none">--Action--</option>
+                        <option value="create">Create</option>
+                        <option value="join">Join</option>
+                    </select>
+                    <button class="btn btn-submit-room-action disabled" type="submit">Submit</button>
                 </div>
-            </div>
+                <input class="invisible input-room-action" type="text" name="infoRoom">
+            </form>
+        </div>
     </div>
 
     <div class="empty"></div>
@@ -45,10 +39,34 @@
     <div class="chatting">
         <div class="partner">
             <div class="title">Chatting with...</div>
-            <div class="info-partner"></div>
+            <div class="info-partner">
+                <div class="partner-avatar">
+                    <img src="{{data.partner.avatar}}" alt="Can not load avatar">
+                </div>
+                <div class="partner-detail">
+                    <div class="partner-detail-name">{{data.partner.username}}</div>
+                    <a class="btn about" href="/api/user/profile/?isSelf=false&id={{data.partner._id}}">About</a>
+                </div>
+            </div>
         </div>
 
         <div class="empty"></div>
+
+        <div class="user-rooms">
+            <div class="title">Your rooms</div>
+            <div class="container">
+                {{#each data.rooms}}
+                    <div class="room-item btn">
+                        <a href="/api/user/chat-area/:partnerId={{this._id}}">{{this.name}}</a>
+                        <button class="icon room-options">
+                            <form class="form-submit-leave-room" action="/api/user/room" method="POST">
+                                <a class="ti-trash leave-room" name="infoRoom"></a>
+                            </form>
+                        </button>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
     </div>
 </div>
 

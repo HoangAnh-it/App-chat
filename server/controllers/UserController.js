@@ -1,9 +1,8 @@
 const { StatusCodes } = require('http-status-codes');
-const { User } = require('../models');
-const { Room } = require('../models');
-require('dotenv').config();
 const roomController = require('./RoomController');
 const { multipleToObject } = require('../helpers/mongoose');
+const { User } = require('../models');
+require('dotenv').config();
 
 const UserController = {
     
@@ -20,12 +19,15 @@ const UserController = {
         }
         const allRooms = await user.getAllRooms();
 
+        const partner = await User.findOne({})
+
         res.render('chat-area', {
             data: {
                 userId: user._id,
                 username: user.name,
                 avatar: user.avatar,
                 rooms: multipleToObject(allRooms),
+                partner: partner,
             }
         });
     },
@@ -34,6 +36,7 @@ const UserController = {
     profile: async (req, res) => {
         try {
             const { id: userId } = req.query;
+            const isSelf = req.query.isSelf;
             const user = await User.findOne({ _id: userId });
             if (!user) {
                 return res.status(StatusCodes.BAD_REQUEST).render('status', {
@@ -46,10 +49,10 @@ const UserController = {
 
             return res.render('user/profile', {
                 data: {
+                    isSelf: isSelf,
                     userId,
                     username: user.name,
                     avatar: user.avatar,
-
                     nickname: user.nickname,
                     address: user.address,
                     phoneNumber: user.phoneNumber,
@@ -101,6 +104,10 @@ const UserController = {
                     await roomController.joinRoom(infoRoom, user);
                     break;
                 
+                case 'leave':
+                    await roomController.leaveRoom(infoRoom?.split('-')[1], user);
+                    break;
+                
                 default: break;
             }
 
@@ -109,7 +116,7 @@ const UserController = {
             return res.status(StatusCodes.BAD_REQUEST).render('status', {
                 notification: {
                     title: 'Error',
-                    message: `Something went wrong. Can not ${action} room. Please try again!\n${error.message}`,
+                    message: `${error.message}`,
                 }
             });
         }

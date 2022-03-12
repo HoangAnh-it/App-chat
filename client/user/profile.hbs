@@ -1,10 +1,12 @@
 <div class="profile-wrapper">
     <div class="profile-avatar">
         <img src="{{data.avatar}}" alt="avatar can not load...">
-        <form class="edit-avatar" method="POST" action="/api/user/profile/update-info/{{data.userId}}?_method=PATCH">
-            <label class="btn btn-edit-avatar" for="change-avatar" >Change</label>
-            <input type="file" id="change-avatar" onchange="editAvatar('{{data.userId}}')">
-        </form>
+        {{#if data.isSelf}}
+            <form class="edit-avatar" method="POST" action="/api/user/profile/update-info/{{data.userId}}?_method=PATCH">
+                <label class="btn btn-edit-avatar" for="change-avatar" >Change</label>
+                <input type="file" id="change-avatar" onchange="editAvatar('{{data.userId}}')">
+            </form>
+        {{/if}}
     </div>
     
 <div class="profile-info">
@@ -33,11 +35,13 @@
                 </tbody>
 
                 <tfoot>
-                    <tr>
-                        <td colspan="2" class="btn-control">
-                            <div class="btn btn-edit" onclick="editing('{{data.userId}}')">Edit</div>
-                        </td>
-                    </tr>
+                   {{#if data.isSelf}}
+                         <tr>
+                            <td colspan="2" class="btn-control">
+                                <div class="btn btn-edit" onclick="editing('{{data.userId}}')">Edit</div>
+                            </td>
+                        </tr>
+                    {{/if}}
                 </tfoot>
             </table>
         </form>

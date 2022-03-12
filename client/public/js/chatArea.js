@@ -90,3 +90,12 @@ inputRoomAction.oninput = function () {
         btnSubmitRoomAction.classList.add('disabled');
     }
 }
+
+// ---------------- user's rooms -------------------------
+
+const btnLeaveRoom = document.querySelector('a.leave-room');
+if (btnLeaveRoom) {
+    btnLeaveRoom.onclick = function () {
+        btnLeaveRoom.parentNode.closest('form').submit();
+    }
+}

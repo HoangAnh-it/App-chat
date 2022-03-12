@@ -28,13 +28,18 @@ const RoomController = {
             throw new Error('Room not found!');
         }
 
+        if (user.rooms.includes(roomId)) {
+            throw new Error('You already joined this room!');
+        }
+
         existingRoom.members.push(user._id);
         user.rooms.push(existingRoom._id);
         await Promise.all([Room.updateOne({ _id: existingRoom._id }, existingRoom), User.updateOne({ _id: user._id }, user)]);
     },
 
-    leaveRoom: (nameOfRoom, user) => {
-
+    leaveRoom: (idRoom, user) => {
+        console.log('leave room ', idRoom);
+        return res.json('leave room');
     },
 }
 

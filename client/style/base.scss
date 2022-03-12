@@ -95,3 +95,13 @@ a:hover{
     cursor: pointer;
     transition: opacity 0.2s linear
 }
+
+.icon {
+    width: 15px;
+    height: 15px;
+    background-color: transparent;
+    border: none;
+}
+.icon::content {
+    content: "Hello";    
+}
