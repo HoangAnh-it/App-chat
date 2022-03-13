@@ -1,0 +1,22 @@
+<form class="login-form" action="/api/v2/auth/login" method="POST">
+    <div class="title">LOGIN</div>
+    <div class=" flex email info-item">
+        <label for="email">Email:</label>
+        <input type="email" name="email", id="email" placeholder="Enter your email address">
+    </div>
+
+    <div class="flex password info-item">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="Enter your password">
+    </div>
+
+    <div class="forgot-password">
+        Forgot Password? <a href="" style="text-decoration: underline !important;">Reset now</a>
+    </div>
+
+    <div class="btn login-submit">Login</div>
+
+    <div class="more">
+        <p>Not a member? <a href="/api/v2/auth/register" style="text-decoration: underline !important;">Register</a></p>
+    </div>
+</form>

@@ -1,0 +1,40 @@
+#main {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+.status {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border-radius: 10px;
+  padding: 16px;
+  text-align: center;
+  width: 30%;
+  height: 40%;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.title {
+  font-size: 2em;
+  border-bottom: 2px solid black;
+  width: 100%;
+  margin-bottom: 16px;
+  font-weight: bold;
+}
+
+.message {
+  margin: 8px 4px;
+  font-size: 1.4rem;
+}
+
+.comeTo a,
+.comeTo a:hover {
+  color: white;
+}
+
+/*# sourceMappingURL=status.css.map */

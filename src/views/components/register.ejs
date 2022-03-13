@@ -1,0 +1,28 @@
+<form class="register-form" action="/api/v2/auth/register" method="POST">
+    <div class="title">REGISTER</div>
+    <div class=" flex email info-item">
+        <label for="email">Email:</label>
+        <input type="email" name="email", id="email" placeholder="Enter your email address">
+    </div>
+
+    <div class=" flex name info-item">
+        <label for="name">Name:</label>
+        <input type="text" name="name", id="name" placeholder="Enter your name">
+    </div>
+
+    <div class="flex password info-item">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="Enter your password">
+    </div>
+
+    <div class="flex re-password info-item">
+        <label for="re-password">Re-password</label>
+        <input type="password" id="re-password" name="confirmPassword" placeholder="Retype your password">
+    </div>
+
+    <div class="btn register-submit">Register</div>
+
+    <div class="more">
+        <p>Already a member? <a href="/api/v2/auth/login" style="text-decoration: underline !important;">Login</a></p>
+    </div>
+</form>
