@@ -1,0 +1,146 @@
+header {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 5vw;
+    height: auto;
+    padding:8px 4px;
+    z-index:1;
+}
+
+header .header-profile {
+    display: none;
+}
+
+.avatar img {
+    width: 100%;
+    height:80%;
+    border-radius: 50%;
+}
+
+.options {
+    height: 10%;
+    margin: auto;
+    font-size:1.5rem;
+    text-align: center;
+    margin-top:8px;
+    padding-top:8px;
+    padding-bottom: 8px;
+    cursor: pointer;
+}
+
+.options {
+    box-shadow: 0px 0px 8px black;
+}
+
+.options:hover i {
+    padding: 0px 8px;
+    background-color: #ccc;
+    border-radius: 8px;
+    transition: background-color 0.2s linear;
+}
+
+.options:hover .more {
+    display: block;
+}
+
+.more {
+    font-size: 1.2rem;
+    padding: 4px;
+    display: none;
+}
+.more > div {
+    margin: 4px 0;
+}
+
+.more a {
+    opacity: 0.8;
+    color: #ccc;
+}
+
+.more a:hover {
+    opacity: 1;
+    color: aqua;
+    text-decoration: underline;
+}
+
+#main {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+}
+
+.chat-wrapper {
+    flex-direction: row;
+    justify-content: space-between;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 10px;
+    padding: 16px;
+    width: 70%;
+    height: 85%;
+    text-align: center;
+}
+
+.item {
+    box-shadow: 0 0 4px black;
+    background-color: white;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.item.list {
+    width: 30%;
+    height: 100%;
+}
+
+.item.chat-box {
+    width: 65%;
+    height: 100%;
+}
+
+.chat-box {
+    flex-direction: column;
+}
+
+.chat-box .chatting-with {
+    width: 100%;
+    height: 10%;
+    background-color: #ccc;
+    border-bottom: 1px solid black;
+}
+
+.chat-box .box ,
+.list .friend {
+    width: 100%;
+    height: 90%;
+}
+
+.search {
+    flex-direction:row;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+    height: 10%;
+    background-color: #ccc;
+}
+
+.search input {
+    width: 80%;
+    margin: 0 4px;
+    padding: 8px 8px;
+}
+
+.search .btn-search {
+    width: 10%;
+    height:auto;
+    margin-top: 0;
+    border-radius: 50%;
+}
+
+.friend {
+    width: 100%;
+    height: 90%;
+}

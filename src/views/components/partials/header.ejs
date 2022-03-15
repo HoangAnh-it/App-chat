@@ -1,0 +1,23 @@
+<!-- in chat box -->
+
+<div class="header-chat-box">
+    <div class="avatar">
+        <img src="<%= user.avatar %>" alt="...">
+    </div>
+    
+    <div class="options">
+        <i class="ti-more"></i>
+    
+        <div class="more">
+            <div class="profile"><a href="/api/v2/user/profile?id=<%= user.userId %>">Profile</a></div>
+            <div class="logout"><a href="/api/v2/auth/logout">Logout</a></div>
+        </div>
+    </div>
+</div>
+
+<!-- in profile -->
+<div class="header-profile">
+    <div class="btn-back">
+        <a href="/api/v2/chat"><i class="ti-arrow-circle-left"></i></a>
+    </div>
+</div>

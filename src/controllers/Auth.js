@@ -1,17 +1,20 @@
 const { StatusCodes } = require('http-status-codes');
 const { User } = require('../models');
 
-const storageToken = require('../utils/storageToken');
+const storeToken = require('../utils/storageToken');
 
 const AuthController = {
+    // [GET] /api/v2/auth/login
     showLoginForm: (req, res) => {
         res.status(StatusCodes.OK).render('pages/login.ejs');
     },
     
+    // [GET] /api/v2/auth/register
     showRegisterForm: (req, res) => {
         res.status(StatusCodes.OK).render('pages/register.ejs');
     },
-
+    
+    // [POST] /api/v2/auth/login
     login: async (req, res) => {
         const { email, password } = req.body;
         const user = await User.findOne({
@@ -37,18 +40,16 @@ const AuthController = {
             });
         }
 
-        const { accessToken } = user.generateToken();
-        storageToken(res, accessToken);
+        const token = user.generateToken();
+        storeToken(req, res, user.userId, token);
 
-        return res.send({
-            message: 'Login successfully',
-            user,
-        })
+        return res.redirect('/api/v2/chat');
     },
 
+    // [POST] /api/v2/auth/register
     register: async (req, res) => {
         const { email, name, password, confirmPassword } = req.body;
-
+        console.log(req.body);
         // check password and re-password
         if (password !== confirmPassword) {
             return res.status(StatusCodes.UNAUTHORIZED).render('pages/status.ejs', {
@@ -83,6 +84,22 @@ const AuthController = {
                     directTo: '/api/v2/auth/register',
                 })
             });
+    },
+
+    // [GET] api/v2/auth/logout
+    logout: (req, res) => {
+        try {
+            req.session.destroy(() => { 
+                res.redirect('/api/v2/auth/login');
+            });
+            res.clearCookie('access_token');
+        } catch (err) {
+            res.status(StatusCodes.INTERNAL_SERVER_ERROR).render('pages/status', {
+                title: 'Error!',
+                message: 'Can not log out. Something went wrong!',
+                directTo: '/api/v2/chat',
+            });
+        }
     }
 
 }

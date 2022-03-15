@@ -9,11 +9,18 @@ module.exports = function (sequelize, DataTypes) {
             primaryKey: true,
             allowNull: false,
             autoIncrement: true,
+            unique: true,
         },
 
         name: {
             type: DataTypes.STRING,
             allowNull: false,
+        },
+
+        nickName: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            defaultValue: '',
         },
 
         email: {
@@ -22,17 +29,29 @@ module.exports = function (sequelize, DataTypes) {
             unique: true,
         },
 
+        address: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            defaultValue: '',
+        },
+
         password: {
             type: DataTypes.STRING,
             allowNull: false,
+        },
+
+        avatar: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+            defaultValue: process.env.DEFAULT_AVATAR,
         }
     },
         {
             timestamp: true,
             hooks: {
-                beforeSave: (instance, options) => {
-                    const salt = bcryptjs.genSalt(10);
-                    instance.password = bcryptjs.hash(instance.password, salt);
+                beforeSave: async (instance, options) => {
+                    const salt = await bcryptjs.genSalt(10);
+                    instance.password = await bcryptjs.hash(instance.password, salt);
                 }
             }
         }
@@ -49,11 +68,13 @@ module.exports = function (sequelize, DataTypes) {
             _id: this.userId,
         }
         const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, { expiresIn: process.env.ACCESS_TOKEN_EXPIRATION });
+        const refreshToken = jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET, { expiresIn: process.env.REFRESH_TOKEN_EXPIRATION });
 
         return {
-            accessToken,
+            accessToken: 'Bearer ' + accessToken,
+            refreshToken: 'Bearer ' + refreshToken,
         }
     }
-
+    
     return User;
 }
