@@ -49,13 +49,13 @@ label {
 .forgot-password {
   opacity: 0.6;
   text-align: left;
-  margin-left: 10px;
   font-size: 0.8rem;
+  margin: 8px 10px;
 }
 
 .more {
   padding: 4px;
-  margin: 4px 0 0 0;
+  margin: 8px 4px;
   opacity: 0.8;
 }
 

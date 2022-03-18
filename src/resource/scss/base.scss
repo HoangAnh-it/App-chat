@@ -66,3 +66,22 @@ a:hover {
     width: 0;
     height: 0;
 }
+
+.btn-login-with-google {
+    display: inline-block;
+    padding: 8px 2px;
+    margin: 2px;
+    box-shadow: 0 0 4px black;
+    background-color: rgb(228, 216, 216);
+}
+
+
+.btn-login-with-google:hover {
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+    cursor: pointer;
+}
+
+.btn-login-with-google:hover a {
+    color: black;
+}

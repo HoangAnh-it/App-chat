@@ -126,6 +126,5 @@ function cancel(type) {
         default:
             break;
     }
-
-    
 }
+

@@ -1,4 +1,6 @@
-module.exports = function storeToken(req, res, userId, token) {
+module.exports = function storeToken(req, res, user) {
+    const { userId, token, typeLogin } = user;
+
     res.cookie('access_token', token.accessToken, {
         httpOnly: true,
         signed: true,
@@ -9,6 +11,7 @@ module.exports = function storeToken(req, res, userId, token) {
         isAuth: true,
         user: {
             _id: userId,
+            typeLogin: typeLogin,
         }
     }
 }

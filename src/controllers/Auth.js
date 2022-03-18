@@ -19,7 +19,7 @@ const AuthController = {
         const { email, password } = req.body;
         const user = await User.findOne({
             where: {
-                email: email,
+                email,
             }
         });
 
@@ -41,15 +41,20 @@ const AuthController = {
         }
 
         const token = user.generateToken();
-        storeToken(req, res, user.userId, token);
+        storeToken(req, res, {
+            userId: user.userId,
+            token: token,
+            typeLogin: user.typeLogin,
+        });
 
         return res.redirect('/api/v2/chat');
     },
 
+
+
     // [POST] /api/v2/auth/register
     register: async (req, res) => {
         const { email, name, password, confirmPassword } = req.body;
-        console.log(req.body);
         // check password and re-password
         if (password !== confirmPassword) {
             return res.status(StatusCodes.UNAUTHORIZED).render('pages/status.ejs', {
@@ -61,7 +66,10 @@ const AuthController = {
 
         // check if existing user
         const existingUser = await User.findOne({
-            where: { email }
+            where: {
+                email,
+                loginType: 'local',
+            }
         });
 
         if (existingUser) {

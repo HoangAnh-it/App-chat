@@ -37,21 +37,27 @@ module.exports = function (sequelize, DataTypes) {
 
         password: {
             type: DataTypes.STRING,
-            allowNull: false,
         },
 
         avatar: {
             type: DataTypes.TEXT,
             allowNull: true,
             defaultValue: process.env.DEFAULT_AVATAR,
+        },
+
+        loginType: {
+            type: DataTypes.ENUM('local', 'google'),
+            defaultValue: 'local',
         }
     },
         {
             timestamp: true,
             hooks: {
                 beforeSave: async (instance, options) => {
-                    const salt = await bcryptjs.genSalt(10);
-                    instance.password = await bcryptjs.hash(instance.password, salt);
+                    if (instance.loginType === 'local') {
+                        const salt = await bcryptjs.genSalt(10);
+                        instance.password = await bcryptjs.hash(instance.password, salt);
+                    };
                 }
             }
         }
