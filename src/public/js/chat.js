@@ -48,12 +48,12 @@ btnSubmit.onclick = function () {
 }
 
 inputRoomEvent.oninput = function () {
-    if (this.value && btnSelectMaxUser.value !== 'none') {
+    if ((this.value && btnSelectMaxUser.style.display !== 'none' && btnSelectMaxUser.value !== 'none')
+        || (this.value && btnSelectMaxUser.style.display === 'none')) {
         btnSubmit.classList.remove('disabled');
     } else {
         btnSubmit.classList.add('disabled');
     }
-    
 }
 
 btnSelectMaxUser.onchange = function () {

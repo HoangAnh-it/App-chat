@@ -129,7 +129,7 @@ const UserController = {
                 room.addUser(you);
             }
 
-            return res.json(room);
+            return res.redirect('/api/v2/chat');
         }
     },
 
