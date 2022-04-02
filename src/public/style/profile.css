@@ -164,4 +164,12 @@ input[type=file] {
   margin: 2px 0;
 }
 
+.btn-back a {
+  color: white;
+}
+
+.btn-back a:hover {
+  color: fuchsia;
+}
+
 /*# sourceMappingURL=profile.css.map */

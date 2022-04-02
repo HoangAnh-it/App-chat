@@ -3,7 +3,8 @@ const { isTokenExpired, generateTokenExpired} = require('../utils/token');
 require('dotenv').config();
 
 const verifyToken = (req, res, next) => {
-    const accessToken = req.signedCookies.accessToken?.split(' ')[1];
+    
+    const accessToken = req.signedCookies.access_token?.split(' ')[1];
 
     if (!accessToken) {
         return res.redirect('/api/v2/auth/login');
@@ -12,7 +13,7 @@ const verifyToken = (req, res, next) => {
     if (isTokenExpired(accessToken)) {
         generateTokenExpired(req, res);
     }
-
+    
     const { _id: userId } = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET);
     req.userId = userId;
     next();

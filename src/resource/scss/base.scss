@@ -85,3 +85,8 @@ a:hover {
 .btn-login-with-google:hover a {
     color: black;
 }
+
+.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}

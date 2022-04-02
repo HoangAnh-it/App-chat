@@ -48,7 +48,7 @@ module.exports = function (sequelize, DataTypes) {
         loginType: {
             type: DataTypes.ENUM('local', 'google'),
             defaultValue: 'local',
-        }
+        },
     },
         {
             timestamp: true,

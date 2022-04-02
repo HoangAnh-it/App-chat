@@ -5,8 +5,9 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const methodOverride = require('method-override');
 const passport = require('passport');
-// const helmet = require('helmet');
-// const cors = require('cors');
+const helmet = require('helmet');
+const cors = require('cors');
+const io = require('socket.io');
 require('dotenv').config();
 require('./config/passport')(passport);
 
@@ -15,6 +16,9 @@ const server = http.createServer(app);
 const configViewEngine = require('./config/viewEngine');
 const routes = require('./routes');
 const sessionStore = require('./config/redisStorage')(session);
+const chanel = require('./routes/channel');
+
+// ---------------------- >>> ERROR: PayloadTooLargeError: request entity too large -------------------
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -33,20 +37,14 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-// app.use(
-//     helmet.contentSecurityPolicy({
-//     directives: {
-//       defaultSrc: ["'self'"],
-//       scriptSrc: ["'self'", "example.com"],
-//       objectSrc: ["'none'"],
-//       upgradeInsecureRequests: [],
-//     },
-//   })
-// );
-// app.use(cors());
+// app.use(helmet({
+//     contentSecurityPolicy: false,
+// }));
+app.use(cors());
 
 configViewEngine(app);
 routes(app);
+chanel(io(server));
 
 const PORT = process.env.PORT || 8080;
 server.listen(PORT, () => console.log(`>> Listening on port ${PORT}`));

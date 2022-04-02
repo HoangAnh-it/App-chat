@@ -86,11 +86,13 @@ function update(type) {
     switch (type) {
         case 'avatar':
             document.querySelector('input.invisibility').value = avatar.src;
+            if(window.confirm('Are you sure to update your avatar?'))
             formAvatar.submit();
             break;
-        
-        case 'info':
-            formInfo.submit();
+            
+            case 'info':
+            if(window.confirm('Are you sure to update your information?'))
+                formInfo.submit();
             break;
         
         default: break;

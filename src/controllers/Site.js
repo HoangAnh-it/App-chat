@@ -1,19 +1,23 @@
 const {StatusCodes} = require('http-status-codes');
-const { User } = require('../models');
+const { User, Room } = require('../models');
 
 const SiteController = {
     chatBox: async (req, res) => {
         try {
             const userId = req.userId;
             const user = await User.findOne({
-                where: { userId }
+                where: { userId },
+                include: [Room]
             });
 
             if (!user) {
                 throw new Error('Can not find user!');
             }
+
             return res.render('pages/chat.ejs', {
                 user,
+                friends: [],
+                rooms: user.rooms,
             });
 
         } catch (error) {

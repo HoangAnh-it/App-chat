@@ -18,7 +18,7 @@ header .header-profile {
   border-radius: 50%;
 }
 
-.options {
+header .options {
   height: 10%;
   margin: auto;
   font-size: 1.5rem;
@@ -27,9 +27,6 @@ header .header-profile {
   padding-top: 8px;
   padding-bottom: 8px;
   cursor: pointer;
-}
-
-.options {
   box-shadow: 0px 0px 8px black;
 }
 
@@ -89,12 +86,12 @@ header .header-profile {
   box-shadow: 0 0 4px black;
   background-color: white;
   border-radius: 15px;
-  overflow: hidden;
 }
 
 .item.list {
   width: 30%;
   height: 100%;
+  overflow-y: hidden;
 }
 
 .item.chat-box {
@@ -113,10 +110,17 @@ header .header-profile {
   border-bottom: 1px solid black;
 }
 
-.chat-box .box,
-.list .friend {
+.list-friends .items,
+.list-rooms .items {
+  overflow-y: scroll;
+  height: 100%;
+}
+
+.list .list-friends,
+.list .list-rooms {
   width: 100%;
-  height: 90%;
+  height: 35%;
+  border-top: 1px solid black;
 }
 
 .search {
@@ -141,9 +145,116 @@ header .header-profile {
   border-radius: 50%;
 }
 
-.friend {
+.list-rooms {
+  margin-top: 40px;
+}
+
+.list-friends .item,
+.list-rooms .item {
+  padding: 8px 4px;
+  margin: 12px 8px;
+}
+
+.room-options .options {
   width: 100%;
-  height: 90%;
+  height: 5%;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  margin: 8px 0;
+}
+
+.room-options .options > div {
+  padding: 4px;
+  font-size: 0.9rem;
+}
+
+.room-event {
+  margin: 8px 0;
+  display: none;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.room-event input {
+  padding: 8px;
+  margin: 4px;
+  border: 2px solid black;
+  display: inline-block;
+}
+
+.room-event-btn > div {
+  margin: 4px 0;
+  font-size: 0.8rem;
+}
+
+.room-event .room-info {
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.room-event .room-info .max-users {
+  display: none;
+  width: 70%;
+  margin: 8px auto;
+  border: 2px solid black;
+  background-color: transparent;
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+.list .title {
+  color: black;
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  padding: 4px;
+}
+
+.list .empty {
+  width: 100%;
+  height: 10%;
+}
+
+.list .items .item:hover {
+  background-color: #ccc;
+  opacity: 0.7;
+  cursor: pointer;
+}
+
+.list .items .item .room-name {
+  min-width: 60%;
+}
+
+.list .items .item {
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.list .items .item .btn-more {
+  padding: 4px;
+  height: 100%;
+  font-size: 1.1rem;
+  display: inline-block;
+  position: relative;
+}
+
+.list .items .item .btn-more:hover {
+  opacity: 1;
+  font-weight: bold;
+  transform: scale(1.5, 1.5);
+  transition: transform 0.2s linear;
+}
+
+.list .items .item .options {
+  padding: 8px 4px;
+  border-left: 1px solid black;
+  display: none;
+}
+
+.list .items .item .options a:hover {
+  color: red;
 }
 
 /*# sourceMappingURL=chat.css.map */

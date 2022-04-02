@@ -85,4 +85,9 @@ a:hover {
   color: black;
 }
 
+.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
 /*# sourceMappingURL=base.css.map */

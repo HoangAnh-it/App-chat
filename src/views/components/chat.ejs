@@ -1,5 +1,5 @@
 <div class="chat-wrapper flex">
-    <div class="list item">
+    <div class="list item ">
         <div class="search flex">
             <input type="text">
             <div class="btn btn-search">
@@ -7,7 +7,62 @@
             </div>
         </div>
 
-        <div class="friend"></div>
+        <div class="room-options">
+            <div class="options flex">
+                <div class="create btn">Create room</div>
+                <div class="join btn">Join room</div>
+            </div>
+            <!-- Start form room-event -->
+            <form class="room-event flex" method="POST">
+                <div class="room-info flex">
+                    <input type="text" name="roomInfoInput">
+                    
+                    <select class="max-users" name="maxUsers">
+                        <option value="none">-- Max --</option>
+                        <option value="4">4</option>
+                        <option value="8">8</option>
+                        <option value="10">10</option>
+                        <option value="unlimited">unlimited</option>
+                    </select>
+                </div>
+
+                <div class="room-event-btn">
+                    <div class="btn submit disabled">Submit</div>
+                    <div class="btn cancel">Cancel</div>
+                </div>
+                
+            </form>
+            <!-- End form room-event -->
+        </div>
+
+        <div class="list-friends">
+            <div class="title">Your friends</div>
+            <div class="items">
+                <% for(let i = 0; i< friends.length;i ++) { %>
+                    <div class="item">
+                        <div><%= friends[i].name%></div>
+                        <i class="ti-arrow-left"></i>
+                    </div>
+                    <% } %>
+            </div>
+        </div>
+
+        <div class="list-rooms">
+            <div class="title">Your rooms</div>
+            <div class="items">
+                <% for(let i = 0; i< rooms.length;i ++) { %>
+                    <div class="item flex">
+                        <div class="room-name"><%= rooms[i].name%></div>
+                        <i class="ti-arrow-left btn-more" data-roomid=<%= rooms[i].roomId %>></i>
+                        <div class="options options-<%= rooms[i].roomId %>">
+                            <a href="/api/v2/user/leave-room?roomId=<%= rooms[i].roomId %>"><i class="ti-trash delete"></i></a>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+
+        <div class="empty"></div>
     </div>
 
     <div class="chat-box item flex">
