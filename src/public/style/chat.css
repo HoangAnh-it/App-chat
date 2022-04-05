@@ -12,9 +12,14 @@ header .header-profile {
   display: none;
 }
 
+header .avatar {
+  flex-direction: column;
+  align-items: center;
+}
+
 .avatar img {
-  width: 100%;
-  height: 80%;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
 }
 
@@ -205,6 +210,10 @@ header .options {
   z-index: 100;
   background-color: white;
   box-shadow: 0 0 4px black;
+  margin-top: 8px;
+  margin-left: 6px;
+  margin-right: 6px;
+  border-radius: 10px;
 }
 
 .search .results .result-item {
@@ -222,11 +231,18 @@ header .options {
 }
 
 .search .results .result-item img {
+  width: 25px;
   height: 25px;
   display: inline-block;
   border-radius: 50%;
   box-shadow: 0 0 2px black;
   margin: 0 8px;
+}
+
+.search .results .no-results {
+  padding: 32px 0;
+  font-weight: bold;
+  font-size: 2rem;
 }
 
 .list-rooms {
@@ -362,7 +378,7 @@ header .options {
   width: 100%;
   height: auto;
   padding: 4px;
-  margin: 8px;
+  margin: 16px;
   text-align: right;
 }
 
@@ -370,7 +386,7 @@ header .options {
   width: 100%;
   height: auto;
   padding: 4px;
-  margin: 8px;
+  margin: 16px;
   text-align: left;
   flex-direction: row;
   align-items: flex-start;
@@ -385,17 +401,36 @@ header .options {
   margin-right: 8px;
 }
 
+.other-message img:hover {
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+}
+
 .your-message span,
 .other-message span {
   background-color: aqua;
   display: inline-block;
-  max-width: 30%;
+  max-width: 150px;
   height: auto;
   padding: 4px 8px;
   margin: 4px 16px;
   border-radius: 10px;
   word-wrap: break-word;
   text-align: left;
+}
+
+.other-message .content-other-message {
+  position: relative;
+}
+
+.other-message .name-of-sender {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translateY(-100%);
+  margin: 4px 16px;
+  font-size: 0.8rem;
+  white-space: nowrap;
 }
 
 /*# sourceMappingURL=chat.css.map */

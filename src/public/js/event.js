@@ -56,13 +56,27 @@ socket.on('receive-message', data => {
         msgContainer.appendChild(span);
     } else {
         // if this message is not yours
-        const img = document.createElement('img');
-        const span = document.createElement('span');
-        img.src = data.senderAvatar;
-        span.textContent = data.message;
+        const msg = document.createElement('div');
+        const nameOfSender = document.createElement('p');
+        const msgContent = document.createElement('span');
+        const linkToOther = document.createElement('a');
+
+        msg.classList.add('content-other-message');
+        nameOfSender.classList.add('name-of-sender');
+        
+        nameOfSender.textContent = data.senderName;
+        msgContent.textContent = data.message;
+        linkToOther.href = `/api/v2/user/profile?id=${data.senderId}`;
+
+        linkToOther.innerHTML = 
+        `
+            <img src=${data.senderAvatar}></img>
+        `;
+        msg.appendChild(nameOfSender);
+        msg.appendChild(msgContent);
         msgContainer.classList.add('other-message', 'flex');
-        msgContainer.appendChild(img);
-        msgContainer.appendChild(span);
+        msgContainer.appendChild(linkToOther);
+        msgContainer.appendChild(msg);
     }
 
     // Add new message into box container
@@ -71,8 +85,8 @@ socket.on('receive-message', data => {
 });
 
 socket.on('results of searching', data => {
+    resultsOfSearching.innerHTML = '';
     if (data.length > 0) {
-        resultsOfSearching.innerHTML = '';
         for (const user of data) {
             const div = document.createElement('div');
             const img = document.createElement('img');
@@ -87,6 +101,11 @@ socket.on('results of searching', data => {
 
             resultsOfSearching.appendChild(div);
         }
+    } else {
+        const div = document.createElement('div');
+        div.classList.add('no-results');
+        div.textContent = 'No results.';
+        resultsOfSearching.appendChild(div);
     }
 });
 
@@ -105,7 +124,7 @@ function endChatting () {
 }
 
 // send message
-btnSendMessage.onclick = function () {
+function startSendingMessage() {
     const message = inputMessage.value;
     if (message) {
         inputMessage.value = '';
@@ -119,6 +138,14 @@ btnSendMessage.onclick = function () {
     }
 }
 
+btnSendMessage.onclick = startSendingMessage;
+inputMessage.onkeydown = (event) => {
+    if (event.keyCode === 13) { // press 'enter' to send message
+        startSendingMessage();
+    }
+}
+
+//
 function autoScroll() {
     boxContainer.scrollTop = boxContainer.scrollHeight;
 }

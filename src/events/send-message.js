@@ -9,6 +9,7 @@ module.exports = function sendMessage(io, socket) {
                 // send to all members in room ( include sender)
                 io.in(`${roomId}`).emit('receive-message', {
                     senderId: sender.userId,
+                    senderName: sender.name,
                     senderAvatar: sender.avatar,
                     message: data.message,
                 });
