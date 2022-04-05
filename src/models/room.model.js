@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 module.exports = function (sequelize, DataTypes) {
     const Room = sequelize.define('room', {
         roomId: {
@@ -6,6 +8,11 @@ module.exports = function (sequelize, DataTypes) {
             unique: true,
             primaryKey: true,
             autoIncrement: true,
+        },
+
+        avatar: {
+            type: DataTypes.STRING,
+            defaultValue: process.env.DEFAULT_AVATAR_GROUP,
         },
 
         name: {

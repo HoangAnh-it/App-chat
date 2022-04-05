@@ -18,6 +18,13 @@ header .header-profile {
     border-radius: 50%;
 }
 
+header .avatar .name {
+    text-align: center;
+    color: #fff;
+    font-size: 1rem;
+    margin: 4px;
+}
+
 header .options {
     height: 10%;
     margin: auto;
@@ -96,10 +103,13 @@ header .options {
 .item.chat-box {
     width: 65%;
     height: 100%;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
 }
 
-.chat-box {
-    flex-direction: column;
+.item.chat-box > * {
+    // padding: 0 4px;
 }
 
 .chat-box .chatting-with {
@@ -107,16 +117,55 @@ header .options {
     height: 10%;
     background-color: #ccc;
     border-bottom: 1px solid black;
+    border-radius: 10px;
+    text-align:left;
+    align-items: center;
+}
+
+.chat-box .chatting-with .partner-avatar {
+    display: inline-block;
+    border-radius: 10px;
+    height: 100%;
+}
+
+.chat-box .chatting-with .partner-name {
+    display: inline-block;
+    flex-grow: 1;
+    margin: 0 32px;
+    font-size: 2rem;
+}
+
+.chat-box .box {
+    overflow-y: scroll;
+    flex-grow: 1;
+}
+
+.chat-box .input-message {
+    margin: 32px auto;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 60%;
+    visibility: hidden;
+}
+
+.chat-box .input-message > * {
+    display: inline-block;
+    margin: 8px 16px;
+}
+
+.chat-box .input-message > input {
+    flex-grow: 1;
+    padding: 8px;
+    border: 1px solid black;
+    font-size: 1rem;
 }
 
 .list-friends .items,
 .list-rooms .items {
      overflow-y: scroll;
      height: 100%;
-}
-
-.chat-box .box {
-    
+     
 }
 
 .list .list-friends,
@@ -133,19 +182,55 @@ header .options {
     width: 100%;
     height: 10%;
     background-color: #ccc;
+    border-radius: 10px;
+    border: 1px solid black;
+    position: relative;
 }
 
 .search input {
     width: 80%;
     margin: 0 4px;
     padding: 8px 8px;
+    border: 1px solid black;
 }
 
 .search .btn-search {
-    width: 10%;
-    height:auto;
     margin-top: 0;
     border-radius: 50%;
+    padding: 4px;
+    width: 10%;
+}
+
+.search .results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background-color: white;
+    box-shadow: 0 0 4px black;
+}
+
+.search .results .result-item {
+    width: 70%;
+    margin: 4px auto;
+    padding: 4px 8px;
+    border-radius: 10px;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.search .results .result-item:hover {
+    background-color: #ccc;
+}
+
+.search .results .result-item img {
+    height: 25px;
+    display: inline-block;
+    border-radius: 50%;
+    box-shadow: 0 0 2px black;
+    margin: 0 8px;
 }
 
 .list-rooms {
@@ -154,7 +239,7 @@ header .options {
 
 .list-friends .item,
 .list-rooms .item {
-    padding: 8px 4px;
+    padding: 0px 4px;
     margin: 12px 8px;
 }
 
@@ -220,14 +305,18 @@ header .options {
     height: 10%;
 }
 
-.list .items .item:hover {
+.list .items .item .room-name:hover {
     background-color: #ccc;
     opacity: 0.7;
     cursor: pointer;
+    border-radius: 10px;
 }
 
 .list .items .item .room-name {
     min-width: 60%;
+    padding: 8px;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 .list .items .item {
@@ -242,6 +331,8 @@ header .options {
     font-size: 1.1rem;
     display: inline-block;
     position: relative;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 .list .items .item .btn-more:hover {
@@ -259,4 +350,55 @@ header .options {
 
 .list .items .item .options a:hover {
     color: rgb(255, 0, 0)
+}
+
+.btn-leave-chatting {
+    padding: 0 32px;
+    font-weight: bold;
+}
+
+.btn-leave-chatting:hover {
+    transform: scale(2);
+    transition: transform 0.2s linear;
+    cursor: pointer;
+}
+
+.your-message {
+    width: 100%;
+    height: auto;
+    padding: 4px;
+    margin: 8px;
+    text-align: right;
+}
+
+.other-message {
+    width: 100%;
+    height: auto;
+    padding: 4px;
+    margin: 8px;
+    text-align: left;
+    flex-direction: row;
+    align-items:flex-start;
+    justify-content:flex-start;
+}
+
+.other-message img {
+    width: 40px;
+    height: 100%;
+    border-radius: 50%;
+    box-shadow: 0 0 2px black;
+    margin-right: 8px;
+}
+
+.your-message span,
+.other-message span {
+    background-color: aqua;
+    display: inline-block;
+    max-width: 30%;
+    height: auto;
+    padding: 4px 8px;
+    margin: 4px 16px;
+    border-radius: 10px;
+    word-wrap: break-word;
+    text-align: left;
 }

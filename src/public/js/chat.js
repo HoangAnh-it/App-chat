@@ -7,16 +7,11 @@ const btnCancel = document.querySelector('.room-event .cancel');
 const btnSelectMaxUser = document.querySelector('.room-event select.max-users');
 const btnEditRooms = document.querySelectorAll('.list .item .btn-more');
 
-const socket = io();
-socket.on('connect', () => {
-    console.log('AN USER CONNECTED');
-})
-
 let typeOfSubmit = undefined;
 
 btnCreateRoom.onclick = function() {
     formRoomEvent.style.display = 'flex';
-    inputRoomEvent.placeholder = 'Enter the name of room';
+    inputRoomEvent.placeholder = 'Enter the name of group';
     this.style.opacity = 0.5;
     btnJoinRoom.style.opacity = 1;
     typeOfSubmit = 'create-room';
@@ -25,7 +20,7 @@ btnCreateRoom.onclick = function() {
 
 btnJoinRoom.onclick = function () {
     formRoomEvent.style.display = 'flex';
-    inputRoomEvent.placeholder = 'Enter the ID of room';
+    inputRoomEvent.placeholder = 'Enter the ID of group';
     this.style.opacity = 0.5;
     btnCreateRoom.style.opacity = 1;
     typeOfSubmit = 'join-room';
@@ -64,6 +59,7 @@ btnSelectMaxUser.onchange = function () {
     }
 }
 
+// submit create or join room
 btnSubmit.onclick = function () {
     if (btnSubmit.classList.contains('disabled')) {
         return;
@@ -72,11 +68,11 @@ btnSubmit.onclick = function () {
     formRoomEvent.submit();
 }
 
+// edit each of rooms
 for (const btn of btnEditRooms) {
     btn.onclick = function (e) {
         const btnMore = e.target.closest('.btn-more');
         const roomId = btnMore.dataset.roomid;
-        console.log('roomId', roomId);
         if (btnMore) {
             if (btnMore.classList.contains('ti-arrow-left')) {
                 btnMore.classList.remove('ti-arrow-left');

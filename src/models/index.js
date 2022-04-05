@@ -22,6 +22,7 @@ const sequelize = new Sequelize(
 const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
+db.Op = Op;
 
 db.User = require('./user.model')(sequelize, DataTypes);
 db.Room = require('./room.model')(sequelize, DataTypes);

@@ -1,16 +1,18 @@
 <div class="chat-wrapper flex">
     <div class="list item ">
         <div class="search flex">
-            <input type="text">
+            <input type="text" placeholder="Find your friends">
             <div class="btn btn-search">
                 <i class="ti-search"></i>
             </div>
+
+            <div class="results"></div>
         </div>
 
         <div class="room-options">
             <div class="options flex">
-                <div class="create btn">Create room</div>
-                <div class="join btn">Join room</div>
+                <div class="create btn">Create group</div>
+                <div class="join btn">Join group</div>
             </div>
             <!-- Start form room-event -->
             <form class="room-event flex" method="POST">
@@ -52,7 +54,7 @@
             <div class="items">
                 <% for(let i = 0; i< rooms.length;i ++) { %>
                     <div class="item flex">
-                        <div class="room-name"><%= rooms[i].name%></div>
+                        <div class="room-name" data-roomid=<%= rooms[i].roomId%>><%= rooms[i].name%></div>
                         <i class="ti-arrow-left btn-more" data-roomid=<%= rooms[i].roomId %>></i>
                         <div class="options options-<%= rooms[i].roomId %>">
                             <a href="/api/v2/user/leave-room?roomId=<%= rooms[i].roomId %>"><i class="ti-trash delete"></i></a>
@@ -66,8 +68,13 @@
     </div>
 
     <div class="chat-box item flex">
-        <div class="chatting-with"></div>
+        <div class="chatting-with flex"></div>
         
         <div class="box"></div>
+
+        <div class="input-message flex">
+            <input type="text" class="message" placeholder="text message">
+            <div class="btn btn-send-message" data-sender_id=<%= user.userId %>>Send</div>
+        </div>
     </div>
 </div>

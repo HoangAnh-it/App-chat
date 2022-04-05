@@ -69,7 +69,7 @@ const UserController = {
             return res.status(StatusCodes.INTERNAL_SERVER_ERROR).render('pages/status', {
                 title: 'ERROR',
                 message: 'Cannot create room!',
-                comeTo: 'api/v2/chat',
+                directTo: '/api/v2/chat',
             });
         } else {
             // add admin as user into room
@@ -99,7 +99,7 @@ const UserController = {
             return res.status(StatusCodes.INTERNAL_SERVER_ERROR).render('pages/status', {
                 title: 'NOT FOUND',
                 message: 'Room not found!',
-                comeTo: 'api/v2/chat',
+                directTo: '/api/v2/chat',
             });
         }
 
@@ -112,7 +112,7 @@ const UserController = {
             return res.status(StatusCodes.INTERNAL_SERVER_ERROR).render('pages/status', {
                 title: '!!!',
                 message: 'You are already a member!',
-                comeTo: 'api/v2/chat',
+                directTo: '/api/v2/chat',
             });
         } else {
             // if you are not a member, join room
@@ -120,7 +120,7 @@ const UserController = {
                 return res.status(StatusCodes.INTERNAL_SERVER_ERROR).render('pages/status', {
                     title: 'Cannot join room',
                     message: 'This room is already full!',
-                    comeTo: 'api/v2/chat',
+                    directTo: '/api/v2/chat',
                 });
             }
 

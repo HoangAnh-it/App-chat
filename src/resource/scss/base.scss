@@ -7,6 +7,7 @@
 html {
     font-family: "Helvetica Neue",Helvetica;
     font-size: 16px;
+    scroll-behavior: smooth;
 }
 
 body {
@@ -89,4 +90,10 @@ a:hover {
 .disabled {
     opacity: 0.5;
     pointer-events: none;
+}
+
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+    /* make scrollbar transparent */
 }
