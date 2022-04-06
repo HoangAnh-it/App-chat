@@ -386,7 +386,8 @@ header .options {
     width: 100%;
     height: auto;
     padding: 4px;
-    margin: 16px;
+    margin-top: 16px;
+    margin-left: 16px;
     text-align: right;
 }
 
@@ -394,7 +395,8 @@ header .options {
     width: 100%;
     height: auto;
     padding: 4px;
-    margin: 16px;
+    margin-top: 16px;
+    margin-bottom: 16px;
     text-align: left;
     flex-direction: row;
     align-items:flex-start;
@@ -416,7 +418,6 @@ header .options {
 
 .your-message span,
 .other-message span {
-    background-color: aqua;
     display: inline-block;
     max-width: 150px;
     height: auto;
@@ -425,6 +426,15 @@ header .options {
     border-radius: 10px;
     word-wrap: break-word;
     text-align: left;
+}
+
+.your-message span {
+    background-color: aqua;
+    margin-right: 32px;
+}
+
+.other-message span {
+    background-color: #ccc;
 }
 
 .other-message .content-other-message {
@@ -436,7 +446,27 @@ header .options {
     left: 0;
     top: 0;
     transform: translateY(-100%);
-    margin: 4px 16px;
+    margin-left: 16px;
     font-size: 0.8rem;
     white-space: nowrap;
+}
+
+.loader {
+    border: 4px solid #ccc;
+    border-top: 4px solid rgb(93, 96, 96);
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 2s linear infinite;
+    margin: 16px auto;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg)
+    }
 }

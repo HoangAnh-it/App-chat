@@ -41,7 +41,7 @@ socket.on('info-partner', partner => {
             <img class="partner-avatar" src="${partner.avatar}" alt="Cannot load avatar of group"></img>
             <div class="partner-name">${partner.name}</div>
             <div class="btn-leave-chatting ti-close" data-partnerinfo='{"type":"${partner.type}", "id":${partner.id}}' onclick="endChatting()"></div>
-        `
+        `;
 });
 
 socket.on('receive-message', data => {
@@ -85,7 +85,7 @@ socket.on('receive-message', data => {
 });
 
 socket.on('results of searching', data => {
-    resultsOfSearching.innerHTML = '';
+    resultsOfSearching.innerHTML = ''; // clear loading
     if (data.length > 0) {
         for (const user of data) {
             const div = document.createElement('div');
@@ -109,6 +109,54 @@ socket.on('results of searching', data => {
     }
 });
 
+/** send message */
+btnSendMessage.onclick = startSendingMessage;
+inputMessage.onkeydown = (event) => {
+    if (event.keyCode === 13) { // press 'enter' to send message
+        startSendingMessage();
+    }
+}
+
+
+/**
+ * Search
+ */
+
+// send keyword
+const startSearching = debounce((args) => {
+    socket.emit('search-friends', args[0]);
+}, 1000);
+
+inputSearch.onblur = () => {
+    resultsOfSearching.innerHTML = '';
+}
+
+inputSearch.oninput = (event) => {
+    const keyword = event.target.value.trim();
+    loading();
+    startSearching(keyword);
+}
+
+function debounce(fnc, wait) {
+    let timerId;
+    return function() {
+        const args = arguments;
+
+        const executeFunction = function () {
+            fnc(args);
+        }
+
+        if (timerId || args[0] === '') {
+            console.log('clear');
+            clearTimeout(timerId);
+        }
+
+        if (args[0] !== '') {
+            timerId = setTimeout(executeFunction, wait);
+        }
+    }
+}
+
 // End chatting
 function endChatting () {
     const partner = JSON.parse(document.querySelector('.btn-leave-chatting').dataset.partnerinfo);
@@ -123,7 +171,9 @@ function endChatting () {
     boxContainer.innerHTML = '';
 }
 
-// send message
+/**
+ *  send message 
+*/
 function startSendingMessage() {
     const message = inputMessage.value;
     if (message) {
@@ -138,28 +188,23 @@ function startSendingMessage() {
     }
 }
 
-btnSendMessage.onclick = startSendingMessage;
-inputMessage.onkeydown = (event) => {
-    if (event.keyCode === 13) { // press 'enter' to send message
-        startSendingMessage();
-    }
-}
-
-//
+/**
+ *  Auto scroll to bottom of box
+ */
 function autoScroll() {
     boxContainer.scrollTop = boxContainer.scrollHeight;
 }
 
 /**
- * Search
+ *  Loading
  */
 
-// send keyword
-inputSearch.oninput = function () {
-    const keyword = inputSearch.value;
-    if (keyword) {
-        socket.emit('search-friends', keyword.toLowerCase());
-    } else {
+function loading() {
+    // if the loading is not already, show new one
+    if (!document.querySelector('.search .loader')) {
         resultsOfSearching.innerHTML = '';
+        const loader = document.createElement('div');
+        loader.classList.add('loader');
+        resultsOfSearching.appendChild(loader);
     }
 }
