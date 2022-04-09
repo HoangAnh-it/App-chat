@@ -3,17 +3,19 @@ const { StatusCodes } = require('http-status-codes');
 const { User, Room } = require('../models');
 
 module.exports = function intoRoom(io, socket) {
-    return async (roomId) => {
+    return async ({roomId, userId}) => {
         console.log('>>> You are into room: ', roomId);
         socket.join(`${roomId}`);
         const room = await Room.findOne({ where: { roomId } });
-        if (!room) {
+        const user = await User.findOne({ where: { userId } });
+        if (!room || !user) {
             return res.status(StatusCodes.INTERNAL_SERVER_ERROR).render('pages/status', {
                 title: 'Error',
                 message: 'Something went wrong!',
                 directTo: '/api/v2/chat',
             });
         }
+        socket.to(`${roomId}`).emit('join', user.name);
         socket.emit('info-partner', {
             type: 'room',
             id: room.roomId,

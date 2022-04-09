@@ -1,11 +1,16 @@
 module.exports = function (sequelize, DataTypes) {
     const User_User = sequelize.define('user_user', {
-        userId: {
+        userReqId: {
             type: DataTypes.INTEGER
         },
 
-        friendId: {
+        userResId: {
             type: DataTypes.INTEGER
+        },
+
+        status: {
+            type: DataTypes.ENUM('friend', 'pending'),
+            defaultValue: 'pending',
         }
     },
         { timestamp: true, }

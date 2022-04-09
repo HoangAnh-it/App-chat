@@ -1,14 +1,12 @@
 <div class="chat-wrapper flex">
     <div class="list item ">
         <div class="search flex">
-            <input type="text" placeholder="Find your friends">
-            <div class="btn btn-search">
+            <input type="text" placeholder="Find friends">
+            <!-- <div class="btn btn-search">
                 <i class="ti-search"></i>
-            </div>
+            </div> -->
 
-            <div class="results">
-                <!-- <div class="loader"></div> -->
-            </div>
+            <div class="results"></div>
         </div>
 
         <div class="room-options">
@@ -47,7 +45,7 @@
                         <div><%= friends[i].name%></div>
                         <i class="ti-arrow-left"></i>
                     </div>
-                    <% } %>
+                <% } %>
             </div>
         </div>
 
@@ -59,7 +57,7 @@
                         <div class="room-name" data-roomid=<%= rooms[i].roomId%>><%= rooms[i].name%></div>
                         <i class="ti-arrow-left btn-more" data-roomid=<%= rooms[i].roomId %>></i>
                         <div class="options options-<%= rooms[i].roomId %>">
-                            <a href="/api/v2/user/leave-room?roomId=<%= rooms[i].roomId %>"><i class="ti-trash delete"></i></a>
+                            <a class="delete-room" href="/api/v2/user/leave-room?roomId=<%= rooms[i].roomId %>"><i class="ti-trash delete"></i></a>
                         </div>
                     </div>
                 <% } %>

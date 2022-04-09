@@ -2,9 +2,10 @@ const router = require('express').Router();
 const userController = require('../controllers/User');
 
 const { verifyToken } = require('../middleware/verify');
+const { authUser } = require('../middleware/authUser');
 
 router.route('/profile')
-    .get(userController.getProfile)
+    .get(verifyToken, authUser, userController.getProfile);
 
 router.route('/update-info')
     .patch(verifyToken, userController.update)
@@ -17,5 +18,8 @@ router.route('/join-room')
 
 router.route('/leave-room')
     .get(verifyToken, userController.leaveRoom);
+
+router.route('/send-friend-request')
+    .post(verifyToken, userController.sendFriendRequest);
 
 module.exports = router;

@@ -1,17 +1,24 @@
-const btnPrivacy = document.querySelector('.options .privacy');
-const btnSettings = document.querySelector('.options .settings');
-const optionsPrivacy = document.querySelector('.options-privacy');
-const optionsSetting = document.querySelector('.options-settings');
-const button = document.querySelector('.button');
-const btnEdit = document.querySelector('.btn-edit');
-const inputs = document.querySelectorAll('.wrapper-options input');
-const formInfo = document.querySelector('form.info');
-const btnEditAvatar = document.querySelector('.btn-edit-avatar');
-const btnChangeAvatar = document.querySelector('.icon-change-avatar');
-const formAvatar = document.querySelector('.formAvatar');
+const btnPrivacy = $('.options .privacy');
+const btnSettings = $('.options .settings');
+const optionsPrivacy = $('.options-privacy');
+const optionsSetting = $('.options-settings');
+const button = $('.button');
+const btnEdit = $('.btn-edit');
+const inputs = $$('.wrapper-options input');
+const formInfo = $('form.info');
+const btnEditAvatar = $('.btn-edit-avatar');
+const btnChangeAvatar = $('.icon-change-avatar');
+const formAvatar = $('.formAvatar');
+const avatar = $('.img-avatar');
+const inputAvatar = document.getElementById('input-avatar');
+const btnAddFriend = $('.profile-actions .add-friend');
+
 const originValue = {}
 let originAvatar;
 
+/**
+ * Show your privacy settings.
+ */
 btnPrivacy.onclick = function () {
     if (optionsPrivacy.style.display === 'none' || !optionsPrivacy.style.display) {
         btnPrivacy.style.backgroundColor = 'rgb(119, 119, 119)';
@@ -26,6 +33,9 @@ btnPrivacy.onclick = function () {
     }
 }
 
+/**
+ * Show your setting.
+ */
 btnSettings.onclick = function () {
     if (optionsSetting.style.display === 'none' || !optionsSetting.style.display) {
         btnSettings.style.backgroundColor = 'rgb(119, 119, 119)';
@@ -40,10 +50,9 @@ btnSettings.onclick = function () {
 }
 
 
-// change avatar button
-const avatar = document.querySelector('.img-avatar');
-const inputAvatar = document.getElementById('input-avatar');
-
+/**
+ * Show form change user's avatar.
+ */
 function loadAvatar() {
     originAvatar = avatar.src;
     const reader = new FileReader();
@@ -58,9 +67,10 @@ function loadAvatar() {
     `;
 }
 
-
-// handle event
-
+/**
+ * When click on edit button.
+ * Show 2 buttons: Update and Cancel.
+ */
 function editInfo() {
     if (btnEdit) {
         if (inputs) {
@@ -82,10 +92,13 @@ function editInfo() {
     }
 }
 
+/**
+ * When click on Update button. Start updating.
+ */
 function update(type) {
     switch (type) {
         case 'avatar':
-            document.querySelector('input.invisibility').value = avatar.src;
+            $('input.invisibility').value = avatar.src;
             if(window.confirm('Are you sure to update your avatar?'))
             formAvatar.submit();
             break;
@@ -99,10 +112,12 @@ function update(type) {
     }
 }
 
+/**
+ * When click on cancel button. Stop updating.
+ */
 function cancel(type) {
-
     switch (type) {
-        case 'avatar':
+        case 'avatar': {
             avatar.src = originAvatar;
             btnEditAvatar.classList.remove('btn-edit-avatar');
             btnEditAvatar.innerHTML = `
@@ -110,6 +125,7 @@ function cancel(type) {
                 <input id="input-avatar" type="file" accept="image/*" name="newAvatar" onchange="loadAvatar()">
             `;
             break;
+        }
         case 'info': {
             if (inputs) {
                 for (const input of inputs) {
@@ -121,7 +137,7 @@ function cancel(type) {
             button.innerHTML = `
                     <div class="btn btn-edit" onclick="editInfo()">Edit</div>
             `;
-            }
+        }
             
             break;
     
@@ -130,3 +146,15 @@ function cancel(type) {
     }
 }
 
+if (btnAddFriend) {
+    const otherId = $('.profile-actions').dataset.other_id;
+    btnAddFriend.onclick = function (event) {
+        axios({
+            url: '/api/v2/user/send-friend-request',
+            method: 'POST',
+            data: {
+                otherId,
+            }
+        })
+    }
+}

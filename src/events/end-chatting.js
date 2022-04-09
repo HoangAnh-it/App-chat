@@ -1,3 +1,5 @@
+const { User, Room } = require('../models');
+
 module.exports = function endChatting(io, socket) {
     /**
      * info : {
@@ -5,11 +7,12 @@ module.exports = function endChatting(io, socket) {
      *  id ,
      * }
      */
-    return (info) => {
+    return async(info) => {
         switch (info.type) {
             case 'room':
-                console.log('you have left room', info.id);
-                socket.leave(`${info.id}`);
+                const user = await User.findOne({ where: { userId: info.userId } });
+                socket.to(`${info.roomId}`).emit('leave', user.name);
+                socket.leave(`${info.roomId}`);
                 break;
             
             case 'private':

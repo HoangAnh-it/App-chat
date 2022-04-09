@@ -5,7 +5,7 @@ const auth = require('../middleware/auth');
 const { verifyToken } = require('../middleware/verify');
 
 router.route('/chat')
-    // .get(auth, siteController.chatBox)
-    .get(verifyToken, siteController.chatBox);
+    .get(auth, siteController.chatBox)
+    // .get(verifyToken, siteController.chatBox);
 
 module.exports = router;

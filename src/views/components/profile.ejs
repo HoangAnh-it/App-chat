@@ -2,21 +2,41 @@
     <div class="empty"></div>
 
     <div class="avatar">
-        <form class="formAvatar" action="/api/v2/user/update-info?id=<%=user.userId%>&_method=PATCH" method="POST">
-            <img class="img-avatar" src="<%=user.avatar %>" alt="..." >
+        <form class="formAvatar" action="/api/v2/user/update-info?id=<%= profile.id %>&_method=PATCH" method="POST">
+            <img class="img-avatar" src="<%= profile.avatar %>" alt="..." >
             <input class="invisibility" type="text" value="" name="avatar">
         </form>
+
+        <% if(isYourProfile) { %>
             <div class="btn-edit-avatar">
                 <label for="input-avatar"><i class="ti-gallery icon-change-avatar"></i></label>
                 <input id="input-avatar" type="file" accept="image/*" onchange="loadAvatar()">
             </div>
+        <% } %>
+        
     </div>
 
     <div class="detail">
         <div class="name">
-            <%= user.name %>
+            <%= profile.name %>
         </div>
     </div>
+
+    <% if(!isYourProfile) { %>
+        <div class="profile-actions flex" data-other_id="<%= profile.id %>">
+            <div class="add-friend item btn">
+                <i class="fa fa-user-plus"></i>
+                Add Friend
+            </div>
+
+            <div class="message item btn">
+                <i class="fa fa-comment"></i>
+                Message
+            </div>
+
+        </div>
+    <% } %>
+
 
     <div class="wrapper-options">
         <div class="options flex">
@@ -32,23 +52,26 @@
             <div class="options-privacy">
                 <div class="name">
                     <label for="name">Name:</label>
-                    <input class="input-disabled" type="text" value="<%=user.name%>" name="name">
+                    <input class="input-disabled" type="text" value="<%= profile.name %>" name="name">
                 </div>
                 <div class="nick-name">
                     <label for="nickName">NickName:</label>
-                    <input class="input-disabled" type="text" value="<%=user.nickName%>" name="nickName">
+                    <input class="input-disabled" type="text" value="<%= profile.nickName%>" name="nickName">
                 </div>
                 <div class="email">
                     <label for="email">Email:</label>
-                    <input class="input-disabled" type="email" value="<%=user.email%>" name="email">
+                    <input class="input-disabled" type="email" value="<%= profile.email%>" name="email">
                 </div>
                 <div class="address">
                     <label for="address">Address</label>
-                    <input class="input-disabled" type="text" value="<%=user.address%>" name="address">
+                    <input class="input-disabled" type="text" value="<%= profile.address%>" name="address">
                 </div>
-                <div class="button flex">
-                    <div class="btn btn-edit" onclick="editInfo()">Edit</div>
-                </div>
+
+                <% if(isYourProfile) { %>
+                    <div class="button flex">
+                        <div class="btn btn-edit" onclick="editInfo()">Edit</div>
+                    </div>
+                <% } %>
             
             </div>
         </form>

@@ -29,14 +29,16 @@ db.Room = require('./room.model')(sequelize, DataTypes);
 db.User_Room = require('./user_room.model')(sequelize, DataTypes);
 db.User_User = require('./user_user.model')(sequelize, DataTypes);
 
-/** ASSOCIATION MODELS */
+/** 
+ * ASSOCIATION MODELS 
+*/
 // user - room
 db.User.belongsToMany(db.Room, { through: db.User_Room, foreignKey: 'userId' });
 db.Room.belongsToMany(db.User, { through: db.User_Room, foreignKey: 'roomId' });
 
 // user - user
-db.User.belongsToMany(db.User, {as: 'user', through: db.User_User, foreignKey: 'userId', otherKey: 'friendId' });
-db.User.belongsToMany(db.User, { as: 'friend', through: db.User_User, foreignKey: 'friendId', otherKey: 'userId' });
+db.User.belongsToMany(db.User, {as: 'userReq', through: db.User_User, foreignKey: 'userResId' });
+db.User.belongsToMany(db.User, { as: 'userRes', through: db.User_User, foreignKey: 'userReqId' });
 
 // test connect
 sequelize.authenticate()

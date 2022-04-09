@@ -1,31 +1,44 @@
 const { StatusCodes } = require('http-status-codes');
 const { User, Room, User_Room } = require('../models');
 const { trimObj } = require('../utils/object');
-
+const {
+    CustomError,
+    NotFoundError,
+    ConflictError,
+    BadRequestError,
+} = require('../error');
 
 const UserController = {
     // [GET] /api/v2/user/profile?userId
     getProfile: async (req, res) => {
         try {
-            const userId = req.query.id;
+            const isYourProfile = req.isYourProfile;
+            const userId = req.userId;
             const user = await User.findOne({
-                where: { userId }
+                where: { userId },
+                include: [
+                    {
+                        model: User,
+                        as: 'userRes',
+                    }
+                ]
             });
-
-            if (!user) {
-                throw new Error();
-            }
-
-            return res.status(StatusCodes.OK).render('pages/profile.ejs', {
-                user: {
-                    userId: user.userId,
-                    avatar: user.avatar,
-                    name: user.name,
-                    email: user.email,
-                    nickName: user.nickName,
-                    address: user.address,
-                }
-            });
+            const anotherUser = await user.getUserRes();
+            const profileUser = isYourProfile ? user : anotherUser;
+            const payload = {
+                profile: {
+                    id: profileUser.userId,
+                    avatar: profileUser.avatar,
+                    name: profileUser.name,
+                    email: profileUser.email,
+                    nickName: profileUser.nickName,
+                    address: profileUser.address,
+                },
+                userId : userId ,
+                isYourProfile: isYourProfile,
+            };
+            
+            return res.status(StatusCodes.OK).render('pages/profile.ejs', payload);
 
         } catch (error) {
             console.error(error);
@@ -42,7 +55,7 @@ const UserController = {
         const newValue = trimObj(req.body);
         const userId = req.userId;
         User.update(newValue, {
-            where: { userId, }
+            where: { userId }
         }).then(() => {
             return res.redirect(`/api/v2/user/profile?id=${userId}`)
         }).catch(error => {
@@ -57,79 +70,82 @@ const UserController = {
 
     // [POST] /api/v2/user/create-room
     createRoom: async (req, res) => {
-        const admin = req.userId;
-        const { roomInfoInput: name, maxUsers } = req.body;
-        const newRoom = await Room.create({
-            name,
-            admin,
-            maximum_users: maxUsers === 'unlimited' ? -1 : Number.parseInt(maxUsers),
-        });
-
-        if (!newRoom) {
-            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).render('pages/status', {
-                title: 'ERROR',
-                message: 'Cannot create room!',
-                directTo: '/api/v2/chat',
+        try {
+            const admin = req.userId;
+            const { roomInfoInput: name, maxUsers } = req.body;
+            const newRoom = await Room.create({
+                name,
+                admin,
+                maximum_users: maxUsers === 'unlimited' ? -1 : Number.parseInt(maxUsers),
             });
-        } else {
-            // add admin as user into room
-            // and add room to admin
-            const userAsAdmin = await User.findOne({
-                where: { userId: admin },
-            });
-            if (userAsAdmin) {
-                newRoom.addUser(userAsAdmin);
-                // userAsAdmin.addRoom(newRoom);
+    
+            if (!newRoom) {
+                return new CustomError('!!!', 'Something went wrong.');
+            } else {
+                // add admin as user into room
+                // and add room to admin
+                const userAsAdmin = await User.findOne({
+                    where: { userId: admin },
+                });
+                if (userAsAdmin) {
+                    newRoom.addUser(userAsAdmin);
+                }
+                        
+                return res.redirect('/api/v2/chat');
             }
-                    
-            return res.redirect('/api/v2/chat');
+            
+        } catch (error) {
+            console.log(error);
+            return res.status(error.status).render('pages/status', {
+                title: error.name,
+                message: error.message,
+                directTo: '/api/v2/chat',
+            })
         }
                 
     },
     
     // [POST] /api/v2/user/join-room
     joinRoom: async (req, res) => {
-        const { roomInfoInput: roomId } = req.body;
-        const userId = req.session.auth?.user._id || req.session.passport?.user._id;
-        const room = await Room.findOne({
-            where: { roomId },
-            include: [User],
-        });
-        if (!room) {
-            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).render('pages/status', {
-                title: 'NOT FOUND',
-                message: 'Room not found!',
-                directTo: '/api/v2/chat',
+        try {
+            const { roomInfoInput: roomId } = req.body;
+            const userId = req.session.auth?.user._id || req.session.passport?.user._id;
+            const room = await Room.findOne({
+                where: { roomId },
+                include: [User],
             });
-        }
-
-        const isAlreadyMember = room.users.some(user => {
-            return userId === user.userId;
-        });
-
-        if (isAlreadyMember) {
-            // if you are already a member
-            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).render('pages/status', {
-                title: '!!!',
-                message: 'You are already a member!',
-                directTo: '/api/v2/chat',
-            });
-        } else {
-            // if you are not a member, join room
-            if (room.maxUsers !== -1 && room.users.length > room.maxUsers) {
-                return res.status(StatusCodes.INTERNAL_SERVER_ERROR).render('pages/status', {
-                    title: 'Cannot join room',
-                    message: 'This room is already full!',
-                    directTo: '/api/v2/chat',
-                });
+            if (!room) {
+                throw new NotFoundError('Not found', 'Room with this id is not found');
             }
 
-            const you = await User.findOne({ where: { userId } });
-            if (you) {
-                room.addUser(you);
+            const isAlreadyMember = room.users.some(user => {
+                return userId === user.userId;
+            });
+
+            if (isAlreadyMember) {
+                // if you are already a member
+                throw new ConflictError('Conflict', 'You are already a member.');
+            } else {
+                // if you are not a member, join room
+                if (room.maxUsers !== -1 && room.users.length > room.maxUsers) {
+                    throw new BadRequestError('Cannot join!', 'This room is already full.');
+                }
+
+                const you = await User.findOne({ where: { userId } });
+                if (you) {
+                    room.addUser(you);
+                }
+
+                return res.redirect('/api/v2/chat');
             }
 
-            return res.redirect('/api/v2/chat');
+            
+        } catch (error) {
+            return res.status(error.status).render('pages/status', {
+                title: error.name,
+                message: error.message,
+                directTo: '/api/v2/chat',
+            })
         }
     },
 
@@ -141,7 +157,7 @@ const UserController = {
             await User_Room.destroy({
                 where: { roomId, userId }
             });
-
+            
             return res.redirect('/api/v2/chat');
 
         } catch (error) {
@@ -151,7 +167,31 @@ const UserController = {
                 directTo: '/api/v2/chat',
             });
         }
-    }
+    },
+
+    // [POST] /api/v2/user/send-friend-request
+    sendFriendRequest: async (req, res) => {
+        try {
+            const userReqId = req.userId;
+            const userResId = req.body.otherId;
+            const userReq = await User.findOne({ where: { userId: userReqId } });
+            const userRes = await User.findOne({ where: { userId: userResId } });
+            if (!userReq || !userRes) {
+            
+                throw new BadRequestError('ERROR', 'Cannot send request. Something went wrong!');
+            }
+        
+            await userReq.addUserRes(userRes);
+            return res.redirect(`/api/v2/user?id=${userResId}`);
+        
+        } catch (error) {
+            return res.status(error.status).render('pages/status', {
+                title: error.name,
+                message: error.message,
+                directTo: '/api/v2/chat',
+            });
+        }
+    },
 }
 
 module.exports = UserController;

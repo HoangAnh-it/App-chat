@@ -40,6 +40,16 @@ header .header-chat-box {
   margin: 16px 0;
 }
 
+.profile .profile-actions {
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.profile-actions .item {
+  padding: 8px;
+  border: 1px solid black;
+}
+
 .avatar {
   position: absolute;
   top: 0;

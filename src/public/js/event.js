@@ -1,36 +1,72 @@
-const rooms = document.querySelectorAll('.list-rooms .items .item');
-const chattingWith = document.querySelector('.chat-box .chatting-with');
-const messageController = document.querySelector('.input-message');
-const inputMessage = document.querySelector('.input-message .message');
-const btnSendMessage = document.querySelector('.btn-send-message');
-const boxContainer = document.querySelector('.chat-box .box');
-const inputSearch = document.querySelector('.search input');
-const btnSearch = document.querySelector('.btn-search');
-const resultsOfSearching = document.querySelector('.search .results');
+const rooms = $$('.list-rooms .items .item');
+const chattingWith = $('.chat-box .chatting-with');
+const messageController = $('.input-message');
+const inputMessage = $('.input-message .message');
+const btnSendMessage = $('.btn-send-message');
+const boxContainer = $('.chat-box .box');
+const inputSearch = $('.search input');
+const btnSearch = $('.btn-search');
+const resultsOfSearching = $('.search .results');
+const btnDeleteRooms = $$('a.delete-room');
 
-const clientId = Number.parseInt(document.querySelector('.client-id').dataset.client_id);
-console.log('Your id =>', clientId);
-let type; // room or private or none
-let partnerId;
+let type; // ['room', 'private', 'none']
+let partnerId; // chatting with
+let currentRoom; // room that you are in now
 
 const socket = io();
 socket.on('connect', () => {
     console.log('AN USER CONNECTED', socket.id);
 });
 
-// Start chatting
+/**
+ * Start chatting when chose room
+ */
 for (const room of rooms) {
     room.onclick = function (e) {
         const clickOn = e.target.closest('.list-rooms .item .room-name');
         if (clickOn) {
+            if (currentRoom) {
+                endChatting();
+            }
+
             const roomId = clickOn.dataset.roomid;
-            socket.emit('open-room', roomId);
+            socket.emit('open-room', {
+                roomId,
+                userId: userId,
+            });
             // show message controller;
             messageController.style.visibility = 'visible';
+            currentRoom = roomId;
         }
 
     }
 }
+
+/**
+ * When click on button delete room.
+ */
+for (const btn of btnDeleteRooms) {
+    btn.onclick = (e) => {
+        endChatting();
+    }
+}
+
+socket.on('join', userName => {
+    // inform an user joined the room
+    const noticeOfJoining = document.createElement('div');
+    noticeOfJoining.classList.add('notice-of-join-or-leave');
+    noticeOfJoining.textContent = `${userName} joined`;
+    boxContainer.appendChild(noticeOfJoining);
+    autoScroll();
+});
+
+socket.on('leave', userName => {
+    const noticeOfLeaving = document.createElement('div');
+    noticeOfLeaving.classList.add('notice-of-join-or-leave');
+    noticeOfLeaving.textContent = `${userName} left`;
+    boxContainer.appendChild(noticeOfLeaving);
+    autoScroll();
+})
 
 socket.on('info-partner', partner => {
     type = partner.type;
@@ -45,8 +81,7 @@ socket.on('info-partner', partner => {
 });
 
 socket.on('receive-message', data => {
-    console.log('receive message', data);
-    const isSelf = data.senderId === clientId;
+    const isSelf = data.senderId === userId;
     const msgContainer = document.createElement('div'); // contain the content of the message
     if (isSelf) {
         // if this message is yours
@@ -87,6 +122,7 @@ socket.on('receive-message', data => {
 socket.on('results of searching', data => {
     resultsOfSearching.innerHTML = ''; // clear loading
     if (data.length > 0) {
+        // Show all user found.
         for (const user of data) {
             const div = document.createElement('div');
             const img = document.createElement('img');
@@ -95,7 +131,7 @@ socket.on('results of searching', data => {
             div.classList.add('result-item', 'flex')
             img.src = user.userAvatar;
             a.textContent = user.userName;
-            a.href = `/api/v2/user/profile/?id=${user.userId}`;
+            a.href = `/api/v2/user/profile?id=${user.userId}`;
             div.appendChild(img);
             div.appendChild(a);
 
@@ -109,14 +145,17 @@ socket.on('results of searching', data => {
     }
 });
 
-/** send message */
+
+
+/** 
+ * Send message. 
+ */
 btnSendMessage.onclick = startSendingMessage;
 inputMessage.onkeydown = (event) => {
     if (event.keyCode === 13) { // press 'enter' to send message
         startSendingMessage();
     }
 }
-
 
 /**
  * Search
@@ -127,13 +166,11 @@ const startSearching = debounce((args) => {
     socket.emit('search-friends', args[0]);
 }, 1000);
 
-inputSearch.onblur = () => {
-    resultsOfSearching.innerHTML = '';
-}
-
 inputSearch.oninput = (event) => {
     const keyword = event.target.value.trim();
     loading();
+    if (!keyword)
+        resultsOfSearching.innerHTML = '';
     startSearching(keyword);
 }
 
@@ -147,7 +184,6 @@ function debounce(fnc, wait) {
         }
 
         if (timerId || args[0] === '') {
-            console.log('clear');
             clearTimeout(timerId);
         }
 
@@ -157,22 +193,27 @@ function debounce(fnc, wait) {
     }
 }
 
-// End chatting
+/**
+ * End chatting.
+ * Clear everything in chat box.
+ */
 function endChatting () {
-    const partner = JSON.parse(document.querySelector('.btn-leave-chatting').dataset.partnerinfo);
+    const partner = JSON.parse($('.btn-leave-chatting').dataset.partnerinfo);
     socket.emit('end-chatting', {
         type: partner.type,
-        id: partner.id,
+        roomId: partner.id,
+        userId: userId,
     });
     type = 'none';
     // clear all message
     chattingWith.innerHTML = '';
     messageController.style.visibility = 'hidden';
     boxContainer.innerHTML = '';
+    currentRoom = undefined;
 }
 
 /**
- *  send message 
+ *  Send message.
 */
 function startSendingMessage() {
     const message = inputMessage.value;
@@ -189,19 +230,18 @@ function startSendingMessage() {
 }
 
 /**
- *  Auto scroll to bottom of box
+ *  Auto scroll to bottom of chat box
  */
 function autoScroll() {
     boxContainer.scrollTop = boxContainer.scrollHeight;
 }
 
 /**
- *  Loading
+ *  Show loading.
  */
-
 function loading() {
     // if the loading is not already, show new one
-    if (!document.querySelector('.search .loader')) {
+    if (!$('.search .loader')) {
         resultsOfSearching.innerHTML = '';
         const loader = document.createElement('div');
         loader.classList.add('loader');

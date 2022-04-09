@@ -5,7 +5,6 @@ require('dotenv').config();
 const verifyToken = (req, res, next) => {
     
     const accessToken = req.signedCookies.access_token?.split(' ')[1];
-
     if (!accessToken) {
         return res.redirect('/api/v2/auth/login');
     }
