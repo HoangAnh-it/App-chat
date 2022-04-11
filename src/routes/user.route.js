@@ -22,4 +22,12 @@ router.route('/leave-room')
 router.route('/send-friend-request')
     .post(verifyToken, userController.sendFriendRequest);
 
+router.route('/cancel-friend-request')
+    .post(verifyToken, userController.cancelOrDeleteFriendRequest);
+        
+router.route('/confirm-friend-request')
+    .post(verifyToken, userController.confirmFriendRequest);
+
+router.route('/delete-friend-request')
+    .post(verifyToken, userController.cancelOrDeleteFriendRequest);
 module.exports = router;

@@ -1,5 +1,5 @@
 const { StatusCodes } = require('http-status-codes');
-const { User, Room, User_Room } = require('../models');
+const { User, Room, User_Room, User_User, Op } = require('../models');
 const { trimObj } = require('../utils/object');
 const {
     CustomError,
@@ -12,32 +12,53 @@ const UserController = {
     // [GET] /api/v2/user/profile?userId
     getProfile: async (req, res) => {
         try {
-            const isYourProfile = req.isYourProfile;
             const userId = req.userId;
-            const user = await User.findOne({
-                where: { userId },
-                include: [
-                    {
-                        model: User,
-                        as: 'userRes',
-                    }
-                ]
-            });
-            const anotherUser = await user.getUserRes();
-            const profileUser = isYourProfile ? user : anotherUser;
-            const payload = {
-                profile: {
-                    id: profileUser.userId,
-                    avatar: profileUser.avatar,
-                    name: profileUser.name,
-                    email: profileUser.email,
-                    nickName: profileUser.nickName,
-                    address: profileUser.address,
-                },
-                userId : userId ,
-                isYourProfile: isYourProfile,
-            };
+            const otherId = Number(req.query.id);
+            const isYourProfile = userId === otherId;
             
+            const user = await User.findOne({ where: { userId } });
+
+            const payload = {};
+            let profileUser = undefined;
+            if (!isYourProfile) {
+                const anotherUser = await User.findOne({ where: { userId: otherId } });
+
+                const associatedUser = await User_User.findOne({
+                    where: {
+                        [Op.or]: [
+                            {
+                                userReqId: userId,
+                                userResId: otherId,
+                            },
+                            {
+                                userReqId: otherId,
+                                userResId: userId,
+                            }
+                        ]
+                    }
+                });
+
+                if (associatedUser) {
+                    payload.userRole = associatedUser.userReqId === userId ? 'userReq' : 'userRes';    
+                }
+                profileUser = anotherUser;
+                payload.status = associatedUser ? associatedUser.status : 'none';
+
+            } else {
+                profileUser = user;
+            }
+
+            payload.profile = {
+                id: profileUser.userId,
+                avatar: profileUser.avatar,
+                name: profileUser.name,
+                email: profileUser.email,
+                nickName: profileUser.nickName,
+                address: profileUser.address,
+            };
+            payload.userId = userId;
+            payload.isYourProfile = isYourProfile;
+
             return res.status(StatusCodes.OK).render('pages/profile.ejs', payload);
 
         } catch (error) {
@@ -181,17 +202,77 @@ const UserController = {
                 throw new BadRequestError('ERROR', 'Cannot send request. Something went wrong!');
             }
         
-            await userReq.addUserRes(userRes);
-            return res.redirect(`/api/v2/user?id=${userResId}`);
+            userReq.addUserRes(userRes)
+            return res.redirect(`/api/v2/user/profile?id=${userReqId}`);
         
         } catch (error) {
+            console.log(error);
             return res.status(error.status).render('pages/status', {
                 title: error.name,
                 message: error.message,
-                directTo: '/api/v2/chat',
+                directTo: `/api/v2/user/profile?id=${userResId}`,
             });
         }
     },
+
+    // [POST]  /api/v2/user/cancel-friend-request
+    cancelOrDeleteFriendRequest: async (req, res) => {
+        try {
+            const userId = req.userId;
+            const otherId = req.body.otherId;
+            await User_User.destroy({
+                where: {
+                    [Op.or]: [
+                        {
+                            userReqId: userId,
+                            userResId: otherId,
+                        },
+                        {
+                            userReqId: otherId,
+                            userResId: userId,
+                        }
+                    ]
+                }
+            });
+            
+            return res.redirect(`/api/v2/user/profile?id=${userId}`);
+
+        } catch (error) {
+            console.log(error);
+            return res.status(error.status).render('pages/status', {
+                title: error.name,
+                message: error.message,
+                directTo: `/api/v2/chat`,
+            });
+        }
+    },
+
+    // [POST]  /api/v2/user/confirm-friend-request
+    confirmFriendRequest: async (req, res) => {
+        try {
+            const userId = req.userId;
+            const otherId = req.body.otherId;
+            User_User.update(
+                { status: 'friend' },
+                {
+                    where: {
+                        userReqId: otherId,
+                        userResId: userId,
+                    }
+                }
+            );
+            return res.redirect(`/api/v2/user/profile?id=${otherId}`);
+            
+        } catch (error) {
+            console.log(error);
+            return res.status(error.status).render('pages/status', {
+                title: error.name,
+                message: error.message,
+                directTo: `/api/v2/chat`,
+            });
+        }
+    },
+    
 }
 
 module.exports = UserController;

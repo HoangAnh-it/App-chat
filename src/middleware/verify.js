@@ -10,6 +10,7 @@ const verifyToken = (req, res, next) => {
     }
 
     if (isTokenExpired(accessToken)) {
+        console.log('>>>>>     TOKEN IS EXPIRED     <<<<<<<')
         generateTokenExpired(req, res);
     }
     

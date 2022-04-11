@@ -12,6 +12,10 @@ const formAvatar = $('.formAvatar');
 const avatar = $('.img-avatar');
 const inputAvatar = document.getElementById('input-avatar');
 const btnAddFriend = $('.profile-actions .add-friend');
+const btnCancelRequest = $('.profile-actions .cancel-request');
+const btnResponseRequest = $('.profile-actions .respond-request');
+const confirmRequest = $('.answer .confirm');
+const deleteRequest = $('.answer .delete');
 
 const originValue = {}
 let originAvatar;
@@ -146,15 +150,67 @@ function cancel(type) {
     }
 }
 
+ /**
+  * Profile actions.
+  * */
 if (btnAddFriend) {
     const otherId = $('.profile-actions').dataset.other_id;
-    btnAddFriend.onclick = function (event) {
+    btnAddFriend.onclick = function () {
         axios({
             url: '/api/v2/user/send-friend-request',
             method: 'POST',
             data: {
                 otherId,
             }
+        }).then(() => {
+            window.location.reload();
         })
+    }
+}
+
+if (btnCancelRequest) {
+    const otherId = $('.profile-actions').dataset.other_id;
+    btnCancelRequest.onclick = function () {
+        console.log('click');
+        axios({
+            url: '/api/v2/user/cancel-friend-request',
+            method: 'POST',
+            data: {
+                otherId,
+            }
+        }).then(() => {
+            window.location.reload();
+        })
+    }
+}
+
+if (btnResponseRequest) {
+    btnResponseRequest.onclick = function () {
+        const answer = $('.respond-request .answer');
+        if (answer.style.display === '' || answer.style.display === 'none') {
+            answer.style.display = 'inline-block';
+        } else {
+            answer.style.display = 'none';
+        }
+    }
+}
+
+if (confirmRequest) {
+    const otherId = $('.profile-actions').dataset.other_id;
+    confirmRequest.onclick = function () {
+        axios.post('/api/v2/user/confirm-friend-request', { otherId })
+            .then(() => {
+                window.location.reload();
+            });
+    }
+}
+
+if (deleteRequest) {
+    const otherId = $('.profile-actions').dataset.other_id;
+    deleteRequest.onclick = function () {
+        axios.post('/api/v2/user/delete-friend-request', { otherId })
+            .then(() => {
+                window.location.reload();
+            });
     }
 }

@@ -3,7 +3,7 @@
 
     <div class="avatar">
         <form class="formAvatar" action="/api/v2/user/update-info?id=<%= profile.id %>&_method=PATCH" method="POST">
-            <img class="img-avatar" src="<%= profile.avatar %>" alt="..." >
+            <img class="img-avatar" src="<%= profile.avatar %>" alt="Cannot load avatar" >
             <input class="invisibility" type="text" value="" name="avatar">
         </form>
 
@@ -22,29 +22,70 @@
         </div>
     </div>
 
-    <% if(!isYourProfile) { %>
-        <div class="profile-actions flex" data-other_id="<%= profile.id %>">
+    <div class="profile-actions flex" data-other_id="<%= profile.id %>">
+        
+    <% if(!isYourProfile) {%>
+        <!-- no association -->
+        <% if(status === 'none') { %>
             <div class="add-friend item btn">
                 <i class="fa fa-user-plus"></i>
                 Add Friend
             </div>
+        <% } %>
+        
+        <!-- one user sent add-friend-request -->
+        <% if(status === 'pending') { %>
+            <% if(userRole === 'userReq') {%>
+                <div class="cancel-request item btn">
+                    <i class="fa fa-user-plus"></i>
+                    Cancel Request
+                </div>
+            <% } %>
+            <% if(userRole == 'userRes') { %>
+                <div class="respond-request item">
+                    <div class="respond-btn">
+                        <i class="fa fa-user-plus"></i>
+                        Respond
+                    </div>
 
-            <div class="message item btn">
-                <i class="fa fa-comment"></i>
-                Message
+                    <div class="answer">
+                        <div class="confirm">
+                            <i class="fas fa-check-circle"></i>
+                            Confirm
+                        </div>
+
+                        <div class="delete">
+                            <i class="fas fa-times-circle"></i>
+                            Delete
+                        </div>
+                    </div>
+                </div>
+            <% } %>
+        <% } %>
+        <!-- already is friend -->
+        <% if(status === 'friend') {%>
+            <div class="friend item btn">
+                <i class="fas fa-user-edit"></i>
+                Friend
             </div>
+        <% } %>
 
+        <div class="message item btn">
+            <i class="far fa-comment-dots"></i>
+            Message
         </div>
     <% } %>
+
+    </div>
 
 
     <div class="wrapper-options">
         <div class="options flex">
             <div class="privacy">
-                <i class="ti-lock"></i>
+                <i class="fas fa-lock"></i>
             </div>
             <div class="settings">
-                <i class="ti-settings"></i>
+                <i class="fas fa-cog"></i>
             </div>
         </div>
         
