@@ -64,9 +64,16 @@
         <% } %>
         <!-- already is friend -->
         <% if(status === 'friend') {%>
-            <div class="friend item btn">
-                <i class="fas fa-user-edit"></i>
-                Friend
+            <div class="friend item">
+                <div class="btn">
+                    <i class="fas fa-user-edit"></i>
+                    Friend
+                </div>
+
+                <div class="unfriend btn">
+                    <i class="fas fa-times-circle"></i>
+                    Unfriend
+                </div>
             </div>
         <% } %>
 

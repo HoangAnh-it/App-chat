@@ -30,4 +30,8 @@ router.route('/confirm-friend-request')
 
 router.route('/delete-friend-request')
     .post(verifyToken, userController.cancelOrDeleteFriendRequest);
+
+router.route('/unfriend')
+    .post(verifyToken, userController.unfriend);
+
 module.exports = router;

@@ -14,6 +14,8 @@ const inputAvatar = document.getElementById('input-avatar');
 const btnAddFriend = $('.profile-actions .add-friend');
 const btnCancelRequest = $('.profile-actions .cancel-request');
 const btnResponseRequest = $('.profile-actions .respond-request');
+const btnFriend = $('.profile-actions .friend');
+const btnUnfriend = $('.profile-actions .friend .unfriend');
 const confirmRequest = $('.answer .confirm');
 const deleteRequest = $('.answer .delete');
 
@@ -181,6 +183,26 @@ if (btnCancelRequest) {
         }).then(() => {
             window.location.reload();
         })
+    }
+}
+
+if (btnFriend) {
+    btnFriend.onclick = function () {
+        if (btnUnfriend.style.display === '' || btnUnfriend.style.display === 'none') {
+            btnUnfriend.style.display = 'inline-block';
+        } else {
+            btnUnfriend.style.display = 'none';
+        }
+    }
+}
+
+if (btnUnfriend) {
+    btnUnfriend.onclick = function () {
+        const otherId = $('.profile-actions').dataset.other_id;
+        axios.post('/api/v2/user/unfriend', { otherId })
+            .then(() => {
+                window.location.reload();
+            });
     }
 }
 

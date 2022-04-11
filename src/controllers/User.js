@@ -226,10 +226,12 @@ const UserController = {
                         {
                             userReqId: userId,
                             userResId: otherId,
+                            status: 'pending',
                         },
                         {
                             userReqId: otherId,
                             userResId: userId,
+                            status: 'pending',
                         }
                     ]
                 }
@@ -249,30 +251,58 @@ const UserController = {
 
     // [POST]  /api/v2/user/confirm-friend-request
     confirmFriendRequest: async (req, res) => {
-        try {
             const userId = req.userId;
             const otherId = req.body.otherId;
-            User_User.update(
-                { status: 'friend' },
-                {
-                    where: {
-                        userReqId: otherId,
-                        userResId: userId,
-                    }
+        User_User.update(
+            { status: 'friend' },
+            {
+                where: {
+                    userReqId: otherId,
+                    userResId: userId,
+                    status: 'pending',
                 }
-            );
+            }
+        ).then(() => {
             return res.redirect(`/api/v2/user/profile?id=${otherId}`);
-            
-        } catch (error) {
+        }).catch(error => {
             console.log(error);
             return res.status(error.status).render('pages/status', {
                 title: error.name,
                 message: error.message,
                 directTo: `/api/v2/chat`,
             });
-        }
+        });
     },
     
+    unfriend: async (req, res) => {
+        const userId = req.userId;
+        const otherId = req.body.otherId;
+        User_User.destroy({
+            where: {
+                [Op.or]: [
+                    {
+                        userReqId: userId,
+                        userResId: otherId,
+                        status: 'friend',
+                    },
+                    {
+                        userReqId: otherId,
+                        userResId: userId,
+                        status: 'friend',
+                    }
+                ]
+            }
+        }).then(() => {
+            return res.redirect(`/api/v2/user/profile?id=${otherId}`);
+        }).catch(error => {
+            console.log(error);
+            return res.status(error.status).render('pages/status', {
+                title: error.name,
+                message: error.message,
+                directTo: `/api/v2/chat`,
+            });
+        })
+    },
 }
 
 module.exports = UserController;

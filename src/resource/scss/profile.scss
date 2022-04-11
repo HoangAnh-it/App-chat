@@ -93,6 +93,25 @@ header i:hover {
     border: 1px solid black;
 }
 
+.profile-actions .friend  {
+    position: relative;
+    border: none;
+    padding: 0;
+}
+
+.profile-actions .friend > div {
+    padding: 8px;
+}
+
+.profile-actions .friend .unfriend {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(-100%, -100%);
+    white-space: nowrap;
+    display: none;
+}
+
 .avatar {
     position: absolute;
     top: 0;
