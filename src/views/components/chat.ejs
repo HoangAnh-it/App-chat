@@ -56,8 +56,11 @@
                     <div class="item flex">
                         <div class="room-name" data-roomid=<%= rooms[i].roomId%>><%= rooms[i].name%></div>
                         <i class="fas fa-arrow-left btn-more" data-roomid=<%= rooms[i].roomId %>></i>
-                        <div class="options options-<%= rooms[i].roomId %>">
+                        <div class="options options-<%= rooms[i].roomId %> flex">
                             <a class="delete-room" href="/api/v2/user/leave-room?roomId=<%= rooms[i].roomId %>"><i class="fas fa-trash-alt"></i></a>
+                            <a class="share-link-room">
+                                <i class="fas fa-share" data-room='{"roomId":"<%= rooms[i].roomId %>", "roomName":"<%= rooms[i].name %>"}''></i>
+                            </a>
                         </div>
                     </div>
                 <% } %>

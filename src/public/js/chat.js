@@ -8,6 +8,7 @@ const btnSelectMaxUser = $('.room-event select.max-users');
 const btnEditRooms = $$('.list .item .btn-more');
 const searchArea = $('.search');
 const profileLink = $('header .more .profile a');
+const btnShareLinks = $$('.share-link-room i');
 
 let typeOfSubmit = undefined;
 
@@ -120,3 +121,15 @@ document.addEventListener('click', event => {
         resultsOfSearching.innerHTML = '';
     }
 });
+
+/**
+ * Get ID of room
+ */
+for (const btnShare of btnShareLinks) {
+    btnShare.onclick = function () {
+        const { roomId, roomName } = JSON.parse(btnShare.dataset.room);
+        $('.modal.link-room .name').textContent = roomName;
+        $('.modal.link-room .link').value = roomId;
+        $('.modal.link-room').style.display = 'inline-block';
+    }
+}

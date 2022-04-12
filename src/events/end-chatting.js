@@ -16,7 +16,6 @@ module.exports = function endChatting(io, socket) {
                 break;
             
             case 'private':
-                console.log('Stop chatting with ', info.partnerId);
                 socket.leave(`${info.partnerId}`);
                 break;
             default: break;

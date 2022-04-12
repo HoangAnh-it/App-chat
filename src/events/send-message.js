@@ -5,6 +5,7 @@ module.exports = function sendMessage(io, socket) {
         const sender = await User.findOne({ where: { userId: data.senderId } });
         const partnerId = data.partnerId;
 
+        console.log(`${data.type}-${partnerId}`);
         io.in(`${data.type}-${partnerId}`).emit('receive-message', {
             senderId: sender.userId,
             senderName: sender.name,

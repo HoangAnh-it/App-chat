@@ -24,7 +24,7 @@ module.exports = function (io, socket) {
                 throw new NotFoundError('Not found', 'Cannot found associated users');
             }
 
-            socket.join(user_user.id);
+            socket.join(`private-${user_user.id}`);
             socket.emit('info-partner', {
                 type: 'private',
                 id: user_user.id,

@@ -12,6 +12,7 @@ html {
 
 body {
   background: linear-gradient(120deg, #2980b9, #8e44ad);
+  position: relative;
 }
 
 .flex {
@@ -95,6 +96,16 @@ a:hover {
   width: 0px;
   background: transparent;
   /* make scrollbar transparent */
+}
+
+.modal {
+  display: none;
+  background-color: rgba(255, 255, 255, 0.5);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 /*# sourceMappingURL=base.css.map */

@@ -3,7 +3,6 @@ const { User, Room } = require('../models');
 
 module.exports = function intoRoom(io, socket) {
     return async ({roomId, userId}) => {
-        socket.join(`${roomId}`);
         const room = await Room.findOne({ where: { roomId } });
         const user = await User.findOne({ where: { userId } });
         if (!room || !user) {
@@ -13,7 +12,8 @@ module.exports = function intoRoom(io, socket) {
                 directTo: '/api/v2/chat',
             });
         }
-        socket.to(`${roomId}`).emit('join', user.name);
+        socket.join(`room-${roomId}`);
+        socket.to(`room-${roomId}`).emit('join', user.name);
         socket.emit('info-partner', {
             type: 'room',
             id: room.roomId,
