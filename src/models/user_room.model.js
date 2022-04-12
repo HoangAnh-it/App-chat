@@ -1,7 +1,7 @@
 module.exports = function (sequelize, DataTypes) {
     const User_Room = sequelize.define('user_room', {
         userId: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.UUID,
             references: {
                 model: 'users',
                 key: 'userId',
@@ -9,7 +9,7 @@ module.exports = function (sequelize, DataTypes) {
         },
         
         roomId: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.UUID,
             references: {
                 model: 'rooms',
                 key: 'roomId',

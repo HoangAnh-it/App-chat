@@ -1,13 +1,13 @@
 require('dotenv').config();
+const uuid = require('uuid');
 
 module.exports = function (sequelize, DataTypes) {
     const Room = sequelize.define('room', {
         roomId: {
-            type: DataTypes.INTEGER,
-            required: true,
+            type: DataTypes.UUID,
             unique: true,
             primaryKey: true,
-            autoIncrement: true,
+            defaultValue: DataTypes.UUIDV4,
         },
 
         avatar: {
@@ -21,7 +21,7 @@ module.exports = function (sequelize, DataTypes) {
         },
 
         admin: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.UUID,
             required: true,
             references: {
                 model: 'users',
@@ -32,7 +32,10 @@ module.exports = function (sequelize, DataTypes) {
         maximum_users: {
             type: DataTypes.INTEGER,
         }
-    });
+    },
+        {
+            timestamp: true,
+        });
 
     return Room;
 }

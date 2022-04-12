@@ -1,15 +1,15 @@
 require('dotenv').config();
 const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const uuid = require('uuid');
 
 module.exports = function (sequelize, DataTypes) {
     const User = sequelize.define('user', {
         userId: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.UUID,
             primaryKey: true,
-            allowNull: false,
-            autoIncrement: true,
             unique: true,
+            defaultValue: DataTypes.UUIDV4,
         },
 
         name: {

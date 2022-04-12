@@ -1,5 +1,14 @@
+const uuid = require('uuid');
+
 module.exports = function (sequelize, DataTypes) {
     const User_User = sequelize.define('user_user', {
+        id: {
+            type: DataTypes.UUID,
+            primaryKey: true,
+            unique: true,
+            defaultValue: DataTypes.UUIDV4,
+        },
+
         userReqId: {
             type: DataTypes.INTEGER
         },
@@ -13,7 +22,9 @@ module.exports = function (sequelize, DataTypes) {
             defaultValue: 'pending',
         }
     },
-        { timestamp: true, }
+        {
+            timestamp: true,
+        }
     );
 
     return User_User;

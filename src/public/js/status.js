@@ -5,3 +5,9 @@ btnComeTo.onclick = function () {
         window.location.href = directTo.href;
     } 
 }
+
+document.addEventListener('keydown', event => {
+    if (event.keyCode === 13) {
+        btnComeTo.onclick();
+    }
+})

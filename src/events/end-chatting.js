@@ -11,12 +11,13 @@ module.exports = function endChatting(io, socket) {
         switch (info.type) {
             case 'room':
                 const user = await User.findOne({ where: { userId: info.userId } });
-                socket.to(`${info.roomId}`).emit('leave', user.name);
-                socket.leave(`${info.roomId}`);
+                socket.to(`${info.partnerId}`).emit('leave', user.name);
+                socket.leave(`${info.partnerId}`);
                 break;
             
             case 'private':
-                
+                console.log('Stop chatting with ', info.partnerId);
+                socket.leave(`${info.partnerId}`);
                 break;
             default: break;
         }

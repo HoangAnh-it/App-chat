@@ -13,7 +13,7 @@ const UserController = {
     getProfile: async (req, res) => {
         try {
             const userId = req.userId;
-            const otherId = Number(req.query.id);
+            const otherId = req.query.id;
             const isYourProfile = userId === otherId;
             
             const user = await User.findOne({ where: { userId } });

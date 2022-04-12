@@ -96,13 +96,13 @@ for (const btn of btnEditRooms) {
         const btnMore = e.target.closest('.btn-more');
         const roomId = btnMore.dataset.roomid;
         if (btnMore) {
-            if (btnMore.classList.contains('ti-arrow-left')) {
-                btnMore.classList.remove('ti-arrow-left');
-                btnMore.classList.add('ti-arrow-right');
+            if (btnMore.classList.contains('fa-arrow-left')) {
+                btnMore.classList.remove('fa-arrow-left');
+                btnMore.classList.add('fa-arrow-right');
                 $(`.list .item .options-${roomId}`).style.display = 'inline-block';
             } else {
-                btnMore.classList.add('ti-arrow-left');
-                btnMore.classList.remove('ti-arrow-right');
+                btnMore.classList.add('fa-arrow-left');
+                btnMore.classList.remove('fa-arrow-right');
                 $(`.list .item .options-${roomId}`).style.display = 'none';
             }
         }

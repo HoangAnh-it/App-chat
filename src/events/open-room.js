@@ -1,10 +1,8 @@
-const res = require('express/lib/response');
 const { StatusCodes } = require('http-status-codes');
 const { User, Room } = require('../models');
 
 module.exports = function intoRoom(io, socket) {
     return async ({roomId, userId}) => {
-        console.log('>>> You are into room: ', roomId);
         socket.join(`${roomId}`);
         const room = await Room.findOne({ where: { roomId } });
         const user = await User.findOne({ where: { userId } });

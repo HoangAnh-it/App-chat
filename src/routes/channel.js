@@ -6,5 +6,6 @@ module.exports = function socket(io) {
         socket.on('end-chatting', require('../events/end-chatting')(io, socket));
         socket.on('send-message', require('../events/send-message')(io, socket));
         socket.on('search-friends', require('../events/search')(io, socket));
+        socket.on('private', require('../events/private')(io, socket));
     })
 }

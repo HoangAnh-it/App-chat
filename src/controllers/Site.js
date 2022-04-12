@@ -19,6 +19,13 @@ const SiteController = {
                             attributes: ['status'],
                         }
                     },
+                    {
+                        model: User,
+                        as: 'userReq',
+                        through: {
+                            attributes: ['status'],
+                        }
+                    },
                 ]
             });
 
@@ -28,15 +35,21 @@ const SiteController = {
 
             // get rid of password fields from user
             const { password, ...info } = user.dataValues;
-            // find friends and get rid of password fields
-            const friends = user.userRes
-                .filter(entity => {
-                    return entity.user_user.status === 'friend';
-                })
-                .map(friend => {
-                    const { password, ...info } = friend.dataValues;
-                    return info;
-                });
+            // get friends
+            let friends = [];
+            if (user.userReq.length > 0) {
+                friends.push(...(user.userReq.filter(entity => entity.user_user.status === 'friend')));
+            }
+                
+            if (user.userRes.length > 0) {
+                friends.push(...(user.userRes.filter(entity => entity.user_user.status === 'friend')));
+            }
+            // find friends and get rid of password, user_user fields
+            friends = friends.map(friend => {
+                const { password,user_user, ...info } = friend.dataValues;
+                return info;
+            });
+
             return res.status(StatusCodes.OK).render('pages/chat.ejs', {
                 user: info,
                 userId: userId,

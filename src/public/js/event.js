@@ -1,4 +1,5 @@
 const rooms = $$('.list-rooms .items .item');
+const friends = $$('.list-friends .items .item');
 const chattingWith = $('.chat-box .chatting-with');
 const messageController = $('.input-message');
 const inputMessage = $('.input-message .message');
@@ -11,11 +12,13 @@ const btnDeleteRooms = $$('a.delete-room');
 
 let type; // ['room', 'private', 'none']
 let partnerId; // chatting with
-let currentRoom; // room that you are in now
+let currentPartner; // room that you are in now
+let socketId;
 
 const socket = io();
 socket.on('connect', () => {
     console.log('AN USER CONNECTED', socket.id);
+    socketId = socket.id;
 });
 
 /**
@@ -25,7 +28,7 @@ for (const room of rooms) {
     room.onclick = function (e) {
         const clickOn = e.target.closest('.list-rooms .item .room-name');
         if (clickOn) {
-            if (currentRoom) {
+            if (currentPartner) {
                 endChatting();
             }
 
@@ -36,9 +39,27 @@ for (const room of rooms) {
             });
             // show message controller;
             messageController.style.visibility = 'visible';
-            currentRoom = roomId;
+            currentPartner = roomId;
         }
 
+    }
+}
+
+/**
+ * Start chatting when chose friend
+ */
+for (const friend of friends) {
+    friend.onclick = function (event) {
+        if (currentPartner) {
+            endChatting();
+        }
+        const friendId = friend.dataset.friend_id;
+        socket.emit('private', {
+            friendId: friendId,
+            userId: userId,
+        });
+        messageController.style.visibility = 'visible';
+        currentPartner = friendId;
     }
 }
 
@@ -76,7 +97,7 @@ socket.on('info-partner', partner => {
         `
             <img class="partner-avatar" src="${partner.avatar}" alt="Cannot load avatar of group"></img>
             <div class="partner-name">${partner.name}</div>
-            <div class="btn-leave-chatting ti-close" data-partnerinfo='{"type":"${partner.type}", "id":${partner.id}}' onclick="endChatting()"></div>
+            <div class="btn-leave-chatting 	fas fa-times" data-partnerinfo='{"type":"${partner.type}", "id":"${partner.id}"}' onclick="endChatting()"></div>
         `;
 });
 
@@ -201,7 +222,7 @@ function endChatting () {
     const partner = JSON.parse($('.btn-leave-chatting').dataset.partnerinfo);
     socket.emit('end-chatting', {
         type: partner.type,
-        roomId: partner.id,
+        partnerId: partner.id,
         userId: userId,
     });
     type = 'none';
@@ -209,14 +230,14 @@ function endChatting () {
     chattingWith.innerHTML = '';
     messageController.style.visibility = 'hidden';
     boxContainer.innerHTML = '';
-    currentRoom = undefined;
+    currentPartner = undefined;
 }
 
 /**
  *  Send message.
 */
 function startSendingMessage() {
-    const message = inputMessage.value;
+    const message = inputMessage.value.trim();
     if (message) {
         inputMessage.value = '';
         const data = {
