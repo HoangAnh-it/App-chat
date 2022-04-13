@@ -8,11 +8,13 @@ if (btnCopy) {
     btnCopy.onclick = function () {
         link.select();
         navigator.clipboard.writeText(link.value);
-
-        tooltip.style.display = 'inline-block';
-        setTimeout(function () {
-            tooltip.style.display = 'none';
-        }, 3000);
+        console.log(tooltip.style.display);
+        if (!tooltip.style.display || tooltip.style.display === 'none') {
+            tooltip.style.display = 'inline-block';
+            setTimeout(function () {
+                tooltip.style.display = 'none';
+            }, 3000);
+        }
     }
 }
 

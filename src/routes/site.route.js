@@ -8,4 +8,7 @@ router.route('/chat')
     .get(auth, siteController.chatBox)
     // .get(verifyToken, siteController.chatBox);
 
+router.route('/all-users')
+    .get(verifyToken, siteController.getAllUsers);
+
 module.exports = router;

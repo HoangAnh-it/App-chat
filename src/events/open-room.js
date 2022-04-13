@@ -1,7 +1,7 @@
 const { StatusCodes } = require('http-status-codes');
 const { User, Room } = require('../models');
 
-module.exports = function intoRoom(io, socket) {
+module.exports = function openRoom(io, socket) {
     return async ({roomId, userId}) => {
         const room = await Room.findOne({ where: { roomId } });
         const user = await User.findOne({ where: { userId } });

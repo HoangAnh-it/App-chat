@@ -9,6 +9,7 @@ const btnEditRooms = $$('.list .item .btn-more');
 const searchArea = $('.search');
 const profileLink = $('header .more .profile a');
 const btnShareLinks = $$('.share-link-room i');
+const btnSeeAllUsers = $('.search .see-all-users');
 
 let typeOfSubmit = undefined;
 
@@ -132,4 +133,11 @@ for (const btnShare of btnShareLinks) {
         $('.modal.link-room .link').value = roomId;
         $('.modal.link-room').style.display = 'inline-block';
     }
+}
+
+/**
+ * See all users.
+ */
+btnSeeAllUsers.onclick = function () {
+    window.location.href = '/api/v2/all-users?page=1';
 }

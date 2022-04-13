@@ -28,20 +28,22 @@ for (const room of rooms) {
     room.onclick = function (e) {
         const clickOn = e.target.closest('.list-rooms .item .room-name');
         if (clickOn) {
-            if (currentPartner) {
+            const roomId = clickOn.dataset.roomid;
+            
+            if (currentPartner && currentPartner !== roomId) {
                 endChatting();
             }
 
-            const roomId = clickOn.dataset.roomid;
-            socket.emit('open-room', {
-                roomId,
-                userId: userId,
-            });
-            // show message controller;
-            messageController.style.visibility = 'visible';
-            currentPartner = roomId;
+            if (!currentPartner) {
+                socket.emit('open-room', {
+                    roomId,
+                    userId: userId,
+                });
+                // show message controller;
+                messageController.style.visibility = 'visible';
+                currentPartner = roomId;
+            }
         }
-
     }
 }
 
@@ -50,16 +52,18 @@ for (const room of rooms) {
  */
 for (const friend of friends) {
     friend.onclick = function (event) {
-        if (currentPartner) {
+        const friendId = friend.dataset.friend_id;
+        if (currentPartner && currentPartner !== friendId) {
             endChatting();
         }
-        const friendId = friend.dataset.friend_id;
-        socket.emit('private', {
-            friendId: friendId,
-            userId: userId,
-        });
-        messageController.style.visibility = 'visible';
-        currentPartner = friendId;
+        if (!currentPartner && currentPartner !== friendId) {
+            socket.emit('private', {
+                friendId: friendId,
+                userId: userId,
+            });
+            messageController.style.visibility = 'visible';
+            currentPartner = friendId;
+        }
     }
 }
 
@@ -82,6 +86,7 @@ socket.on('join', userName => {
 });
 
 socket.on('leave', userName => {
+    console.log(userName, ' leave');
     const noticeOfLeaving = document.createElement('div');
     noticeOfLeaving.classList.add('notice-of-join-or-leave');
     noticeOfLeaving.textContent = `${userName} left`;
@@ -112,23 +117,27 @@ socket.on('receive-message', data => {
         msgContainer.appendChild(span);
     } else {
         // if this message is not yours
-        const msg = document.createElement('div');
-        const nameOfSender = document.createElement('p');
         const msgContent = document.createElement('span');
-        const linkToOther = document.createElement('a');
-
-        msg.classList.add('content-other-message');
-        nameOfSender.classList.add('name-of-sender');
-        
-        nameOfSender.textContent = data.senderName;
         msgContent.textContent = data.message;
-        linkToOther.href = `/api/v2/user/profile?id=${data.senderId}`;
+        
+        const msg = document.createElement('div');
+        msg.classList.add('content-other-message');
 
+        if (data.type !== 'private') {
+            const nameOfSender = document.createElement('p');
+            nameOfSender.classList.add('name-of-sender');
+            nameOfSender.textContent = data.senderName;
+            msg.appendChild(nameOfSender);
+        }
+        
+        
+        const linkToOther = document.createElement('a');
+        linkToOther.href = `/api/v2/user/profile?id=${data.senderId}`;
         linkToOther.innerHTML = 
         `
             <img src=${data.senderAvatar}></img>
         `;
-        msg.appendChild(nameOfSender);
+        
         msg.appendChild(msgContent);
         msgContainer.classList.add('other-message', 'flex');
         msgContainer.appendChild(linkToOther);
@@ -218,7 +227,7 @@ function debounce(fnc, wait) {
  * End chatting.
  * Clear everything in chat box.
  */
-function endChatting () {
+function endChatting() {
     const partner = JSON.parse($('.btn-leave-chatting').dataset.partnerinfo);
     socket.emit('end-chatting', {
         type: partner.type,

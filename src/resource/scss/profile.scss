@@ -6,6 +6,7 @@ header {
     height: auto;
     font-size: 2rem;
     padding: 16px;
+    z-index: 100;
 }
 
 header:hover {
@@ -18,11 +19,6 @@ header .header-chat-box {
 
 header i:hover {
     color: black;
-}
-
-#main {
-    width: 100%;
-    height: 100vh;
 }
 
 .empty {

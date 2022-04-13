@@ -8,8 +8,8 @@ const validate = {
         if (!errors.isEmpty()) {
             return res.status(StatusCodes.UNPROCESSABLE_ENTITY).render('pages/status.ejs', {
                 title: 'ERRORS',
-                message: errors.array().map(err => err.msg).join(' - '),
-                directTo:'',
+                message: errors.array().map(err => err.msg),
+                directTo:'back',
             })
         }
 

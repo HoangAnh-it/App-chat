@@ -52,7 +52,7 @@ const AuthController = {
             return res.status(error.status).render('pages/status', {
                 title: error.name,
                 message: error.message,
-                directTo: '/api/v2/auth/login',
+                directTo: 'back',
             });
         }
     },
@@ -91,7 +91,7 @@ const AuthController = {
             return res.status(error.status).render('pages/status.ejs', {
                 title: error.name,
                 message: error.message,
-                directTo: '/api/v2/auth/register',
+                directTo: 'back',
             })
         }
     },
@@ -107,7 +107,7 @@ const AuthController = {
             res.status(StatusCodes.INTERNAL_SERVER_ERROR).render('pages/status', {
                 title: 'Error!',
                 message: 'Can not log out. Something went wrong!',
-                directTo: '/api/v2/chat',
+                directTo: 'back',
             });
         }
     }

@@ -66,7 +66,7 @@ const UserController = {
             return res.status(StatusCodes.INTERNAL_SERVER_ERROR).render('pages/status', {
                 title: 'Error!',
                 message: 'Cannot find profile. Something went wrong!',
-                directTo: '/api/v2/chat',
+                directTo: 'back',
             });
         }
     },
@@ -84,7 +84,7 @@ const UserController = {
             return res.status(StatusCodes.INTERNAL_SERVER_ERROR).render('pages/status', {
                 title: 'Error!',
                 message: 'Cannot update profile. Something went wrong!',
-                directTo: '/api/v2/chat',
+                directTo: 'back',
             });
         });
     },
@@ -120,7 +120,7 @@ const UserController = {
             return res.status(error.status).render('pages/status', {
                 title: error.name,
                 message: error.message,
-                directTo: '/api/v2/chat',
+                directTo: 'back',
             })
         }
                 
@@ -165,7 +165,7 @@ const UserController = {
             return res.status(error.status).render('pages/status', {
                 title: error.name,
                 message: error.message,
-                directTo: '/api/v2/chat',
+                directTo: 'back',
             })
         }
     },
@@ -185,7 +185,7 @@ const UserController = {
             return res.status(StatusCodes.INTERNAL_SERVER_ERROR).render('pages/status', {
                 title: 'Error!',
                 message: 'Cannot leave room. Something went wrong!',
-                directTo: '/api/v2/chat',
+                directTo: 'back',
             });
         }
     },
@@ -210,7 +210,7 @@ const UserController = {
             return res.status(error.status).render('pages/status', {
                 title: error.name,
                 message: error.message,
-                directTo: `/api/v2/user/profile?id=${userResId}`,
+                directTo: `back`,
             });
         }
     },
@@ -244,7 +244,7 @@ const UserController = {
             return res.status(error.status).render('pages/status', {
                 title: error.name,
                 message: error.message,
-                directTo: `/api/v2/chat`,
+                directTo: `back`,
             });
         }
     },
@@ -269,7 +269,7 @@ const UserController = {
             return res.status(error.status).render('pages/status', {
                 title: error.name,
                 message: error.message,
-                directTo: `/api/v2/chat`,
+                directTo: `back`,
             });
         });
     },
@@ -299,7 +299,7 @@ const UserController = {
             return res.status(error.status).render('pages/status', {
                 title: error.name,
                 message: error.message,
-                directTo: `/api/v2/chat`,
+                directTo: `back`,
             });
         })
     },

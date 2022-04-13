@@ -7,16 +7,16 @@ module.exports = function endChatting(io, socket) {
      *  id ,
      * }
      */
-    return async(info) => {
+    return async (info) => {
         switch (info.type) {
             case 'room':
                 const user = await User.findOne({ where: { userId: info.userId } });
-                socket.to(`${info.partnerId}`).emit('leave', user.name);
-                socket.leave(`${info.partnerId}`);
+                socket.to(`room-${info.partnerId}`).emit('leave', user.name);
+                socket.leave(`room-${info.partnerId}`);
                 break;
             
             case 'private':
-                socket.leave(`${info.partnerId}`);
+                socket.leave(`private-${info.partnerId}`);
                 break;
             default: break;
         }

@@ -1,0 +1,32 @@
+<div class="all-users flex">
+    <div class="title">ALL USERS</div>
+    <div class="container flex">
+        <% for(let i = 0; i < users.length; i++) { %>
+            <div class="user flex">
+                <a class="img-user" href="/api/v2/user/profile?id=<%= users[i].userId %>"><img src="<%= users[i].avatar %>" alt="Cannot load avatar"></a>
+                <div class="name"><%= users[i].name %></div>
+                <div class="profile-actions flex">
+                    <!-- <div class="btn">Add friend</div> -->
+                    <!-- <div class="btn">Message</div> -->
+                </div>
+            </div>
+        <% } %>
+
+
+    </div>
+
+    <div class="controller flex">
+        <% if(start > 1) { %>
+            <a href="/api/v2/all-users?page=<%= start - 1 %>"><div class="page-<%= start - 1 %>"><i class="fas fa-angle-left"></i></div></a>
+            <% } %>
+            
+        <% for(let i = start; i <= end; i++) { %>
+            <a href="/api/v2/all-users?page=<%= i %>"><div class="page-<%= i %>"><%= i %></div></a>
+        <% } %>
+
+        <% if(end < noPages) { %>
+            <a href="/api/v2/all-users?page=<%= end + 1 %>"><div class="page-<%= end + 1 %>"><i class="fas fa-angle-right"></i></div></a>
+        <% } %>
+
+    </div>
+</div>

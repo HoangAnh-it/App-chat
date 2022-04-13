@@ -3,8 +3,11 @@ const { StatusCodes } = require('http-status-codes');
 const {
     NotFoundError,
 } = require('../error');
+require('dotenv').config();
 
 const SiteController = {
+
+    // [GET] /api/v2/chat
     chatBox: async (req, res) => {
         try {
             const userId = req.userId;
@@ -57,6 +60,47 @@ const SiteController = {
                 rooms: user.rooms,
             });
 
+        } catch (error) {
+            console.error(error);
+            return res.status(error.status).render('pages/status.ejs', {
+                title: error.name,
+                message: error.message,
+                directTo: '/api/v2/auth/login',
+            });
+        }
+    },
+
+    // [GET] /api/v2/all-users?page
+    getAllUsers: async (req, res) => {
+        try {
+            const page = Number(req.query.page);
+            const limit = Number(process.env.NoUsersPerPage);
+            const maxPagesOneTime = Number(process.env.MaxPagesOneTime);
+            const skip = (page - 1) * limit;
+
+            const users = await User.findAll({
+                limit: limit,
+                offset: skip,
+            });
+
+            
+            if (!users) {
+                throw new NotFoundError('Not found', 'Cannot find users');
+            }
+            
+            const noUsers = await User.count();
+            const noPages = Math.ceil(noUsers / limit);
+            const start = Math.floor(page / (maxPagesOneTime + 0.1) ) * maxPagesOneTime + 1;
+            const end = start + maxPagesOneTime - 1 < noPages ? start + maxPagesOneTime - 1 : noPages;
+
+            return res.status(StatusCodes.OK).render('pages/allUsers.ejs', {
+                users,
+                start,
+                end,
+                noPages,
+                maxPagesOneTime,
+            });
+    
         } catch (error) {
             console.error(error);
             return res.status(error.status).render('pages/status.ejs', {

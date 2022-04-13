@@ -7,6 +7,7 @@ module.exports = function sendMessage(io, socket) {
 
         console.log(`${data.type}-${partnerId}`);
         io.in(`${data.type}-${partnerId}`).emit('receive-message', {
+            type: data.type,
             senderId: sender.userId,
             senderName: sender.name,
             senderAvatar: sender.avatar,
