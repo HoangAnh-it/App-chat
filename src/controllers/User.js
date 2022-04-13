@@ -6,6 +6,7 @@ const {
     NotFoundError,
     ConflictError,
     BadRequestError,
+    UnauthenticatedError,
 } = require('../error');
 
 const UserController = {
@@ -94,6 +95,22 @@ const UserController = {
         try {
             const admin = req.userId;
             const { roomInfoInput: name, maxUsers } = req.body;
+            const userAsAdmin = await User.findOne({
+                where: {
+                    userId: admin,
+                },
+                include: [{
+                    model: Room,
+                },]
+            });
+
+            // if name of room is already existing
+            let allRooms = await userAsAdmin.getRooms();
+            allRooms = allRooms.map(room => room.dataValues.name);
+            if (allRooms.includes(name)) {
+                throw new ConflictError('Duplicated', 'This name of room is already in used');
+            }
+
             const newRoom = await Room.create({
                 name,
                 admin,
@@ -105,9 +122,6 @@ const UserController = {
             } else {
                 // add admin as user into room
                 // and add room to admin
-                const userAsAdmin = await User.findOne({
-                    where: { userId: admin },
-                });
                 if (userAsAdmin) {
                     newRoom.addUser(userAsAdmin);
                 }
@@ -153,6 +167,13 @@ const UserController = {
                 }
 
                 const you = await User.findOne({ where: { userId } });
+                // if name of room is already existing
+                let allRooms = await you.getRooms();
+                allRooms = allRooms.map(room => room.dataValues.name);
+                if (allRooms.includes(room.name)) {
+                    throw new ConflictError('Duplicated', 'You already had a room with that name.');
+                }
+                
                 if (you) {
                     room.addUser(you);
                 }
@@ -303,6 +324,72 @@ const UserController = {
             });
         })
     },
+
+    // [PATCH] /api/v2/user/change-password
+    changePassword: async (req, res) => {
+        try {
+            const userId = req.userId;
+            const { currentPassword, newPassword, confirmNewPassword } = trimObj(req.body);
+            const user = await User.findOne({ where: { userId } });
+            if (!user) {
+                throw new NotFoundError('Not found', 'Cannot found user');
+            }
+
+            const passwordMatches = await user.comparePassword(currentPassword);
+            if (!passwordMatches) {
+                throw new UnauthenticatedError('Not matches', 'Incorrect password. Please enter your password correctly');
+            }
+            
+            if (newPassword !== confirmNewPassword) {
+                throw new UnauthenticatedError('Not matches', 'Please enter your retype password correctly');
+            }
+
+            await user.update({ password: newPassword });
+            return res.redirect(`/api/v2/user/profile?id=${userId}`);
+            
+        } catch (error) {
+            console.error(error);
+            return res.status(error.status).render('pages/status.ejs', {
+                title: error.name,
+                message: error.message,
+                directTo: 'back',
+            })
+        }
+    },
+
+    // [DELETE] /api/v2/user/delete-account
+    deleteAccount: async (req, res) => {
+        try {
+            const { email, password } = trimObj(req.body);
+            const userId = req.userId;
+            const user = await User.findOne({ where: { userId } });
+            if (!user) {
+                throw new NotFoundError('Not found', 'Cannot find user');
+            }
+
+            if (email !== user.email) {
+                throw new UnauthenticatedError('Not matches', 'Incorrect email. Please enter your email correctly');
+            }
+
+            const passwordMatches = await user.comparePassword(password);
+            if (!passwordMatches) {
+                throw new UnauthenticatedError('Not matches', 'Incorrect password. Please enter your password correctly');
+            }
+
+            User.destroy({ where: { userId } })
+                .then(() => {
+                    return res.redirect('/api/v2/auth/login');
+                });
+
+        } catch (error) {
+            console.error(error);
+            return res.status(error.status).render('pages/status.ejs', {
+                title: error.name,
+                message: error.message,
+                directTo: 'back',
+            })
+        }
+    }
 }
 
 module.exports = UserController;

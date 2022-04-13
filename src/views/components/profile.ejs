@@ -9,7 +9,7 @@
 
         <% if(isYourProfile) { %>
             <div class="btn-edit-avatar">
-                <label for="input-avatar"><i class="fas fa-images icon-change-avatar"></i></label>
+                <label for="input-avatar"><i class="fas fa-camera icon-change-avatar"></i></label>
                 <input id="input-avatar" type="file" accept="image/*" onchange="loadAvatar()">
             </div>
         <% } %>
@@ -91,9 +91,12 @@
             <div class="privacy">
                 <i class="fas fa-lock"></i>
             </div>
-            <div class="settings">
-                <i class="fas fa-cog"></i>
-            </div>
+
+            <% if(isYourProfile) { %>
+                <div class="settings">
+                    <i class="fas fa-cog"></i>
+                </div>
+            <% } %>
         </div>
         
         <form class="info" action="/api/v2/user/update-info?_method=PATCH" method="POST">
@@ -120,12 +123,27 @@
                         <div class="btn btn-edit" onclick="editInfo()">Edit</div>
                     </div>
                 <% } %>
-            
+                
             </div>
         </form>
+        
+        <% if(isYourProfile) { %>
+            <div class="options-settings">
+                <div class="item change-password flex">
+                    Change your password?
+                    <div class="btn btn-open-change-password-form">Change</div>
+                </div>
 
-        <div class="options-settings">
-            SETTINGS
-        </div>
+                <div class="item delete-account flex">
+                    Delete your account?
+                    <div class="btn btn-delete-account">Delete</div>
+                </div>
+
+                <div class="item delete-account flex">
+                    Log out?
+                    <a href="/api/v2/auth/logout"><div class="btn">Log out</div></a>
+                </div>
+            </div>
+        <% } %>
     </div>
 </div>

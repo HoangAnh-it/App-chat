@@ -10,11 +10,13 @@ module.exports = function (sequelize, DataTypes) {
         },
 
         userReqId: {
-            type: DataTypes.INTEGER
+            type: DataTypes.INTEGER,
+            onDelete: 'cascade',
         },
 
         userResId: {
-            type: DataTypes.INTEGER
+            type: DataTypes.INTEGER,
+            onDelete: 'cascade',
         },
 
         status: {

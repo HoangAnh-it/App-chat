@@ -5,7 +5,8 @@ module.exports = function (sequelize, DataTypes) {
             references: {
                 model: 'users',
                 key: 'userId',
-            }
+            },
+            onDelete: 'cascade',
         },
         
         roomId: {
@@ -13,7 +14,8 @@ module.exports = function (sequelize, DataTypes) {
             references: {
                 model: 'rooms',
                 key: 'roomId',
-            }
+            },
+            onDelete: 'cascade',
         }
     },
         { timestamp: true }

@@ -22,11 +22,12 @@ module.exports = function (sequelize, DataTypes) {
 
         admin: {
             type: DataTypes.UUID,
-            required: true,
+            allowNull: true,
             references: {
                 model: 'users',
                 key: 'userId',
-            }
+            },
+            onDelete: 'cascade',
         },
 
         maximum_users: {

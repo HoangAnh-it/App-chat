@@ -35,6 +35,26 @@ const validate = {
             check('confirmPassword', 'Re-password could not be empty').not().isEmpty(),
             check('confirmPassword', 'Re-password must be more than 6 digits').isLength({ min: 6 }),
         ]
+    },
+
+    validateChangePassword: () => {
+        return [
+            check('currentPassword', 'Password could not be empty').not().isEmpty(),
+            check('currentPassword', 'Password must be more than 6 digits').isLength({ min: 6 }),
+            check('newPassword', 'New password could not be empty').not().isEmpty(),
+            check('newPassword', 'New password must be more than 6 digits').isLength({ min: 6 }),
+            check('confirmNewPassword', 'Re-type new password could not be empty').not().isEmpty(),
+            check('confirmNewPassword', 'Re-type new password must be more than 6 digits').isLength({ min: 6 }),
+        ]
+    },
+
+    validateDeleteAccount: () => {
+        return [
+            check('email', 'Invalid email').isEmail(),
+            check('email', 'Email could not be empty').not().isEmpty(),
+            check('password', 'Password could not be empty').not().isEmpty(),
+            check('password', 'Password must be more than 6 digits').isLength({ min: 6 }),
+        ];
     }
 };
 

@@ -130,12 +130,16 @@ header i:hover {
 }
 
 .avatar .icon-change-avatar {
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: bold;
-    color: rgb(0, 225, 255);
     position: absolute;
-    top:70%;
-    right: 0;
+    right: -10px;
+    box-shadow: 0 0 4px white;
+    transform: translate(-30%, 50%);
+    color: #ccc;
+    background-color: black;
+    padding: 4px;
+    border-radius: 50%;
 }
 
 .avatar .icon-change-avatar:hover {
@@ -238,4 +242,16 @@ input[type="file"] {
 
 .btn-back a:hover {
     color:rgb(255, 0, 255);
+}
+
+.options-settings {}
+
+.options-settings .item {
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 8px 0;
+}
+
+.options-settings .item  .btn {
+    min-width: 100px;
 }

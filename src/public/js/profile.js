@@ -28,9 +28,9 @@ let originAvatar;
 btnPrivacy.onclick = function () {
     if (optionsPrivacy.style.display === 'none' || !optionsPrivacy.style.display) {
         btnPrivacy.style.backgroundColor = 'rgb(119, 119, 119)';
-        btnSettings.style.backgroundColor = '#ccc';
+        if(btnSettings) btnSettings.style.backgroundColor = '#ccc';
         optionsPrivacy.style.display = 'block';
-        optionsSetting.style.display = 'none';
+        if(optionsSetting) optionsSetting.style.display = 'none';
     }
     else {
         btnPrivacy.style.backgroundColor = '#ccc';
@@ -42,17 +42,19 @@ btnPrivacy.onclick = function () {
 /**
  * Show your setting.
  */
-btnSettings.onclick = function () {
-    if (optionsSetting.style.display === 'none' || !optionsSetting.style.display) {
-        btnSettings.style.backgroundColor = 'rgb(119, 119, 119)';
-        btnPrivacy.style.backgroundColor = '#ccc';
-        optionsSetting.style.display = 'block';
-        optionsPrivacy.style.display = 'none';
+if (btnSettings) {
+    btnSettings.onclick = function () {
+        if (optionsSetting.style.display === 'none' || !optionsSetting.style.display) {
+            btnSettings.style.backgroundColor = 'rgb(119, 119, 119)';
+            btnPrivacy.style.backgroundColor = '#ccc';
+            optionsSetting.style.display = 'block';
+            optionsPrivacy.style.display = 'none';
+        }
+        else {
+            btnSettings.style.backgroundColor = '#ccc';
+            optionsSetting.style.display = 'none';
+        }
     }
-    else {
-        btnSettings.style.backgroundColor = '#ccc';
-        optionsSetting.style.display = 'none';
-    } 
 }
 
 
@@ -127,7 +129,7 @@ function cancel(type) {
             avatar.src = originAvatar;
             btnEditAvatar.classList.remove('btn-edit-avatar');
             btnEditAvatar.innerHTML = `
-                <label for="input-avatar"><i class="ti-gallery icon-change-avatar"></i></label>
+                <label for="input-avatar"><i class="fas fa-camera icon-change-avatar"></i></label>
                 <input id="input-avatar" type="file" accept="image/*" name="newAvatar" onchange="loadAvatar()">
             `;
             break;
