@@ -4,13 +4,13 @@
     <div class="avatar">
         <form class="formAvatar" action="/api/v2/user/update-info?id=<%= profile.id %>&_method=PATCH" method="POST">
             <img class="img-avatar" src="<%= profile.avatar %>" alt="Cannot load avatar" >
-            <input class="invisibility" type="text" value="" name="avatar">
+            <input class="invisibility"  tabindex="-1" type="text" value="" name="avatar">
         </form>
 
         <% if(isYourProfile) { %>
             <div class="btn-edit-avatar">
                 <label for="input-avatar"><i class="fas fa-camera icon-change-avatar"></i></label>
-                <input id="input-avatar" type="file" accept="image/*" onchange="loadAvatar()">
+                <input id="input-avatar"  tabindex="-1" type="file" accept="image/*" onchange="loadAvatar()">
             </div>
         <% } %>
         
@@ -103,19 +103,19 @@
             <div class="options-privacy">
                 <div class="name">
                     <label for="name">Name:</label>
-                    <input class="input-disabled" type="text" value="<%= profile.name %>" name="name">
+                    <input class="input-disabled" tabindex="-1" type="text" value="<%= profile.name %>" name="name">
                 </div>
                 <div class="nick-name">
                     <label for="nickName">NickName:</label>
-                    <input class="input-disabled" type="text" value="<%= profile.nickName%>" name="nickName">
+                    <input class="input-disabled" tabindex="-1" type="text" value="<%= profile.nickName%>" name="nickName">
                 </div>
                 <div class="email">
                     <label for="email">Email:</label>
-                    <input class="input-disabled" type="email" value="<%= profile.email%>" name="email">
+                    <input class="input-disabled" tabindex="-1" type="email" value="<%= profile.email%>" name="email">
                 </div>
                 <div class="address">
                     <label for="address">Address</label>
-                    <input class="input-disabled" type="text" value="<%= profile.address%>" name="address">
+                    <input class="input-disabled" tabindex="-1" type="text" value="<%= profile.address%>" name="address">
                 </div>
 
                 <% if(isYourProfile) { %>

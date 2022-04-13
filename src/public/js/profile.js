@@ -85,6 +85,7 @@ function editInfo() {
             for (const input of inputs) {
                 originValue[input.name] = input.value;
                 input.classList.remove('input-disabled');
+                input.tabIndex = 1;
             }
         }
         
@@ -130,7 +131,7 @@ function cancel(type) {
             btnEditAvatar.classList.remove('btn-edit-avatar');
             btnEditAvatar.innerHTML = `
                 <label for="input-avatar"><i class="fas fa-camera icon-change-avatar"></i></label>
-                <input id="input-avatar" type="file" accept="image/*" name="newAvatar" onchange="loadAvatar()">
+                <input id="input-avatar" tabindex="-1" type="file" accept="image/*" name="newAvatar" onchange="loadAvatar()">
             `;
             break;
         }
@@ -139,6 +140,7 @@ function cancel(type) {
                 for (const input of inputs) {
                     input.value = originValue[input.name];
                     input.classList.add('input-disabled');
+                    input.tabIndex = -1;
                 };
             }
 
