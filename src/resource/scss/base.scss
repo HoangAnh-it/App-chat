@@ -53,9 +53,10 @@ a:hover {
 }
 
 .input-disabled {
-    background-color: #ccc;
+    background-color: white;
     border:none;
     pointer-events: none;
+    border:none !important;
 }
 
 .btn {
@@ -120,4 +121,17 @@ a:hover {
     left: 0;
     right: 0;
     z-index: 99;
+}
+
+.btn-back:hover {
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.2s linear;
+}
+
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-indent: 1px;
+  text-overflow: '';
 }

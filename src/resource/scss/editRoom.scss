@@ -1,0 +1,165 @@
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+    font-size: 2rem;
+    padding: 16px;
+    z-index: 100;
+}
+
+header:hover {
+    opacity: 0.6;
+}
+
+header i:hover {
+    color: black;
+}
+
+.form-edit-room {
+    position:absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border-radius:10px;
+    padding: 16px;
+    text-align: center;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 40%;
+}
+
+.form-edit-room .title {
+    font-size: 2em;
+    border-bottom: 2px  solid black;
+    width: 100%;
+    margin-bottom: 16px;
+    font-weight: bold;
+}
+
+.form-edit-room .avatar {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    box-shadow: 0 0 4px black;
+    border-radius:50%;
+}
+
+.form-edit-room .info {
+    flex-direction: row;
+    justify-content: space-around;
+    flex-grow: 1;
+    text-align: left;
+    font-size: 1.5rem;
+}
+
+.form-edit-room .info > * {
+    padding: 4px;
+    margin: 8px 16px;
+}
+
+.form-edit-room .detail-info {
+    flex-grow: 1;
+}
+
+.form-edit-room .detail-info > div {
+    margin: 16px 0;
+}
+
+.form-edit-room .detail-info label {
+    min-width: 100px;
+    display: inline-block;
+}
+
+.form-edit-room .detail-info input {
+    padding: 4px;
+    min-width: 200px;
+    font-size: 1.5rem;
+    border: 1px solid black;
+}
+
+.form-edit-room .detail-info select{
+    font-size: 1.5rem;
+    border: 1px solid black;
+    padding: 2px;
+    border-radius: 10px;
+}
+
+.form-edit-room .detail-info .admin  {
+    flex-direction: row;
+    align-items: center;
+    justify-content:flex-start;
+}
+
+.form-edit-room .detail-info .admin .info-admin {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.form-edit-room .detail-info .admin img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    margin-right: 8px;
+    box-shadow: 0 0 4px black;
+    border-radius: 50%;
+}
+
+.form-edit-room .detail-info .admin img:hover {
+    opacity: 0.6;
+    transition: opacity 0.2s linear;
+    cursor: pointer;
+}
+
+.form-edit-room .list-members {
+    box-shadow: 0 0 4px black;
+    padding: 4px;
+    overflow-y: scroll;
+    max-height: 200px;
+    border-radius: 10px;
+    margin: 8px;
+}
+
+.form-edit-room .list-members a:hover {
+    color: black;
+    cursor: default;
+}
+
+.form-edit-room .list-members .item {
+    width: 80%;
+    height: 35px;
+    margin: 4px auto;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    border: 1px solid black;
+    border-radius: 10px;
+    font-size: 1rem;
+}
+
+.form-edit-room .list-members .item:hover {
+    background-color: #ccc;
+    cursor: pointer;
+    color: rgb(255, 0, 255);
+}
+
+.form-edit-room .list-members .item img {
+    width: 35px;
+    height: 100%;
+    object-fit:cover;
+    margin-right: 16px;
+    border-radius: 10px;
+    padding: 4px;
+    box-shadow: 0 0 4px black;
+}
+
+.form-edit-room .btn-edit {
+    display: inline-block;
+    padding: 4px;
+}
+
+

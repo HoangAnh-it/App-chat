@@ -1,6 +1,9 @@
 <div class="delete-account modal">
     <div class="container">
-        <div class="title">DELETE ACCOUNT</div>
+        <div class="title">
+            <i class="fas fa-exclamation-triangle" style="color:red"></i>
+            DELETE ACCOUNT
+        </div>
         <form class="flex delete-account-form" action="/api/v2/user/delete-account?_method=DELETE" method="POST">
             <input type="email"  placeholder="Your email" name="email">
             <input type="password"  placeholder="Password" name="password">

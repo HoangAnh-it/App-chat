@@ -12,7 +12,6 @@ const validate = {
                 directTo:'back',
             })
         }
-
         next();
     },
 
@@ -55,7 +54,16 @@ const validate = {
             check('password', 'Password could not be empty').not().isEmpty(),
             check('password', 'Password must be more than 6 digits').isLength({ min: 6 }),
         ];
-    }
+    },
+
+    validateUpdateInfo: () => {
+        return [
+            check('name', 'Name could not be empty').optional({checkFalsy: false}).not().isEmpty(),
+            check('email', 'Invalid email').optional().isEmail(),
+            check('email', 'Email could not be empty').optional({checkFalsy: false}).not().isEmpty(),
+        ]
+    },
+
 };
 
 module.exports = validate;

@@ -1,0 +1,46 @@
+<form class="form-edit-room flex" method="POST" action="/api/v2/room/edit">
+    <div class="title">ROOM</div>
+
+    <div class="info flex">
+        <img class="avatar" src="/image/default_avatar_group.jpg" alt="">
+
+        <div class="detail-info ">
+            <div class="name">
+                <label for="name-room">Name:</label>
+                <input class="input-disabled" type="text" value="<%= room.name %>">
+            </div>
+            <div class="admin flex">
+                <label for="admin-room">Admin:</label>
+                <div class="info-admin flex">
+                    <a href="/api/v2/user/profile?id=<%= admin.id %>"><img src="<%= admin.avatar %>" alt="..."></a>
+                    <div class="name"><%= admin.name %></div>
+                </div>
+            </div>
+            <div class="max-users">
+                <label for="">Max:</label>
+                <select class="max-users input-disabled" name="maxUsers">
+                    <option value="<%= room.maximum_users %>" selected hidden disabled><%= room.maximum_users %></option>
+                    <option value="4">4</option>
+                    <option value="8">8</option>
+                    <option value="10">10</option>
+                    <option value="unlimited">unlimited</option>
+                </select>
+            </div>
+            <div class="members">
+                <label for="">Members:</label>
+                <div class="list-members">
+                    <% for(let i = 0; i< members.length; i++) { %>
+                        <a href="/api/v2/user/profile?id=<%= members[i].userId %>">
+                            <div class="item flex">
+                                <img src="<%= members[i].avatar %>" alt="...">
+                                <div class="name"><%= members[i].name %></div>
+                            </div>
+                        </a>
+                    <% } %>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+

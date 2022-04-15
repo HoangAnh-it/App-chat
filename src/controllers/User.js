@@ -72,22 +72,31 @@ const UserController = {
         }
     },
 
-    // [POST] /api/v2/user/update-info?userId
-    update: (req, res) => {
-        const newValue = trimObj(req.body);
-        const userId = req.userId;
-        User.update(newValue, {
-            where: { userId }
-        }).then(() => {
+    // [PATCH] /api/v2/user/update-info?userId
+    update: async(req, res) => {
+        try {
+            const newValue = trimObj(req.body);
+            // check if new email has already been used.
+            if ('email' in newValue) {
+                const existingUser = await User.findOne({ where: { email: newValue.email } });
+                if (existingUser) {
+                    throw new ConflictError('Duplicated', 'This email has already been used');
+                }
+            }
+
+            const userId = req.userId;
+            await User.update(newValue, {
+                where: { userId }
+            });
             return res.redirect(`/api/v2/user/profile?id=${userId}`)
-        }).catch(error => {
+        } catch (error) {
             console.error(error);
-            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).render('pages/status', {
-                title: 'Error!',
-                message: 'Cannot update profile. Something went wrong!',
+            return res.status(error.status || StatusCodes.INTERNAL_SERVER_ERROR).render('pages/status', {
+                title: error.name,
+                message: error.message,
                 directTo: 'back',
             });
-        });
+        }
     },
 
     // [POST] /api/v2/user/create-room

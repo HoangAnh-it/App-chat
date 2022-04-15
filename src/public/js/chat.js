@@ -10,6 +10,7 @@ const searchArea = $('.search');
 const profileLink = $('header .more .profile a');
 const btnShareLinks = $$('.share-link-room i');
 const btnSeeAllUsers = $('.search .see-all-users');
+const btnSeeInfoRooms = $$('.edit-room i');
 
 let typeOfSubmit = undefined;
 
@@ -45,6 +46,7 @@ btnCancel.onclick = function () {
     formRoomEvent.style.display = 'none';
     btnJoinRoom.style.opacity = 1;
     btnCreateRoom.style.opacity = 1;
+    btnSubmit.classList.add('disabled');
     typeOfSubmit = undefined;
     btnSelectMaxUser.value = 'none';
     btnSelectMaxUser.style.display = 'none';
@@ -140,4 +142,13 @@ for (const btnShare of btnShareLinks) {
  */
 btnSeeAllUsers.onclick = function () {
     window.location.href = '/api/v2/all-users?page=1';
+}
+
+/**
+ * Show room information
+ */
+for (const infoRoom of btnSeeInfoRooms) {
+    infoRoom.onclick = function () {
+        
+    }
 }

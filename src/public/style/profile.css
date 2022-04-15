@@ -1,3 +1,7 @@
+.input-disabled {
+  background-color: #ccc;
+}
+
 header {
   position: fixed;
   top: 0;
@@ -13,10 +17,6 @@ header:hover {
   opacity: 0.6;
 }
 
-header .header-chat-box {
-  display: none;
-}
-
 header i:hover {
   color: black;
 }
@@ -27,7 +27,7 @@ header i:hover {
 }
 
 .profile {
-  width: 30%;
+  width: 35%;
   height: auto;
   background-color: #ccc;
   margin: 250px auto;
@@ -175,39 +175,6 @@ header i:hover {
   cursor: pointer;
 }
 
-.options-privacy,
-.options-settings {
-  padding: 16px 32px;
-  border-radius: 10px;
-  height: auto;
-  background-color: #ccc;
-  position: absolute;
-  top: calc(100% + 32px);
-  left: 0;
-  right: 0;
-  z-index: 100;
-  display: none;
-  font-size: 1.4rem;
-}
-
-.options-privacy > div {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 8px;
-}
-
-.options-privacy label {
-  display: inline-block;
-  min-width: 150px;
-  text-align: left;
-}
-
-.options-privacy input {
-  flex-grow: 1;
-  padding: 4px;
-  font-size: 1.4rem;
-}
-
 .button {
   flex-direction: row;
   justify-content: flex-start;
@@ -236,6 +203,10 @@ input[type=file] {
   margin: 2px 0;
 }
 
+.btn-edit-avatar .confirm-edit {
+  display: none;
+}
+
 .btn-back a {
   color: white;
 }
@@ -252,6 +223,81 @@ input[type=file] {
 
 .options-settings .item .btn {
   min-width: 100px;
+}
+
+.options-privacy,
+.options-settings {
+  padding: 16px 32px;
+  border-radius: 10px;
+  height: auto;
+  background-color: #ccc;
+  position: absolute;
+  top: calc(100% + 32px);
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: none;
+  font-size: 1.4rem;
+}
+
+.options-privacy {
+  justify-content: space-between;
+}
+
+.privacy-info {
+  flex-grow: 1;
+}
+
+.privacy-info > div {
+  flex-direction: row;
+  justify-content: flex-start;
+  padding: 4px 0;
+}
+
+.privacy-info > div > label > i {
+  min-width: 35px;
+  font-size: 1rem;
+}
+
+.privacy-info > div > label {
+  min-width: 150px;
+  text-align: left;
+  font-size: 1.2rem;
+}
+
+.privacy-info > div > input {
+  padding: 4px;
+  font-size: 1.2rem;
+  display: block;
+  flex-grow: 1;
+  height: 30px;
+  margin: 0 8px;
+}
+
+.privacy-info .button-edit {
+  text-align: left;
+  margin-top: 8px;
+  display: none;
+}
+
+.privacy-info .button-edit .btn {
+  display: inline-block;
+}
+
+.options-privacy-edit {
+  flex-direction: column;
+  font-size: 1rem;
+  justify-content: flex-start;
+}
+
+.options-privacy-edit .icon-edit {
+  padding: 4px 8px;
+  line-height: 30px;
+}
+
+.options-privacy-edit .icon-edit:hover {
+  cursor: pointer;
+  color: fuchsia;
 }
 
 /*# sourceMappingURL=profile.css.map */

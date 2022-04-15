@@ -9,7 +9,7 @@ router.route('/profile')
     .get(verifyToken, authUser, userController.getProfile);
 
 router.route('/update-info')
-    .patch(verifyToken, userController.update)
+    .patch(validate.validateUpdateInfo(), validate.handleError, verifyToken, userController.update);
 
 router.route('/create-room')
     .post(verifyToken, userController.createRoom);

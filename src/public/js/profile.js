@@ -2,15 +2,10 @@ const btnPrivacy = $('.options .privacy');
 const btnSettings = $('.options .settings');
 const optionsPrivacy = $('.options-privacy');
 const optionsSetting = $('.options-settings');
-const button = $('.button');
-const btnEdit = $('.btn-edit');
-const inputs = $$('.wrapper-options input');
-const formInfo = $('form.info');
-const btnEditAvatar = $('.btn-edit-avatar');
-const btnChangeAvatar = $('.icon-change-avatar');
-const formAvatar = $('.formAvatar');
+const inputs = $$('.options-privacy input');
+const formAvatar = $('form.formAvatar');
 const avatar = $('.img-avatar');
-const inputAvatar = document.getElementById('input-avatar');
+const inputAvatar = $('input#input-avatar');
 const btnAddFriend = $('.profile-actions .add-friend');
 const btnCancelRequest = $('.profile-actions .cancel-request');
 const btnResponseRequest = $('.profile-actions .respond-request');
@@ -18,8 +13,13 @@ const btnFriend = $('.profile-actions .friend');
 const btnUnfriend = $('.profile-actions .friend .unfriend');
 const confirmRequest = $('.answer .confirm');
 const deleteRequest = $('.answer .delete');
+const iconEditInfos = $$('.profile .options-privacy i');
+const infoForm = $('.profile form.info');
+const btnEditPrivacy = $('.privacy-info .button-edit');
+const btnEditPrivacy_update = $('.privacy-info .button-edit .update');
+const btnEditPrivacy_cancel = $('.privacy-info .button-edit .cancel');
 
-const originValue = {}
+let originValueInfo = {}
 let originAvatar;
 
 /**
@@ -29,7 +29,7 @@ btnPrivacy.onclick = function () {
     if (optionsPrivacy.style.display === 'none' || !optionsPrivacy.style.display) {
         btnPrivacy.style.backgroundColor = 'rgb(119, 119, 119)';
         if(btnSettings) btnSettings.style.backgroundColor = '#ccc';
-        optionsPrivacy.style.display = 'block';
+        optionsPrivacy.style.display = 'flex';
         if(optionsSetting) optionsSetting.style.display = 'none';
     }
     else {
@@ -68,91 +68,98 @@ function loadAvatar() {
         avatar.src = reader.result;
     }
     reader.readAsDataURL(event.target.files[0]);
-    btnEditAvatar.classList.add('btn-edit-avatar');
-    btnEditAvatar.innerHTML = `
-        <div class="btn btn-update-avatar" onclick="update('avatar')">Update</div>
-        <div class="btn btn-cancel-avatar" onclick="cancel('avatar')">Cancel</div>
-    `;
-}
-
-/**
- * When click on edit button.
- * Show 2 buttons: Update and Cancel.
- */
-function editInfo() {
-    if (btnEdit) {
-        if (inputs) {
-            for (const input of inputs) {
-                originValue[input.name] = input.value;
-                input.classList.remove('input-disabled');
-                input.tabIndex = 1;
-            }
-        }
-        
-        const update = document.createElement('div');
-        const cancel = document.createElement('div');
-        
-        button.innerHTML = `
-            <div class="btn btn-update" onclick="update('info')">Update</div>
-            <div class="btn btn-cancel" onclick="cancel('info')">Cancel</div>
-        `;
-        button.appendChild(update);
-        button.appendChild(cancel);
-    }
+    $('.btn-edit-avatar .confirm-edit').style.display = 'inline-block';
+    $('.btn-edit-avatar .choose-avatar').style.display = 'none';
 }
 
 /**
  * When click on Update button. Start updating.
  */
-function update(type) {
-    switch (type) {
-        case 'avatar':
-            $('input.invisibility').value = avatar.src;
-            if(window.confirm('Are you sure to update your avatar?'))
-            formAvatar.submit();
-            break;
-            
-            case 'info':
-            if(window.confirm('Are you sure to update your information?'))
-                formInfo.submit();
-            break;
-        
-        default: break;
+function updateAvatar() {
+    $('input.invisibility').value = avatar.src;
+    if (window.confirm('Are you sure to update your avatar?')) {
+        formAvatar.submit();
     }
 }
 
 /**
  * When click on cancel button. Stop updating.
  */
-function cancel(type) {
-    switch (type) {
-        case 'avatar': {
-            avatar.src = originAvatar;
-            btnEditAvatar.classList.remove('btn-edit-avatar');
-            btnEditAvatar.innerHTML = `
-                <label for="input-avatar"><i class="fas fa-camera icon-change-avatar"></i></label>
-                <input id="input-avatar" tabindex="-1" type="file" accept="image/*" name="newAvatar" onchange="loadAvatar()">
-            `;
-            break;
+function cancelUpdateAvatar() {
+    avatar.src = originAvatar;
+    $('.btn-edit-avatar .confirm-edit').style.display = 'none';
+    $('.btn-edit-avatar .choose-avatar').style.display = 'inline-block';
+    inputAvatar.value = '';
+}
+
+/**
+ * When click on edit button.
+ * Show 2 buttons: Update and Cancel.
+ */
+for (const iconEdit of iconEditInfos) {
+    iconEdit.onclick = function () {
+        const field = iconEdit.dataset.for;
+        const inputField = $(`.profile .options-privacy .input-${field}`);
+        if (!(field in originValueInfo)) {
+            originValueInfo[field] = inputField.value.trim();
         }
-        case 'info': {
-            if (inputs) {
-                for (const input of inputs) {
-                    input.value = originValue[input.name];
-                    input.classList.add('input-disabled');
-                    input.tabIndex = -1;
-                };
+        inputField.classList.toggle('input-disabled');
+        if (!btnEditPrivacy.style.display || btnEditPrivacy.style.display === 'none') {
+            btnEditPrivacy.style.display = 'block';
+        }
+    }
+
+}
+
+/**
+ *  Cancel update info of user.
+ */
+if (btnEditPrivacy_cancel) {
+    btnEditPrivacy_cancel.onclick = function () {
+        for (const input of inputs) {
+            if (input.name in originValueInfo) {
+                input.value = originValueInfo[input.name];
+            }
+            if (!input.classList.contains('input-disabled')) {
+                input.classList.add('input-disabled');
+            }
+        }
+        btnEditPrivacy.style.display = 'none';
+        originValueInfo = {};
+    }
+}
+
+/**
+ * Update info.
+ */
+if (btnEditPrivacy_update) {
+    btnEditPrivacy_update.onclick = function () {
+        if (window.confirm('Are you sure you want to update?')) {
+            const newInfo = {};
+            for (const input of inputs) {
+                newInfo[input.name] = input.value?.trim();
             }
 
-            button.innerHTML = `
-                    <div class="btn btn-edit" onclick="editInfo()">Edit</div>
-            `;
+            const differenceFields = Object.keys(originValueInfo).filter(field => {
+                return originValueInfo[field] !== newInfo[field];
+            });
+            // dont need to update
+            if (differenceFields.length === 0) {
+                btnEditPrivacy_cancel.click();
+                return;
+            }
+            // real update
+            for (const input of inputs) {
+                if (!differenceFields.includes(input.name)) {
+                    input.removeAttribute('name');
+                }
+            }
+            infoForm.submit();
+            // set attribute 'name' for input after submit
+            for (const field of differenceFields) {
+                $(`.profile .options-privacy .input-${field}`).name = field;
+            }
         }
-            
-            break;
-    
-        default:
-            break;
     }
 }
 

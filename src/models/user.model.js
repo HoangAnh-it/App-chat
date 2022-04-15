@@ -56,9 +56,7 @@ module.exports = function (sequelize, DataTypes) {
                 beforeSave: async (instance, options) => {
                     if (instance.loginType === 'local') {
                         const salt = await bcryptjs.genSalt(10);
-                        console.log('--------------instance.password => ', instance.password);
                         instance.password = await bcryptjs.hash(instance.password, salt);
-                        console.log('--------------instance.password => ', instance.password);
                     };
                 },
             }

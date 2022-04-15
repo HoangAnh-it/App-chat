@@ -1,4 +1,4 @@
-header .header-all-users {
+header .header-back {
   position: fixed;
   top: 0;
   left: 0;
@@ -44,10 +44,12 @@ header .header-all-users {
   padding-bottom: 2px;
   justify-content: space-between;
   flex-direction: column;
+  text-align: center;
 }
 
 .container .user .img-user {
-  flex-grow: 2;
+  display: block;
+  height: 80%;
 }
 
 .container .user img {
@@ -55,16 +57,12 @@ header .header-all-users {
   height: 100%;
   border-radius: 10px;
   box-shadow: 0 0 4px black;
-  flex-grow: 1;
+  object-fit: cover;
 }
 
 .container .user img:hover {
   opacity: 0.6;
   transition: opacity 0.2s ease;
-}
-
-.container .user {
-  text-align: center;
 }
 
 .container .user > div {
