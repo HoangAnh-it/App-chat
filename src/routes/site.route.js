@@ -11,6 +11,4 @@ router.route('/chat')
 router.route('/all-users')
     .get(verifyToken, siteController.getAllUsers);
 
-router.route('/error')
-    .get(siteController.error);
 module.exports = router;

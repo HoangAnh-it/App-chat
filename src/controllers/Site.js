@@ -110,15 +110,6 @@ const SiteController = {
             });
         }
     },
-
-    // [GET] /api/v2/error
-    error: (req, res) => {
-        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).render('pages/status', {
-            title: 'Error!',
-            message: 'Cannot update profile. Something went wrong!',
-            directTo: 'back',
-        });
-    },
 }
 
 module.exports = SiteController;

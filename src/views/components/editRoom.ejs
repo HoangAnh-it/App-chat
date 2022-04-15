@@ -7,7 +7,7 @@
         <div class="detail-info ">
             <div class="name">
                 <label for="name-room">Name:</label>
-                <input class="input-disabled" type="text" value="<%= room.name %>">
+                <input class="input-disabled" type="text" value="<%= room.name %>" tabindex="-1">
             </div>
             <div class="admin flex">
                 <label for="admin-room">Admin:</label>
@@ -18,7 +18,7 @@
             </div>
             <div class="max-users">
                 <label for="">Max:</label>
-                <select class="max-users input-disabled" name="maxUsers">
+                <select class="max-users input-disabled" name="maxUsers" tabindex="-1">
                     <option value="<%= room.maximum_users %>" selected hidden disabled><%= room.maximum_users %></option>
                     <option value="4">4</option>
                     <option value="8">8</option>

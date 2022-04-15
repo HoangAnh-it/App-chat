@@ -1,20 +1,17 @@
 const jwt = require('jsonwebtoken');
-const { isTokenExpired, generateTokenExpired} = require('../utils/token');
+const { generateTokenExpired} = require('../utils/token');
 require('dotenv').config();
 
 const verifyToken = (req, res, next) => {
-    
     const accessToken = req.signedCookies.access_token?.split(' ')[1];
     if (!accessToken) {
         return res.redirect('/api/v2/auth/login');
     }
-
-    if (isTokenExpired(accessToken)) {
-        console.log('>>>>>     TOKEN IS EXPIRED     <<<<<<<')
+    const { _id: userId, exp } = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET);
+    if (exp * 1000 <= Date.now()) {
+        console.log('>>>>>>>>>>         TOKEN WAS EXPIRED       <<<<<<<<');  
         generateTokenExpired(req, res);
     }
-    
-    const { _id: userId } = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET);
     req.userId = userId;
     next();
 }

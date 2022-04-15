@@ -3,6 +3,7 @@ module.exports = function storeToken(req, res, user) {
 
     res.cookie('access_token', token.accessToken, {
         httpOnly: true,
+        secure: false,
         signed: true,
     });
 
