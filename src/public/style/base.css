@@ -53,7 +53,7 @@ a:hover {
 }
 
 .input-disabled {
-  background-color: white;
+  background-color: #ccc;
   border: none;
   pointer-events: none;
   border: none !important;

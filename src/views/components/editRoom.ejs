@@ -1,46 +1,114 @@
-<form class="form-edit-room flex" method="POST" action="/api/v2/room/edit">
+<form class="form-edit-room" method="POST" action="/api/v2/room/edit">
     <div class="title">ROOM</div>
 
     <div class="info flex">
-        <img class="avatar" src="/image/default_avatar_group.jpg" alt="">
+        <div class="avatar">
+            <img src="/image/default_avatar_group.jpg" alt="">
+        </div>
 
-        <div class="detail-info ">
-            <div class="name">
-                <label for="name-room">Name:</label>
-                <input class="input-disabled" type="text" value="<%= room.name %>" tabindex="-1">
-            </div>
-            <div class="admin flex">
-                <label for="admin-room">Admin:</label>
-                <div class="info-admin flex">
-                    <a href="/api/v2/user/profile?id=<%= admin.id %>"><img src="<%= admin.avatar %>" alt="..."></a>
-                    <div class="name"><%= admin.name %></div>
+        <!-- start info -->
+        <div class="detail-info flex">
+            <div class="general-info flex">
+                <div class="general-info__detail">
+                    <div class="name">
+                        <label for="name-room">Name:</label>
+                        <input class="input-disabled" type="text" value="<%= room.name %>" tabindex="-1">
+                    </div>
+
+                    <div class="admin flex">
+                        <label for="admin-room">Admin:</label>
+                        <div class="info-admin flex">
+                            <a href="/api/v2/user/profile?id=<%= admin.id %>"><img src="<%= admin.avatar %>" alt="..."></a>
+                            <div class="name"><%= admin.name %></div>
+                        </div>
+                    </div>
+
+                    <div class="max-users">
+                        <label for="">Max:</label>
+                        <select class="max-users input-disabled" name="maxUsers" tabindex="-1">
+                            <option value="<%= room.maximum_users %>" selected hidden disabled><%= room.maximum_users %></option>
+                            <option value="4">4</option>
+                            <option value="8">8</option>
+                            <option value="10">10</option>
+                            <option value="unlimited">unlimited</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="edit-info flex">
+                    <i class="icon-edit fas fa-pen-fancy" data-for="name"></i>
+                    <i class="icon-edit fas fa-pen-fancy" data-for="nickName"></i>
+                    <i class="icon-edit fas fa-pen-fancy" data-for="email"></i>
                 </div>
             </div>
-            <div class="max-users">
-                <label for="">Max:</label>
-                <select class="max-users input-disabled" name="maxUsers" tabindex="-1">
-                    <option value="<%= room.maximum_users %>" selected hidden disabled><%= room.maximum_users %></option>
-                    <option value="4">4</option>
-                    <option value="8">8</option>
-                    <option value="10">10</option>
-                    <option value="unlimited">unlimited</option>
-                </select>
-            </div>
+
+            <!-- list members -->
             <div class="members">
-                <label for="">Members:</label>
+                <label>Members:</label>
                 <div class="list-members">
                     <% for(let i = 0; i< members.length; i++) { %>
-                        <a href="/api/v2/user/profile?id=<%= members[i].userId %>">
-                            <div class="item flex">
+                        <div class="item">
+                            <div class="item-info flex">
                                 <img src="<%= members[i].avatar %>" alt="...">
                                 <div class="name"><%= members[i].name %></div>
                             </div>
-                        </a>
+                        </div>
                     <% } %>
+
+                    <div class="item">
+                            <div class="item-info flex">
+                                <img src="/image/default_avatar.png" alt="...">
+                                <div class="name">User name</div>
+                            </div>
+                    </div>
+
+                    
+                    <div class="item">
+                            <div class="item-info flex">
+                                <img src="/image/default_avatar.png" alt="...">
+                                <div class="name">User name</div>
+                            </div>
+                    </div>
+
+                    <div class="item">
+                            <div class="item-info flex">
+                                <img src="/image/default_avatar.png" alt="...">
+                                <div class="name">User name</div>
+                            </div>
+                    </div>
+
+                    <div class="item">
+                            <div class="item-info flex">
+                                <img src="/image/default_avatar.png" alt="...">
+                                <div class="name">User name</div>
+                            </div>
+                    </div>
+
+                    <div class="item">
+                            <div class="item-info flex">
+                                <img src="/image/default_avatar.png" alt="...">
+                                <div class="name">User name</div>
+                            </div>
+                    </div>
+
+                    <div class="item">
+                            <div class="item-info flex">
+                                <img src="/image/default_avatar.png" alt="...">
+                                <div class="name">User name</div>
+                            </div>
+                    </div>
+
+                    <div class="item">
+                            <div class="item-info flex">
+                                <img src="/image/default_avatar.png" alt="...">
+                                <div class="name">User name</div>
+                            </div>
+                    </div>
                     
                 </div>
             </div>
         </div>
+        <!-- end info -->
     </div>
 </form>
 

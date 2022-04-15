@@ -91,6 +91,10 @@ header .options {
     text-align: center;
 }
 
+.chat-wrapper > .item {
+    box-shadow: 0 0 10px black;
+}
+
 .item {
     box-shadow: 0 0 4px black;
     background-color: white;

@@ -17,149 +17,184 @@ header i:hover {
   color: black;
 }
 
+img {
+  border-radius: 50%;
+}
+
 .form-edit-room {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: white;
-  border-radius: 10px;
-  padding: 16px;
+  width: 45%;
+  background-color: #ccc;
   text-align: center;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  width: 40%;
+  border-radius: 10px;
+  padding: 8px;
+  box-shadow: 0 0 10px black;
 }
 
-.form-edit-room .title {
-  font-size: 2em;
+.title {
+  font-size: 2.2em;
   border-bottom: 2px solid black;
   width: 100%;
   margin-bottom: 16px;
   font-weight: bold;
 }
 
-.form-edit-room .avatar {
-  width: 200px;
-  height: 200px;
-  object-fit: cover;
-  box-shadow: 0 0 4px black;
-  border-radius: 50%;
-}
-
-.form-edit-room .info {
+.info {
   flex-direction: row;
-  justify-content: space-around;
-  flex-grow: 1;
-  text-align: left;
-  font-size: 1.5rem;
-}
-
-.form-edit-room .info > * {
-  padding: 4px;
-  margin: 8px 16px;
-}
-
-.form-edit-room .detail-info {
-  flex-grow: 1;
-}
-
-.form-edit-room .detail-info > div {
-  margin: 16px 0;
-}
-
-.form-edit-room .detail-info label {
-  min-width: 100px;
-  display: inline-block;
-}
-
-.form-edit-room .detail-info input {
-  padding: 4px;
-  min-width: 200px;
-  font-size: 1.5rem;
-  border: 1px solid black;
-}
-
-.form-edit-room .detail-info select {
-  font-size: 1.5rem;
-  border: 1px solid black;
-  padding: 2px;
-  border-radius: 10px;
-}
-
-.form-edit-room .detail-info .admin {
-  flex-direction: row;
-  align-items: center;
   justify-content: flex-start;
 }
 
-.form-edit-room .detail-info .admin .info-admin {
-  flex-direction: row;
-  align-items: center;
+.info > div {
+  flex-grow: 1;
+}
+
+.info .avatar {
+  width: 25%;
+  position: relative;
+}
+
+.info .avatar:after {
+  content: "";
+  padding-bottom: 100%;
+  display: block;
+}
+
+.info .avatar img {
+  position: absolute;
+  top: 0;
+  left: 25%;
+  right: 25%;
+  width: 60%;
+  height: 60%;
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow: 0 0 4px 1px black;
+}
+
+.general-info {
   justify-content: space-between;
+  font-size: 1.4rem;
 }
 
-.form-edit-room .detail-info .admin img {
-  width: 50px;
-  height: 50px;
-  object-fit: cover;
-  margin-right: 8px;
-  box-shadow: 0 0 4px black;
-  border-radius: 50%;
+.detail-info {
+  flex-direction: column;
+  justify-content: space-evenly;
 }
 
-.form-edit-room .detail-info .admin img:hover {
-  opacity: 0.6;
-  transition: opacity 0.2s linear;
-  cursor: pointer;
+.general-info__detail {
+  flex-grow: 1;
+  margin-right: 4px;
 }
 
-.form-edit-room .list-members {
-  box-shadow: 0 0 4px black;
+.general-info__detail > div {
+  display: flex;
+  margin: 4px 0;
   padding: 4px;
-  overflow-y: scroll;
-  max-height: 200px;
-  border-radius: 10px;
-  margin: 8px;
-}
-
-.form-edit-room .list-members a:hover {
-  color: black;
-  cursor: default;
-}
-
-.form-edit-room .list-members .item {
-  width: 80%;
-  height: 35px;
-  margin: 4px auto;
-  flex-direction: row;
+  min-height: 35px;
   align-items: center;
-  justify-content: flex-start;
-  border: 1px solid black;
-  border-radius: 10px;
+}
+
+.general-info__detail > div > label {
+  min-width: 25%;
+  text-align: left;
+}
+
+.general-info__detail > div > input {
+  flex-grow: 1;
+  padding: 4px 0;
+  font-size: 1.2rem;
+}
+
+.general-info .edit-info {
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.general-info .edit-info i {
+  min-height: 35px;
+  line-height: 35px;
+  padding: 0 4px;
   font-size: 1rem;
 }
 
-.form-edit-room .list-members .item:hover {
-  background-color: #ccc;
+.general-info .edit-info i:hover {
   cursor: pointer;
   color: fuchsia;
 }
 
-.form-edit-room .list-members .item img {
-  width: 35px;
-  height: 100%;
-  object-fit: cover;
-  margin-right: 16px;
-  border-radius: 10px;
+.members {
+  text-align: left;
   padding: 4px;
+}
+
+.members label {
+  font-size: 1.4rem;
+  margin: 16px 0;
+}
+
+.members .list-members {
+  overflow-y: scroll;
+  border: 1px solid black;
+  border-radius: 10px;
+  max-height: 200px;
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+
+.members .list-members .item {
+  margin: 4px auto;
+  width: 50%;
+}
+
+.members .list-members .item .item-info {
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.item-info {
+  border-radius: 10px;
+  box-shadow: 0 0 4px black;
+  margin: 8px 0;
+}
+
+.item-info:hover {
+  background-color: #969292;
+  cursor: pointer;
+}
+
+.item-info img {
+  width: 30px;
+  height: 30px;
+  margin: 4px 8px;
+  border-radius: 50%;
   box-shadow: 0 0 4px black;
 }
 
-.form-edit-room .btn-edit {
+select {
+  font-size: 1.4rem;
+}
+
+.info-admin {
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.info-admin a {
   display: inline-block;
-  padding: 4px;
+}
+
+.info-admin img {
+  width: 35px;
+  height: 35px;
+  margin: auto 4px;
+}
+
+.info-admin img:hover {
+  opacity: 0.6;
+  transition: opacity 0.2s linear;
 }
 
 /*# sourceMappingURL=editRoom.css.map */

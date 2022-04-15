@@ -12,6 +12,7 @@
   flex-direction: column;
   justify-content: space-between;
   color: black;
+  box-shadow: 0 0 10px black;
 }
 
 .title {
