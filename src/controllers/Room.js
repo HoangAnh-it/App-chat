@@ -8,6 +8,7 @@ const RoomController = {
     // [GET] /api/v2/room/edit?id
     formEditRoom: async(req, res) => {
         try {
+            const userId = req.userId;
             const roomId = req.query.id;
             const room = await Room.findOne({
                 where: { roomId },
@@ -20,6 +21,11 @@ const RoomController = {
             });
             if (!room) {
                 throw new NotFoundError('Not found', 'Cannot find this room.');
+            }
+
+            const allUserIds = room.users.map(user => user.dataValues.userId);
+            if (!allUserIds.includes(userId)) {
+                throw new NotFoundError('Not found', 'You are not member of this room.');
             }
 
             const adminId = room.admin;
@@ -176,7 +182,7 @@ const RoomController = {
         try {
             const newValue = trimObj(req.body);
             console.log(newValue);
-            if ('maximum_users' in newValue) {
+            if ('maximum_users' in newValue && newValue.maximum_users !== 'unlimited') {
                 newValue.maximum_users = Number(newValue.maximum_users);
             }
 
@@ -190,6 +196,25 @@ const RoomController = {
                 message: error.message,
                 directTo: 'back',
             });
+        }
+    },
+
+    // [DELETE] /api/v2/room/remove-user
+    removeUser: async (req, res) => {
+        try {
+            const { userId, roomId } = req.body;
+            await User_Room.destroy({
+                where: { roomId, userId },
+            });
+
+            return res.sendStatus(StatusCodes.OK);
+        } catch (error) {
+            console.error(error);
+            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+                title: error.name,
+                message: error.message,
+                directTo: 'back',
+            })
         }
     }
 }

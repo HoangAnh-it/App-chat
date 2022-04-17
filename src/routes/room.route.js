@@ -15,6 +15,9 @@ router.route('/update')
 router.route('/leave')
     .delete(verifyToken, roomController.leaveRoom);
 
+router.route('/remove-user')
+    .delete(verifyToken, roomController.removeUser);
+    
 router.route('/')
     .get(verifyToken, roomController.formEditRoom);
 

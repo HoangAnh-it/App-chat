@@ -26,7 +26,7 @@ img {
     top:50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    min-width: 55%;
+    min-width: 45%;
     background-color: #ccc;
     text-align: center;
     border-radius: 10px;
@@ -144,11 +144,12 @@ img {
     max-height: 250px;
     margin-top: 12px;
     margin-bottom: 12px;
+    width: 60%;
 }
 
 .members .list-members .item {
     margin: 4px auto;
-    width: 50%;
+    width: 70%;
 }
 
 .item-info {
@@ -197,6 +198,8 @@ img {
 select {
     font-size: 1.4rem;
     background-color: #fff;
+    padding-left: 4px;
+    padding-right: 4px;
 }
 
 .info-admin {
@@ -264,4 +267,23 @@ select {
     margin: 2px 4px;
     flex-direction: row;
     justify-content: flex-start;
+}
+
+.link {
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.link .copy {
+    margin-left: 16px;
+    background-color: rgb(96, 88, 88);
+    padding: 4px;
+    border-radius:10px;
+    color: white;
+}
+
+.link .copy:hover {
+    opacity: 0.5;
+    cursor: pointer;
+    transition: opacity 0.2s linear;
 }

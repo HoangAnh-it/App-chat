@@ -187,12 +187,12 @@ header .options {
     flex-direction: row;
 }
 
-.list-rooms .options a {
+.list-rooms .options i {
     padding: 4px;
     z-index: 1111;
 }
 
-.list-rooms .options a:hover {
+.list-rooms .options i:hover {
     cursor: pointer;
     color: red;
 }

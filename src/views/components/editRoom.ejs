@@ -50,16 +50,25 @@
                             <option value="unlimited">unlimited</option>
                         </select>
                     </div>
-                </div>
 
+                    <div class="link flex">
+                        <label>Link:</label>
+                        <input class="input-disabled" style="display:none;" type="text" value="<%= room.roomId %>" >
+                        <div class="copy">Copy</div>
+                    </div>
+                </div>
+                
                 <% if(isAdmin) { %>
                     <div class="edit-info flex">
                         <i class="icon-edit fas fa-pen-fancy" data-for="name"></i>
                         <i class="" data-for="admin"></i>
                         <i class="icon-edit fas fa-pen-fancy" data-for="maximum_users"></i>
+                        <i class="" data-for="admin"></i>
                     </div>
                 <% } %>
+                
             </form>
+
 
             <div class="btn-update-info flex">
                 <div class="btn btn-update">Update</div>
@@ -71,17 +80,13 @@
                 <label>Members(<%=members.length%>):</label>
                 <div class="list-members">
                     <% for(let i = 0; i< members.length; i++) { %>
-                        <!-- <div class="item" onclick="window.location.href='/api/v2/user/profile?id=<%= members[i].userId %>'"> -->
-                        <div class="item" >
+                        <div class="item item-<%= members[i].userId %>" data-id="<%= members[i].userId %>">
                             <div class="item-info flex">
                                 <img src="<%= members[i].avatar %>" alt="...">
                                 <div class="name"><%= members[i].name %></div>
-                                <% if(isAdmin) { %>
+                                <% if(isAdmin && admin.id !== members[i].userId) { %>
                                     <div class="more">
-                                        <i class="fas fa-ellipsis-v"></i>
-                                        <div class="options">
-                                            <i class="fas fa-minus-circle remove" data-id="<%= members[i].userId %>"></i>
-                                        </div>
+                                        <i class="fas fa-minus-circle remove" data-id="<%= members[i].userId %>"></i>
                                     </div>
                                 <% } %>
                             </div>

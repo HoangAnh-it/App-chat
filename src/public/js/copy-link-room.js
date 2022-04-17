@@ -8,7 +8,6 @@ if (btnCopy) {
     btnCopy.onclick = function () {
         link.select();
         navigator.clipboard.writeText(link.value);
-        console.log(tooltip.style.display);
         if (!tooltip.style.display || tooltip.style.display === 'none') {
             tooltip.style.display = 'inline-block';
             setTimeout(function () {

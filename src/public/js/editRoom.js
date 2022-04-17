@@ -12,9 +12,7 @@ const btnUpdateInfo = $('.detail-info .btn-update-info .btn-update');
 const btnCancelInfo = $('.detail-info .btn-update-info .btn-cancel');
 
 const members = $$('.list-members .item');
-
-const more = $('.list-members .more');
-const optionsRemoveMembers = $$('.list-members .more .remove');
+const btnCopyLink = $('.link .copy');
 
 let originAvatar;
 let originInfo ={};
@@ -48,23 +46,23 @@ if (btnCancelInfo) {
 }
 
 if (btnUpdateInfo) {
-    console.log(originInfo);
     btnUpdateInfo.onclick = function () {
-        const differenceFields = [];
-        for (const field in originInfo) {
-            const input = $(`.room-${field}`);
-            if (originInfo[field] !== input.value.trim()) {
-                differenceFields.push(field);
+        if (window.confirm('Are you sure you want to update information?')) {
+            const differenceFields = [];
+            for (const field in originInfo) {
+                const input = $(`.room-${field}`);
+                if (originInfo[field] !== input.value.trim()) {
+                    differenceFields.push(field);
+                }
             }
-        }
 
-        if (differenceFields.length === 0) {
-            btnCancelInfo.click();
-            return;
+            if (differenceFields.length === 0) {
+                btnCancelInfo.click();
+                return;
+            }
+        
+            formChangeInfo.submit();
         }
-        
-        formChangeInfo.submit();
-        
     }
 }
 
@@ -86,7 +84,9 @@ function loadAvatarGroup() {
 
 if (updateChangeAvatarGroup) {
     updateChangeAvatarGroup.onclick = function () {
-        formUpdateAvatarGroup.submit();
+        if (window.confirm('Are you sure you want to update avatar group?')) {
+            formUpdateAvatarGroup.submit();
+        }
     }
 }
 
@@ -98,13 +98,47 @@ if (cancelChangeAvatarGroup) {
         $('input#input-change-avatar-group').value = '';
     }
 }
-    
-/**
- * Options in list members
- */
-for (const optionsRemove of optionsRemoveMembers) {
-    optionsRemove.onclick = function () {
 
+/**
+ * List members.
+ */
+// remove user from room.
+for (const member of members) {
+    member.onclick = function (event) {
+        const userId = this.dataset.id;
+        const optionRemove = event.target.closest('i.remove');
+        if (optionRemove) {
+            if (window.confirm('Are you sure you want to remove this user?')) {
+                const params = new URLSearchParams(window.location.search);
+                const roomId = params.get('id');
+                console.log('roomId >>',roomId);
+                axios.delete('/api/v2/room/remove-user', {
+                    data: {roomId, userId,}
+                }).then(res => {
+                    if (res.statusText === 'OK') {
+                        removeUserFromDOM(userId);
+                    }
+                }).catch(console.error);
+            }
+        } else {
+            window.location.href = `/api/v2/user/profile?id=${userId}`;
+        }
     }
 }
 
+function removeUserFromDOM(userId) {
+    $(`.item-${userId}`).remove();
+}
+
+/**
+ * Copy link
+ */
+btnCopyLink.onclick = function () {
+    const input = $('.link input');
+    input.select();
+    navigator.clipboard.writeText(input.value);
+    this.textContent = 'Copied';
+    setTimeout(() => {
+        this.textContent = 'Copy';
+    }, 3000);
+}

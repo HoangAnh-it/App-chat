@@ -186,7 +186,6 @@ for (const btnLeavingRoom of btnLeavingRooms) {
 }
 
 function removeRoomFromDOM(roomId) {
-    console.log('remove', roomId);
     $(`.list-rooms .room-${roomId}`).remove();
 }
 
