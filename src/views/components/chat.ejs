@@ -55,15 +55,15 @@
             <div class="title">Your groups</div>
             <div class="items">
                 <% for(let i = 0; i< rooms.length;i ++) { %>
-                    <div class="item flex">
+                    <div class="item room-<%= rooms[i].roomId %> flex">
                         <div class="room-name" data-roomid=<%= rooms[i].roomId%>><%= rooms[i].name%></div>
                         <i class="fas fa-arrow-left btn-more" data-roomid=<%= rooms[i].roomId %>></i>
                         <div class="options options-<%= rooms[i].roomId %> flex">
                             <a class="edit-room" href="/api/v2/room?id=<%= rooms[i].roomId%>">
                                 <i class="fas fa-pencil-alt"></i>
                             </a>
-                            <a class="delete-room" href="/api/v2/user/leave-room?roomId=<%= rooms[i].roomId %>">
-                                <i class="fas fa-trash-alt"></i>
+                            <a class="delete-room" data-id="<%= rooms[i].roomId %>">
+                                <i class="fas fa-trash-alt" data-id="<%= rooms[i].roomId %>"></i>
                             </a>
                             <a class="share-link-room">
                                 <i class="fas fa-share" data-room='{"roomId":"<%= rooms[i].roomId %>", "roomName":"<%= rooms[i].name %>"}''></i>

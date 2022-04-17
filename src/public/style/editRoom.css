@@ -26,7 +26,7 @@ img {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 45%;
+  min-width: 55%;
   background-color: #ccc;
   text-align: center;
   border-radius: 10px;
@@ -47,28 +47,28 @@ img {
   justify-content: flex-start;
 }
 
-.info > div {
+.info > * {
   flex-grow: 1;
 }
 
-.info .avatar {
-  width: 25%;
+.info .form-update-avatar {
+  width: 20%;
   position: relative;
 }
 
-.info .avatar:after {
+.info .form-update-avatar:after {
   content: "";
   padding-bottom: 100%;
   display: block;
 }
 
-.info .avatar img {
+.form-update-avatar img {
   position: absolute;
   top: 0;
-  left: 25%;
-  right: 25%;
-  width: 60%;
-  height: 60%;
+  left: 50%;
+  width: 55%;
+  height: 55%;
+  transform: translateX(-50%);
   object-fit: cover;
   border-radius: 50%;
   box-shadow: 0 0 4px 1px black;
@@ -100,27 +100,28 @@ img {
 .general-info__detail > div > label {
   min-width: 25%;
   text-align: left;
+  font-size: 1.4rem;
 }
 
 .general-info__detail > div > input {
   flex-grow: 1;
-  padding: 4px 0;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
+  border: none;
 }
 
-.general-info .edit-info {
+.detail-info .edit-info {
   flex-direction: column;
   justify-content: space-around;
 }
 
-.general-info .edit-info i {
+.detail-info .edit-info i {
   min-height: 35px;
   line-height: 35px;
   padding: 0 4px;
   font-size: 1rem;
 }
 
-.general-info .edit-info i:hover {
+.detail-info .edit-info i:hover {
   cursor: pointer;
   color: fuchsia;
 }
@@ -139,7 +140,7 @@ img {
   overflow-y: scroll;
   border: 1px solid black;
   border-radius: 10px;
-  max-height: 200px;
+  max-height: 250px;
   margin-top: 12px;
   margin-bottom: 12px;
 }
@@ -149,12 +150,9 @@ img {
   width: 50%;
 }
 
-.members .list-members .item .item-info {
+.item-info {
   justify-content: flex-start;
   align-items: center;
-}
-
-.item-info {
   border-radius: 10px;
   box-shadow: 0 0 4px black;
   margin: 8px 0;
@@ -173,8 +171,31 @@ img {
   box-shadow: 0 0 4px black;
 }
 
+.item-info .more {
+  flex-grow: 1;
+  text-align: right;
+  position: relative;
+}
+
+.item-info .more i {
+  margin-right: 12px;
+  padding: 8px;
+}
+
+.item-info .more i:hover {
+  transform: scale(1.5);
+  transition: transform 0.2s linear;
+}
+
+.more .options {
+  position: absolute;
+  top: 0;
+  left: 100%;
+}
+
 select {
   font-size: 1.4rem;
+  background-color: #fff;
 }
 
 .info-admin {
@@ -195,6 +216,50 @@ select {
 .info-admin img:hover {
   opacity: 0.6;
   transition: opacity 0.2s linear;
+}
+
+#input-change-avatar-group {
+  display: none;
+}
+
+.change-avatar-group .choose label {
+  position: absolute;
+  top: 40%;
+  left: 70%;
+  z-index: 1;
+  font-size: 1.4rem;
+  background-color: black;
+  color: white;
+  padding: 2px;
+  border-radius: 50%;
+}
+
+.change-avatar-group .choose label:hover {
+  color: fuchsia;
+  cursor: pointer;
+}
+
+.change-avatar-group .confirm {
+  position: absolute;
+  top: 40%;
+  left: 70%;
+  z-index: 1;
+  display: none;
+}
+
+.change-avatar-group .confirm > div {
+  font-size: 1rem;
+  margin: 2px;
+}
+
+.detail-info .btn-update-info {
+  display: none;
+}
+
+.detail-info .btn-update-info > div {
+  margin: 2px 4px;
+  flex-direction: row;
+  justify-content: flex-start;
 }
 
 /*# sourceMappingURL=editRoom.css.map */

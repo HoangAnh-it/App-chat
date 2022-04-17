@@ -59,7 +59,7 @@ const validate = {
     validateUpdateInfo: () => {
         return [
             check('name', 'Name could not be empty').optional({checkFalsy: false}).not().isEmpty(),
-            check('email', 'Invalid email').optional().isEmail(),
+            check('email', 'Invalid email').optional({checkFalsy: false}).isEmail(),
             check('email', 'Email could not be empty').optional({checkFalsy: false}).not().isEmpty(),
         ]
     },

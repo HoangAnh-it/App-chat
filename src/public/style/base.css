@@ -135,4 +135,8 @@ select {
   text-overflow: "";
 }
 
+input {
+  outline: none;
+}
+
 /*# sourceMappingURL=base.css.map */

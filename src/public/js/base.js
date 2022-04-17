@@ -10,3 +10,21 @@ if (btnBack) {
         history.back();
     }    
 }
+
+function debounce(fnc, wait) {
+    let timerId;
+    return function () {
+        const args = arguments;
+        const executeFunction = function () {
+            fnc(args[0]);
+        }
+
+        if (timerId) {
+            clearTimeout(timerId);
+        }
+
+        if (args[0] !== '') {
+            timerId = setTimeout(executeFunction, wait);
+        }
+    }
+}

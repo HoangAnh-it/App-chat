@@ -189,6 +189,7 @@ header .options {
 
 .list-rooms .options a {
     padding: 4px;
+    z-index: 1111;
 }
 
 .list-rooms .options a:hover {
@@ -247,16 +248,18 @@ header .options {
 
 .search .results .result-item {
     width: 70%;
-    margin: 4px auto;
+    margin: 6px auto;
     padding: 4px 8px;
     border-radius: 10px;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
+    box-shadow: 0 0 2px black;
 }
 
 .search .results .result-item:hover {
     background-color: #ccc;
+    cursor: pointer;
 }
 
 .search .results .result-item img {

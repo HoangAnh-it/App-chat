@@ -5,9 +5,6 @@ const messageController = $('.input-message');
 const inputMessage = $('.input-message .message');
 const btnSendMessage = $('.btn-send-message');
 const boxContainer = $('.chat-box .box');
-const inputSearch = $('.search input');
-const btnSearch = $('.btn-search');
-const resultsOfSearching = $('.search .results');
 const btnDeleteRooms = $$('a.delete-room');
 
 let type; // ['room', 'private', 'none']
@@ -72,7 +69,9 @@ for (const friend of friends) {
  */
 for (const btn of btnDeleteRooms) {
     btn.onclick = (e) => {
-        endChatting();
+        if (currentPartner === btn.dataset.id) {
+            endChatting();
+        }
     }
 }
 
@@ -98,12 +97,23 @@ socket.on('info-partner', partner => {
     type = partner.type;
     partnerId = partner.id;
     // set partner in chatting-with
-    chattingWith.innerHTML =
-        `
-            <img class="partner-avatar" src="${partner.avatar}" alt="Cannot load avatar of group"></img>
-            <div class="partner-name">${partner.name}</div>
-            <div class="btn-leave-chatting 	fas fa-times" data-partnerinfo='{"type":"${partner.type}", "id":"${partner.id}"}' onclick="endChatting()"></div>
-        `;
+    const img = document.createElement('img');
+    img.classList.add('partner-avatar');
+    img.src = partner.avatar;
+    img.alt = 'Cannot load avatar of group';
+
+    const name = document.createElement('div');
+    name.classList.add('partner-name');
+    name.textContent = partner.name;
+
+    const btnLeaving = document.createElement('div');
+    btnLeaving.className = 'btn-leave-chatting 	fas fa-times';
+    btnLeaving.dataset.partnerinfo = `{"type":"${partner.type}", "id":"${partner.id}"}`;
+    btnLeaving.onclick = endChatting;
+
+    chattingWith.appendChild(img);
+    chattingWith.appendChild(name);
+    chattingWith.appendChild(btnLeaving);
 });
 
 socket.on('receive-message', data => {
@@ -149,34 +159,6 @@ socket.on('receive-message', data => {
     autoScroll();
 });
 
-socket.on('results of searching', data => {
-    resultsOfSearching.innerHTML = ''; // clear loading
-    if (data.length > 0) {
-        // Show all user found.
-        for (const user of data) {
-            const div = document.createElement('div');
-            const img = document.createElement('img');
-            const a = document.createElement('a');
-
-            div.classList.add('result-item', 'flex')
-            img.src = user.userAvatar;
-            a.textContent = user.userName;
-            a.href = `/api/v2/user/profile?id=${user.userId}`;
-            div.appendChild(img);
-            div.appendChild(a);
-
-            resultsOfSearching.appendChild(div);
-        }
-    } else {
-        const div = document.createElement('div');
-        div.classList.add('no-results');
-        div.textContent = 'No results.';
-        resultsOfSearching.appendChild(div);
-    }
-});
-
-
-
 /** 
  * Send message. 
  */
@@ -188,58 +170,26 @@ inputMessage.onkeydown = (event) => {
 }
 
 /**
- * Search
- */
-
-// send keyword
-const startSearching = debounce((args) => {
-    socket.emit('search-friends', args[0]);
-}, 1000);
-
-inputSearch.oninput = (event) => {
-    const keyword = event.target.value.trim();
-    loading();
-    if (!keyword)
-        resultsOfSearching.innerHTML = '';
-    startSearching(keyword);
-}
-
-function debounce(fnc, wait) {
-    let timerId;
-    return function() {
-        const args = arguments;
-
-        const executeFunction = function () {
-            fnc(args);
-        }
-
-        if (timerId || args[0] === '') {
-            clearTimeout(timerId);
-        }
-
-        if (args[0] !== '') {
-            timerId = setTimeout(executeFunction, wait);
-        }
-    }
-}
-
-/**
  * End chatting.
  * Clear everything in chat box.
  */
 function endChatting() {
-    const partner = JSON.parse($('.btn-leave-chatting').dataset.partnerinfo);
-    socket.emit('end-chatting', {
-        type: partner.type,
-        partnerId: partner.id,
-        userId: userId,
-    });
-    type = 'none';
-    // clear all message
-    chattingWith.innerHTML = '';
-    messageController.style.visibility = 'hidden';
-    boxContainer.innerHTML = '';
-    currentPartner = undefined;
+    // if you are chatting
+    if ($('.btn-leave-chatting')) {
+        
+        const partner = JSON.parse($('.btn-leave-chatting').dataset.partnerinfo);
+        socket.emit('end-chatting', {
+            type: partner.type,
+            partnerId: partner.id,
+            userId: userId,
+        });
+        type = 'none';
+        // clear all message
+        chattingWith.innerHTML = '';
+        messageController.style.visibility = 'hidden';
+        boxContainer.innerHTML = '';
+        currentPartner = undefined;
+    }
 }
 
 /**
@@ -264,17 +214,4 @@ function startSendingMessage() {
  */
 function autoScroll() {
     boxContainer.scrollTop = boxContainer.scrollHeight;
-}
-
-/**
- *  Show loading.
- */
-function loading() {
-    // if the loading is not already, show new one
-    if (!$('.search .loader')) {
-        resultsOfSearching.innerHTML = '';
-        const loader = document.createElement('div');
-        loader.classList.add('loader');
-        resultsOfSearching.appendChild(loader);
-    }
 }

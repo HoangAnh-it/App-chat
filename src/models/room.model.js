@@ -31,7 +31,7 @@ module.exports = function (sequelize, DataTypes) {
         },
 
         maximum_users: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
         }
     },
         {

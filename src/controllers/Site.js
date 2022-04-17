@@ -1,4 +1,4 @@
-const { User, Room } = require('../models');
+const { User, Room, Op } = require('../models');
 const { StatusCodes } = require('http-status-codes');
 const {
     NotFoundError,
@@ -108,6 +108,34 @@ const SiteController = {
                 message: error.message,
                 directTo: '/api/v2/auth/login',
             });
+        }
+    },
+
+    // [GET] /api/v2/search-user?keyword 
+    searchUsers: async (req, res) => {
+        try {
+            const { keyword } = req.query;
+            const users = await User.findAll({
+                raw: true,
+                where: {
+                    name: {
+                        [Op.like]: `%${keyword}%`,
+                    }
+                }
+            });
+
+            const results = users.map(user => {
+                return {
+                    userAvatar: user.avatar,
+                    userId: user.userId,
+                    userName: user.name,
+                }
+            });
+            return res.status(StatusCodes.OK).json(results);
+            
+        } catch (error) {
+            console.log(error);
+            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json('Something went wrong!');
         }
     },
 }

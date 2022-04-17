@@ -11,15 +11,6 @@ router.route('/profile')
 router.route('/update-info')
     .patch(validate.validateUpdateInfo(), validate.handleError, verifyToken, userController.update);
 
-router.route('/create-room')
-    .post(verifyToken, userController.createRoom);
-
-router.route('/join-room')
-    .post(verifyToken, userController.joinRoom);
-
-router.route('/leave-room')
-    .get(verifyToken, userController.leaveRoom);
-
 router.route('/send-friend-request')
     .post(verifyToken, userController.sendFriendRequest);
 

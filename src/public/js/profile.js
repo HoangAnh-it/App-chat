@@ -135,27 +135,25 @@ if (btnEditPrivacy_cancel) {
 if (btnEditPrivacy_update) {
     btnEditPrivacy_update.onclick = function () {
         if (window.confirm('Are you sure you want to update?')) {
-            const newInfo = {};
+            const differenceFields = [];
             for (const input of inputs) {
-                newInfo[input.name] = input.value?.trim();
+                if ( input.name in originValueInfo && input.value.trim() !== originValueInfo[input.name]) {
+                    differenceFields.push(input.name);
+                }
             }
+            console.log(originValueInfo);
+            console.log(differenceFields);
 
-            const differenceFields = Object.keys(originValueInfo).filter(field => {
-                return originValueInfo[field] !== newInfo[field];
-            });
-            // dont need to update
             if (differenceFields.length === 0) {
                 btnEditPrivacy_cancel.click();
                 return;
             }
-            // real update
             for (const input of inputs) {
                 if (!differenceFields.includes(input.name)) {
                     input.removeAttribute('name');
                 }
             }
             infoForm.submit();
-            // set attribute 'name' for input after submit
             for (const field of differenceFields) {
                 $(`.profile .options-privacy .input-${field}`).name = field;
             }
