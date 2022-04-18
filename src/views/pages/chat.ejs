@@ -3,12 +3,16 @@
 <head>
     <%- include('../components/partials/head.ejs') %>
     <link rel="stylesheet" href="/style/chat.css">
+    <link rel="stylesheet" href="/style/nav.css">
     <link rel="stylesheet" href="/style/link-room-modal.css">
 </head>
 
 <body>
+    <header class="header_nav">
+        <%-include('../components/partials/nav.ejs')%>
+    </header>
 
-    <header>
+    <header class="header_profile">
         <%- include('../components/partials/header-chat.ejs') %>
     </header>
 
@@ -23,6 +27,7 @@
     <script src="/js/chat.js"></script>
     <script src="/js/copy-link-room.js"></script>
     <script src="/js/event.js"></script>
+    <script src="/js/nav.js"></script>
 </body>
 
 </html>

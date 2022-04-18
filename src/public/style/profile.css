@@ -258,7 +258,7 @@ input[type=file] {
   padding: 0 2px;
   border-radius: 50%;
   box-shadow: 0 0 10px black;
-  color: #ccc;
+  color: #6f6d6d;
 }
 
 .btn-edit-avatar .choose-avatar label:hover {

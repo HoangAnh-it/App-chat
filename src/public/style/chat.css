@@ -3,7 +3,7 @@
   text-align: center;
 }
 
-header {
+header.header_profile {
   position: fixed;
   top: 20px;
   right: 20px;
@@ -13,11 +13,11 @@ header {
   z-index: 1;
 }
 
-header .header-profile {
+header.header_profile .header-profile {
   display: none;
 }
 
-header .avatar {
+header.header_profile .avatar {
   flex-direction: column;
   align-items: center;
 }
