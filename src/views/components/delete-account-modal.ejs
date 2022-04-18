@@ -1,16 +1,18 @@
-<div class="delete-account modal">
-    <div class="container">
-        <div class="title">
-            <i class="fas fa-exclamation-triangle" style="color:red"></i>
-            DELETE ACCOUNT
-        </div>
-        <form class="flex delete-account-form" action="/api/v2/user/delete-account?_method=DELETE" method="POST">
-            <input type="email"  placeholder="Your email" name="email">
-            <input type="password"  placeholder="Password" name="password">
-            <div class="button flex">
-                <div class="delete btn">Delete</div>
-                <div class="cancel btn">Cancel</div>
+<% if(isYourProfile) { %>
+    <div class="delete-account modal">
+        <div class="container">
+            <div class="title">
+                <i class="fas fa-exclamation-triangle" style="color:red"></i>
+                DELETE ACCOUNT
             </div>
-        </form>
+            <form class="flex delete-account-form" action="/api/v2/user/delete-account?_method=DELETE" method="POST">
+                <input type="email"  placeholder="Your email" name="email">
+                <input type="password"  placeholder="Password" name="password">
+                <div class="button flex">
+                    <div class="delete btn">Delete</div>
+                    <div class="cancel btn">Cancel</div>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
+<% } %>

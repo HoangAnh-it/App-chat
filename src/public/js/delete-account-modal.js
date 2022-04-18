@@ -7,22 +7,28 @@ const formDeleteAccount = $('.delete-account form');
 /**
  * Show modal delete account.
  */
-btnDeleteAccount.onclick = function () {
-    deleteAccountModal.style.display = 'inline-block';
+if (btnDeleteAccount) {
+    btnDeleteAccount.onclick = function () {
+        deleteAccountModal.style.display = 'inline-block';
+    }
 }
 
 /**
  * Cancel delete account.
  */
-cancelDeleteAccount.onclick = function () {
-    deleteAccountModal.style.display = 'none';
+if (cancelDeleteAccount) {
+    cancelDeleteAccount.onclick = function () {
+        deleteAccountModal.style.display = 'none';
+    }
 }
 
 /**
  * Delete account
  */
-deleteAccount.onclick = function () {
-    if (window.confirm('Are you sure you want to delete this account')) {
-        formDeleteAccount.submit();
+if (deleteAccount) {
+    deleteAccount.onclick = function () {
+        if (window.confirm('Are you sure you want to delete this account')) {
+            formDeleteAccount.submit();
+        }
     }
 }

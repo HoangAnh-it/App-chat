@@ -195,6 +195,18 @@ img {
     left: 100%;
 }
 
+.item-info .name {
+    flex-grow: 1;
+    justify-content: space-between;
+}
+
+.span-me {
+    padding: 2px;
+    background-color: aqua;
+    border-radius: 6px;
+    margin-right: 8px;
+}
+
 select {
     font-size: 1.4rem;
     background-color: #fff;
@@ -287,3 +299,4 @@ select {
     cursor: pointer;
     transition: opacity 0.2s linear;
 }
+

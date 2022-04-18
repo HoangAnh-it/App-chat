@@ -83,7 +83,13 @@
                         <div class="item item-<%= members[i].userId %>" data-id="<%= members[i].userId %>">
                             <div class="item-info flex">
                                 <img src="<%= members[i].avatar %>" alt="...">
-                                <div class="name"><%= members[i].name %></div>
+                                <div class="name flex">
+                                    <span><%= members[i].name %></span>
+                                    <% if(admin.id === members[i].userId) { %>
+                                        <span class="span-me">me</span>
+                                    <% } %>
+                                </div>
+
                                 <% if(isAdmin && admin.id !== members[i].userId) { %>
                                     <div class="more">
                                         <i class="fas fa-minus-circle remove" data-id="<%= members[i].userId %>"></i>
