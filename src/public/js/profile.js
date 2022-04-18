@@ -76,7 +76,6 @@ function loadAvatar() {
  * When click on Update button. Start updating.
  */
 function updateAvatar() {
-    $('input.invisibility').value = avatar.src;
     if (window.confirm('Are you sure to update your avatar?')) {
         formAvatar.submit();
     }

@@ -1,23 +1,20 @@
 <div class="profile">
-    <div class="empty"></div>
+    <!-- <div class="empty"></div> -->
 
     <div class="avatar">
-        <form class="formAvatar" action="/api/v2/user/update-info?_method=PATCH" method="POST">
-            <img class="img-avatar" src="<%= profile.avatar %>" alt="Cannot load avatar" >
-            <input class="invisibility"  tabindex="-1" type="text" value="" name="avatar">
-        </form>
-
+        <img class="img-avatar" src="<%= profile.avatar %>" alt="Cannot load avatar" >
+        
         <% if(isYourProfile) { %>
             <div class="btn-edit-avatar">
                 <div class="confirm-edit">
                     <div class="btn btn-update-avatar" onclick="updateAvatar()">Update</div>
                     <div class="btn btn-cancel-avatar" onclick="cancelUpdateAvatar()">Cancel</div>
                 </div>
-
-                <div class="choose-avatar">
+                
+                <form class="formAvatar choose-avatar" action="/api/v2/user/update-avatar?_method=PATCH" method="POST" enctype="multipart/form-data">
                     <label for="input-avatar"><i class="fas fa-camera icon-change-avatar"></i></label>
-                    <input id="input-avatar"  tabindex="-1" type="file" accept="image/*" onchange="loadAvatar()">
-                </div>
+                    <input id="input-avatar" tabindex="-1" type="file" name="avatar" onchange = "loadAvatar()" >
+                </form>
             </div>
         <% } %>
         

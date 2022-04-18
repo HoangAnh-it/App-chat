@@ -2,6 +2,7 @@ const router = require('express').Router();
 const roomController = require('../controllers/Room');
 
 const { verifyToken } = require('../middleware/verify');
+const upload = require('../config/fileUpload')('group');
 
 router.route('/create')
     .post(verifyToken, roomController.createRoom);
@@ -9,8 +10,11 @@ router.route('/create')
 router.route('/join')
     .post(verifyToken, roomController.joinRoom);
 
-router.route('/update')
-    .patch(verifyToken, roomController.update);
+router.route('/update-info')
+    .patch(verifyToken, roomController.updateInfo);
+
+router.route('/update-avatar')
+    .patch(verifyToken, upload.single('avatar'), roomController.updateAvatar);
 
 router.route('/leave')
     .delete(verifyToken, roomController.leaveRoom);

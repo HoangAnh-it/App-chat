@@ -3,13 +3,14 @@
 <head>
     <%- include('../components/partials/head.ejs') %>
     <link rel="stylesheet" href="/style/profile.css">
+    <link rel="stylesheet" href="/style/nav.css">
     <link rel="stylesheet" href="/style/change-password-modal.css">
     <link rel="stylesheet" href="/style/delete-account-modal.css">
 </head>
 
 <body>
     <header>
-        <%-include('../components/partials/header-back.ejs')%>
+        <%-include('../components/partials/nav.ejs')%>
     </header>
 
     <div id="main">
@@ -21,6 +22,7 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="/js/base.js"></script>
     <script src="/js/profile.js"></script>
+    <script src="/js/nav.js"></script>
     <script src="/js/change-password-modal.js"></script>
     <script src="/js/delete-account-modal.js"></script>
 </body>

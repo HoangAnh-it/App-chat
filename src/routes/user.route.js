@@ -4,12 +4,16 @@ const userController = require('../controllers/User');
 const { verifyToken } = require('../middleware/verify');
 const { authUser } = require('../middleware/authUser');
 const validate = require('../middleware/validator');
+const upload = require('../config/fileUpload')('user');
 
 router.route('/profile')
     .get(verifyToken, authUser, userController.getProfile);
 
 router.route('/update-info')
-    .patch(validate.validateUpdateInfo(), validate.handleError, verifyToken, userController.update);
+    .patch(validate.validateUpdateInfo(), validate.handleError, verifyToken, userController.updateInfo);
+
+router.route('/update-avatar')
+    .patch(verifyToken, upload.single('avatar'), userController.updateAvatar);
 
 router.route('/send-friend-request')
     .post(verifyToken, userController.sendFriendRequest);

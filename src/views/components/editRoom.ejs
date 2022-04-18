@@ -2,18 +2,17 @@
     <div class="title">ROOM</div>
 
     <div class="info flex">
-            <form class="form-update-avatar" method="POST" action="/api/v2/room/update?_method=PATCH&id=<%= room.roomId %>">
+            <div class="form-update-avatar" >
                 <img src="<%= room.avatar %>" alt="...">
-                <input class="new-avatar" type="text" name="avatar" value="", tabindex="-1" style="display:none;">
                 
                 <% if(isAdmin) { %>
                     <div class="change-avatar-group">
-                        <div class="choose">
+                        <form class="choose" method="POST" action="/api/v2/room/update-avatar?_method=PATCH&id=<%= room.roomId %>" enctype="multipart/form-data">
                             <label for="input-change-avatar-group">
                                 <i class="fas fa-camera icon-change-avatar"></i>
                             </label>
-                            <input id="input-change-avatar-group" type="file" value="" tabindex="-1" accept="image/*" onchange = "loadAvatarGroup()">
-                        </div>
+                            <input id="input-change-avatar-group" type="file" name="avatar" tabindex="-1" onchange = "loadAvatarGroup()">
+                        </form>
 
                         <div class="confirm">
                             <div class="btn btn-update">Update</div>
@@ -21,11 +20,11 @@
                         </div>
                     </div>
                 <% } %>
-            </form>
+            </div>
 
         <!-- start info -->
         <div class="detail-info flex">
-            <form class="change-general-info flex" method="POST" action="/api/v2/room/update?_method=PATCH&id=<%= room.roomId %>">
+            <form class="change-general-info flex" method="POST" action="/api/v2/room/update-info?_method=PATCH&id=<%= room.roomId %>">
                 <div class="general-info__detail">
                     <div class="name">
                         <label>Name:</label>

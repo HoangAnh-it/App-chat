@@ -92,7 +92,8 @@ const RoomController = {
                     newRoom.addUser(userAsAdmin);
                 }
                         
-                return res.sendStatus(StatusCodes.OK);
+                // return res.sendStatus(StatusCodes.OK);
+                return res.redirect('/api/v2/chat');
             }
             
         } catch (error) {
@@ -177,8 +178,8 @@ const RoomController = {
         }
     },
 
-    // [PATCH] /api/v2/room/update?id
-    update: async (req, res) => {
+    // [PATCH] /api/v2/room/update-info?id
+    updateInfo: async (req, res) => {
         try {
             const newValue = trimObj(req.body);
             console.log(newValue);
@@ -191,6 +192,31 @@ const RoomController = {
             return res.redirect(`/api/v2/room?id=${roomId}`);
         } catch (error) {
             console.log(error);
+            return res.status(error.status || StatusCodes.INTERNAL_SERVER_ERROR).render('/pages/status.ejs', {
+                title: error.name,
+                message: error.message,
+                directTo: 'back',
+            });
+        }
+    },
+
+    // [PATCH] /api/v2/room/update-avatar?id
+    updateAvatar: async (req, res) => {
+        console.log(req.file);
+        try {
+            const roomId = req.query.id;
+            const newAvatar = `/images/upload/group/${req.file.filename}`;
+            await Room.update({
+                avatar: newAvatar,
+            },
+                {
+                    where: { roomId }
+                });
+        
+            return res.status(StatusCodes.OK).redirect(`/api/v2/room?id=${roomId}`);
+            
+        } catch (error) {
+            console.error(error);
             return res.status(error.status || StatusCodes.INTERNAL_SERVER_ERROR).render('pages/status.ejs', {
                 title: error.name,
                 message: error.message,

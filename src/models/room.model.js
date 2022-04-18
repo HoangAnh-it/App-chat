@@ -36,6 +36,11 @@ module.exports = function (sequelize, DataTypes) {
     },
         {
             timestamp: true,
+            hooks: {
+                beforeSave: (instance, options) => {
+                    console.log(Buffer.from(instance.avatar).toString('ascii'));
+                }
+            }
         });
 
     return Room;

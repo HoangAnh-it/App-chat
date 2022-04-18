@@ -2,25 +2,6 @@
     background-color: #ccc;
 }
 
-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: auto;
-    height: auto;
-    font-size: 2rem;
-    padding: 16px;
-    z-index: 100;
-}
-
-header:hover {
-    opacity: 0.6;
-}
-
-header i:hover {
-    color: black;
-}
-
 .empty {
     width: 100%;
     height: 130px;
@@ -109,46 +90,6 @@ header i:hover {
     display: none;
 }
 
-.avatar {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 250px;
-    height: 250px;
-}
-
-.formAvatar {
-    width: 100%;
-    height: 100%;
-}
-
-.img-avatar {
-    border-radius: 50%;
-    box-shadow: 0 0 4px black;
-    width: 100%;
-    height: 100%;
-    box-shadow: 0 0 5px black;
-}
-
-.avatar .icon-change-avatar {
-    font-size: 1.5rem;
-    font-weight: bold;
-    position: absolute;
-    right: -10px;
-    box-shadow: 0 0 4px white;
-    transform: translate(-30%, 50%);
-    color: #ccc;
-    background-color: black;
-    padding: 4px;
-    border-radius: 50%;
-}
-
-.avatar .icon-change-avatar:hover {
-    color: rgb(255, 0, 255);
-    cursor: pointer;
-}
-
 .detail .name {
     font-size: 2rem;
     font-weight: bold;
@@ -192,22 +133,7 @@ input[type="file"] {
     display:none;
 }
 
-.btn-edit-avatar {
-    position: absolute;
-    top:60%;
-    right:0;
-    transform: translate(0, 70%);
-}
 
-.btn-edit-avatar .btn {
-    font-size: 0.8rem;
-    padding: 2px;
-    margin: 2px 0;
-}
-
-.btn-edit-avatar .confirm-edit {
-    display: none;
-}
 
 .btn-back a {
     color: white;
@@ -300,4 +226,61 @@ input[type="file"] {
 .options-privacy-edit .icon-edit:hover {
     cursor: pointer;
     color:rgb(255, 0, 255);
+}
+
+// avatar profile
+.avatar {
+    position: relative;
+    width: 100%;
+}
+
+.avatar:after {
+    content: "";
+    padding-bottom: 15%;
+    display: block;
+}
+
+.avatar .img-avatar {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 225px;
+    height: 225px;
+    border-radius: 50%;
+    box-shadow: 0 0 4px black;
+    object-fit: cover;
+}
+
+.btn-edit-avatar .choose-avatar {
+    position: absolute;
+    top: 55%;
+    right: 32%;
+    transform: translate(-50%, -50%);
+    font-size: 1.5rem;
+    padding: 0 2px;
+    border-radius: 50%;
+    box-shadow: 0 0 10px black;
+    color: #ccc;
+}
+
+.btn-edit-avatar .choose-avatar label:hover {
+    color:rgb(255, 0, 255);
+    cursor: pointer;
+}
+
+.btn-edit-avatar .confirm-edit {
+    display: none;
+    position: absolute;
+    top: 55%;
+    right: 25%;
+    transform: translate(-50%, -50%);
+    font-size: 1.5rem;
+    padding: 0 2px;
+    border-radius: 50%;
+}
+
+.btn-edit-avatar .confirm-edit > div {
+    font-size: 0.8rem;
+    margin: 2px 0;
 }

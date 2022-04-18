@@ -54,6 +54,8 @@ module.exports = function (sequelize, DataTypes) {
             timestamp: true,
             hooks: {
                 beforeSave: async (instance, options) => {
+                    console.log('>>>>>>>   ------          check avatar => ',Buffer.from(instance.avatar).toString('ascii'));
+
                     if (instance.loginType === 'local') {
                         const salt = await bcryptjs.genSalt(10);
                         instance.password = await bcryptjs.hash(instance.password, salt);

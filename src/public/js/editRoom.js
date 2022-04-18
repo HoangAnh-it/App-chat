@@ -1,7 +1,6 @@
-const formEditRoom = $('form.form-edit-room');
 const iconEdits = $$('.edit-info .icon-edit');
 const avatarGroup = $('.form-edit-room .form-update-avatar img');
-const formUpdateAvatarGroup = $('form.form-update-avatar');
+const formUpdateAvatarGroup = $('form.choose');
 const inputNewAvatar = $('input.new-avatar');
 const updateChangeAvatarGroup = $('.change-avatar-group .btn-update');
 const cancelChangeAvatarGroup = $('.change-avatar-group .btn-cancel');

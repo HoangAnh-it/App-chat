@@ -72,7 +72,7 @@ const UserController = {
     },
 
     // [PATCH] /api/v2/user/update-info?userId
-    update: async(req, res) => {
+    updateInfo: async(req, res) => {
         try {
             const newValue = trimObj(req.body);
             // check if new email has already been used.
@@ -84,13 +84,37 @@ const UserController = {
             }
 
             const userId = req.userId;
-            await User.update(newValue, {
-                where: { userId }
-            });
+            await User.update(newValue, { where: { userId } });
             return res.redirect(`/api/v2/user/profile?id=${userId}`)
         } catch (error) {
             console.error(error);
             return res.status(error.status || StatusCodes.INTERNAL_SERVER_ERROR).render('pages/status', {
+                title: error.name,
+                message: error.message,
+                directTo: 'back',
+            });
+        }
+    },
+
+    // [PATCH] /api/v2/user/update-avatar
+    updateAvatar: async (req, res) => {
+        console.log(req.body);
+        console.log(req.file);
+        try {
+            const userId = req.userId;
+            const newAvatar = `/images/upload/user/${req.file.filename}`;
+            await User.update({
+                avatar: newAvatar,
+            },
+                {
+                    where: { userId }
+                });
+        
+            return res.status(StatusCodes.OK).redirect(`/api/v2/user/profile?id=${userId}`);
+            
+        } catch (error) {
+            console.error(error);
+            return res.status(error.status || StatusCodes.INTERNAL_SERVER_ERROR).render('/pages/status.ejs', {
                 title: error.name,
                 message: error.message,
                 directTo: 'back',

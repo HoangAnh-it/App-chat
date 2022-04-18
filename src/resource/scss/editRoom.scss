@@ -1,26 +1,3 @@
-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: auto;
-    height: auto;
-    font-size: 2rem;
-    padding: 16px;
-    z-index: 100;
-}
-
-header:hover {
-    opacity: 0.6;
-}
-
-header i:hover {
-    color: black;
-}
-
-img {
-    border-radius: 50%;
-}
-
 .form-edit-room {
     position: absolute;
     top:50%;
