@@ -1,0 +1,22 @@
+<div class="email-box flex">
+    <div class="title flex">
+        <span>New Email</span>
+        <p class="status"></p>
+        <i class="close fas fa-minus"></i>
+    </div>
+    <div class="type-email flex">
+        <input class="user-email" required type="email" placeholder="Your email" name="userEmail">
+        <select name="service"  required>
+            <option value="" selected hidden>service</option>
+            <option value="gmail">gmail</option>
+        </select>
+    </div>
+    <input class="passwordEmail" required type="password" placeholder="Password email" name="password">
+    <input class="recipients" type="email" placeholder="Recipients" name="recipients">
+    <input class="subject" type="text" placeholder="Subject" name="subject">
+    <textarea  class="email-content" name="message" placeholder="Your message"></textarea>
+    <div class="actions flex">
+        <button class="btn-send-email">Send</button>
+        <div class="btn-cancel-email">Cancel</div>
+    </div>
+</div>

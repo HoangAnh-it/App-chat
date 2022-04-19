@@ -8,6 +8,8 @@ const {
     BadRequestError,
     UnauthenticatedError,
 } = require('../error');
+require('dotenv').config();
+const sendEmail = require('../config/email');
 
 const UserController = {
     // [GET] /api/v2/user/profile?userId
@@ -40,7 +42,7 @@ const UserController = {
                 });
 
                 if (associatedUser) {
-                    payload.userRole = associatedUser.userReqId === userId ? 'userReq' : 'userRes';    
+                    payload.userRole = associatedUser.userReqId === userId ? 'userReq' : 'userRes';
                 }
                 profileUser = anotherUser;
                 payload.status = associatedUser ? associatedUser.status : 'none';
@@ -72,7 +74,7 @@ const UserController = {
     },
 
     // [PATCH] /api/v2/user/update-info?userId
-    updateInfo: async(req, res) => {
+    updateInfo: async (req, res) => {
         try {
             const newValue = trimObj(req.body);
             // check if new email has already been used.
@@ -183,8 +185,8 @@ const UserController = {
 
     // [POST]  /api/v2/user/confirm-friend-request
     confirmFriendRequest: async (req, res) => {
-            const userId = req.userId;
-            const otherId = req.body.otherId;
+        const userId = req.userId;
+        const otherId = req.body.otherId;
         User_User.update(
             { status: 'friend' },
             {
@@ -300,7 +302,23 @@ const UserController = {
                 directTo: 'back',
             })
         }
-    }
+    },
+
+    // [POST] /api/v2/user/send-email
+    sendEmail: (req, res) => {
+        try {
+            const { userEmail, password, recipients, subject, message, service } = trimObj(req.body);
+            const isSent = sendEmail(userEmail, password, recipients, subject, message, service);
+            if (isSent) {
+                return res.send('successful');
+            } else {
+                return res.send('failed');
+            }
+        } catch (error) {
+            console.log(error);
+            return res.sendStatus(StatusCodes.INTERNAL_SERVER_ERROR);
+        }
+    },
 }
 
 module.exports = UserController;

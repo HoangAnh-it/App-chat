@@ -4,6 +4,7 @@
     <%- include('../components/partials/head.ejs') %>
     <link rel="stylesheet" href="/style/chat.css">
     <link rel="stylesheet" href="/style/nav.css">
+    <link rel="stylesheet" href="/style/email.css">
     <link rel="stylesheet" href="/style/link-room-modal.css">
 </head>
 
@@ -19,7 +20,9 @@
     <div id="main">
         <%-include('../components/chat.ejs')%>
         <%-include('../components/link-room-modal.ejs')%>
+        <%-include('../components/email.ejs')%>
     </div>
+
 
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
@@ -28,6 +31,7 @@
     <script src="/js/copy-link-room.js"></script>
     <script src="/js/event.js"></script>
     <script src="/js/nav.js"></script>
+    <script src="/js/email.js"></script>
 </body>
 
 </html>

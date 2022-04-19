@@ -101,10 +101,26 @@ socket.on('info-partner', partner => {
     img.classList.add('partner-avatar');
     img.src = partner.avatar;
     img.alt = 'Cannot load avatar of group';
+    img.onclick = function () {
+        console.log(type, partnerId);
+        if (type === 'private') {
+            window.location.href = `/api/v2/user/profile?id=${partner.friendId}`;
+        } else if (type === 'room') {
+            window.location.href = `/api/v2/room?id=${partnerId}`;
+        }
+    }
 
     const name = document.createElement('div');
     name.classList.add('partner-name');
     name.textContent = partner.name;
+
+    const btnCallVideo = document.createElement('div');
+    btnCallVideo.className = 'btn-call-video fas fa-video';
+    btnCallVideo.dataset = `${partner.id}`;
+
+    const btnCallPhone = document.createElement('div');
+    btnCallPhone.className = 'btn-call-phone fas fa-phone';
+    btnCallPhone.dataset = `${partner.id}`;
 
     const btnLeaving = document.createElement('div');
     btnLeaving.className = 'btn-leave-chatting 	fas fa-times';
@@ -113,6 +129,8 @@ socket.on('info-partner', partner => {
 
     chattingWith.appendChild(img);
     chattingWith.appendChild(name);
+    chattingWith.appendChild(btnCallPhone);
+    chattingWith.appendChild(btnCallVideo);
     chattingWith.appendChild(btnLeaving);
 });
 

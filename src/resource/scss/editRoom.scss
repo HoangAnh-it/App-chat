@@ -43,8 +43,8 @@
     position: absolute;
     top: 0;
     left: 50%;
-    width: 55%;
-    height: 55%;
+    width: 225px;
+    height: 225px;
     transform: translateX(-50%);
     object-fit: cover;
     border-radius: 50%;
@@ -204,6 +204,7 @@ select {
     width: 35px;
     height: 35px;
     margin: auto 4px;
+    border-radius: 50%;
 }
 
 .info-admin img:hover {
@@ -219,8 +220,8 @@ select {
 
 .change-avatar-group .choose label {
     position: absolute;
-    top: 40%;
-    left: 70%;
+    top: 35%;
+    left: 75%;
     z-index: 1;
     font-size: 1.4rem;
     background-color: black;

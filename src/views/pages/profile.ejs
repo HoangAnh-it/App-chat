@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="/style/nav.css">
     <link rel="stylesheet" href="/style/change-password-modal.css">
     <link rel="stylesheet" href="/style/delete-account-modal.css">
+    <link rel="stylesheet" href="/style/email.css">
 </head>
 
 <body>
@@ -17,7 +18,12 @@
         <%-include('../components/profile.ejs')%>
         <%-include('../components/change-password-modal.ejs')%>
         <%-include('../components/delete-account-modal.ejs')%>
+        <%-include('../components/email.ejs')%>
     </div>
+
+    <footer>
+        <%- include('../components/partials/footer.ejs') %>
+    </footer>
     
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="/js/base.js"></script>
@@ -25,6 +31,7 @@
     <script src="/js/nav.js"></script>
     <script src="/js/change-password-modal.js"></script>
     <script src="/js/delete-account-modal.js"></script>
+    <script src="/js/email.js"></script>
 </body>
 
 </html>

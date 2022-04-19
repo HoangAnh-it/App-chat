@@ -1,0 +1,11 @@
+@media (max-width: 1800px) {
+
+    body > * {
+        display: none;
+        position: relative;
+    }
+
+    .responsive {
+        display: inline-block;
+    }
+}

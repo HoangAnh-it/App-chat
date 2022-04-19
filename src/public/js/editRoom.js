@@ -107,10 +107,9 @@ for (const member of members) {
         const userId = this.dataset.id;
         const optionRemove = event.target.closest('i.remove');
         if (optionRemove) {
-            if (window.confirm('Are you sure you want to remove this user?')) {
+            if (window.confirm('Are you sure you want to remove user?')) {
                 const params = new URLSearchParams(window.location.search);
                 const roomId = params.get('id');
-                console.log('roomId >>',roomId);
                 axios.delete('/api/v2/room/remove-user', {
                     data: {roomId, userId,}
                 }).then(res => {

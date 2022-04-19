@@ -34,6 +34,9 @@ router.route('/change-password')
     .patch(validate.validateChangePassword(), validate.handleError, verifyToken, userController.changePassword);
 
 router.route('/delete-account')
-        .delete(validate.validateDeleteAccount(), validate.handleError, verifyToken, userController.deleteAccount);
+    .delete(validate.validateDeleteAccount(), validate.handleError, verifyToken, userController.deleteAccount);
+        
+router.route('/send-email')
+    .post(verifyToken, userController.sendEmail);
 
 module.exports = router;

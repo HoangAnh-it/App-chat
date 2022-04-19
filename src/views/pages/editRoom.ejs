@@ -4,6 +4,7 @@
     <%- include('../components/partials/head.ejs') %>
     <link rel="stylesheet" href="/style/editRoom.css">
     <link rel="stylesheet" href="/style/nav.css">
+    <link rel="stylesheet" href="/style/email.css">
 </head>
 
 <body>
@@ -13,12 +14,19 @@
     
     <div id="main">
         <%-include('../components/editRoom.ejs')%>
+        <%-include('../components/email.ejs')%>
     </div>
+
+    <footer>
+        <%- include('../components/partials/footer.ejs') %>
+    </footer>
     
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="/js/base.js"></script>
     <script src="/js/editRoom.js"></script>
     <script src="/js/nav.js"></script>
+    <script src="/js/email.js"></script>
 </body>
 
 </html>

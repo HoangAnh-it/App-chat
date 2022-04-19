@@ -84,7 +84,7 @@
                                 <img src="<%= members[i].avatar %>" alt="...">
                                 <div class="name flex">
                                     <span><%= members[i].name %></span>
-                                    <% if(admin.id === members[i].userId) { %>
+                                    <% if(userId === members[i].userId) { %>
                                         <span class="span-me">me</span>
                                     <% } %>
                                 </div>

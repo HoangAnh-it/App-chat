@@ -139,3 +139,14 @@ select {
 input {
     outline: none;
 }
+
+.responsive {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2rem;
+    font-weight: bold;
+    color:rgb(238, 0, 238)
+}

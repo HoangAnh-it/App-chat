@@ -1,6 +1,6 @@
 const { Room, User, User_Room } = require('../models');
 const { StatusCodes } = require('http-status-codes');
-const { NotFoundError, ConflictError } = require('../error');
+const { CustomError, NotFoundError, ConflictError, BadRequestError } = require('../error');
 const { trimObj } = require('../utils/object');
 
 const RoomController = {
@@ -36,6 +36,7 @@ const RoomController = {
             const isAdmin = adminId === req.userId;
 
             return res.status(StatusCodes.OK).render('pages/editRoom.ejs', {
+                userId,
                 room,
                 admin: {
                     id: admin.userId,
@@ -98,7 +99,7 @@ const RoomController = {
             
         } catch (error) {
             console.log(error);
-            return res.status(error.status || StatusCodes.INTERNAL_SERVER_ERROR).json({
+            return res.status(error.status || StatusCodes.INTERNAL_SERVER_ERROR).render('pages/status.ejs',{
                 title: error.name,
                 message: error.message,
                 directTo: 'back',
@@ -124,12 +125,16 @@ const RoomController = {
                 return userId === user.userId;
             });
 
+            console.log(room);
+
             if (isAlreadyMember) {
                 // if you are already a member
                 throw new ConflictError('Conflict', 'You are already a member.');
             } else {
                 // if you are not a member, join room
-                if (room.maxUsers !== 'unlimited' && room.users.length > Number(room.maxUsers)) {
+                console.log(room.users.length);
+                console.log(room.maximum_users);
+                if (room.maximum_users !== 'unlimited' && room.users.length + 1 > Number(room.maximum_users)) {
                     throw new BadRequestError('Cannot join!', 'This room is already full.');
                 }
 
@@ -180,22 +185,32 @@ const RoomController = {
 
     // [PATCH] /api/v2/room/update-info?id
     updateInfo: async (req, res) => {
+        const roomId = req.query.id;
         try {
             const newValue = trimObj(req.body);
-            console.log(newValue);
+            const room = await Room.findOne({
+                where: { roomId },
+                include: [
+                    {
+                        model: User,
+                    }
+                ]
+            });
             if ('maximum_users' in newValue && newValue.maximum_users !== 'unlimited') {
                 newValue.maximum_users = Number(newValue.maximum_users);
+                if (newValue.maximum_users < room.users.length) {
+                    throw new CustomError('Oversized maximum_users', 'Cannot update size of room less than the users of room');
+                }
             }
 
-            const roomId = req.query.id;
             await Room.update(newValue, { where: { roomId } });
             return res.redirect(`/api/v2/room?id=${roomId}`);
         } catch (error) {
             console.log(error);
-            return res.status(error.status || StatusCodes.INTERNAL_SERVER_ERROR).render('/pages/status.ejs', {
+            return res.status(error.status || StatusCodes.INTERNAL_SERVER_ERROR).render('pages/status.ejs', {
                 title: error.name,
                 message: error.message,
-                directTo: 'back',
+                directTo: `/api/v2/room?id=${roomId}`,
             });
         }
     },

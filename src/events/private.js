@@ -30,6 +30,7 @@ module.exports = function (io, socket) {
                 id: user_user.id,
                 avatar: friend.avatar,
                 name: friend.name,
+                friendId: friend.userId,
             });
         } catch (err) {
             console.log(err);
