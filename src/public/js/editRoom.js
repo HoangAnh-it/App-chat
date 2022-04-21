@@ -126,6 +126,7 @@ for (const member of members) {
 
 function removeUserFromDOM(userId) {
     $(`.item-${userId}`).remove();
+    $('.members .no-members').textContent = Number($('.members .no-members').dataset.no_members) - 1;
 }
 
 /**

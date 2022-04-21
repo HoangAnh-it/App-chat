@@ -76,7 +76,7 @@
 
             <!-- list members -->
             <div class="members">
-                <label>Members(<%=members.length%>):</label>
+                <label>Members(<span class="no-members" data-no_members="<%=members.length%>"><%=members.length%></span>):</label>
                 <div class="list-members">
                     <% for(let i = 0; i< members.length; i++) { %>
                         <div class="item item-<%= members[i].userId %>" data-id="<%= members[i].userId %>">

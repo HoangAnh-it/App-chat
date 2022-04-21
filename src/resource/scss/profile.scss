@@ -93,6 +93,7 @@
 .detail .name {
     font-size: 2rem;
     font-weight: bold;
+    padding-top: 16px;
 }
 
 .wrapper-options {
@@ -254,14 +255,15 @@ input[type="file"] {
 
 .btn-edit-avatar .choose-avatar {
     position: absolute;
-    top: 55%;
-    right: 32%;
+    top: 60%;
+    right: 30%;
     transform: translate(-50%, -50%);
     font-size: 1.5rem;
     padding: 0 2px;
     border-radius: 50%;
-    box-shadow: 0 0 10px black;
+    box-shadow: 0 0 10px white;
     color: rgb(111, 109, 109);
+    background-color: black;
 }
 
 .btn-edit-avatar .choose-avatar label:hover {

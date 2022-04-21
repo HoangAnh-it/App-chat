@@ -5,16 +5,28 @@ const sequelize = new Sequelize(
     process.env.MYSQL_DATABASE,
     process.env.MYSQL_USER,
     process.env.MYSQL_PASSWORD,
+    // 'dea1ei5u5equrv',
+    // 'iahcryzasnssda',
+    // 'a6a727199c4dfd36aecd0faae7ae0da5e3e2ddcb133a473f2ecd78ba963d0de5',
     {
+        // host: 'ec2-99-80-170-190.eu-west-1.compute.amazonaws.com',
+        // dialect: 'postgres',
+        // port: 5432,
         host: process.env.MYSQL_HOST,
         dialect: 'mysql',
-        port: process.env.MYSQL_POST,
-
+        port: process.env.MYSQL_PORT,
+        logging: false,
         pool: {
             max: 5,
             min: 0,
             acquire: 30000,
             idle: 10000,
+        },
+        dialectOptions: {
+            ssl: {
+                require: true,
+                rejectUnauthorized: false,
+            }
         }
     }
 );

@@ -24,13 +24,13 @@
     align-items: center;
 }
 
-.title .close {
+.title .actions * {
     font-size: 1rem;
     padding: 8px;
     color: white;
 }
 
-.title .close:hover {
+.title .actions *:hover {
     background-color: rgba(204,204,204,0.5);
     cursor: pointer;
     border-radius: 4px;
@@ -54,31 +54,26 @@
     border: none;
 }
 
-.actions {
-    justify-content: flex-start;
-    align-items: center;
-    margin-left: 16px;
-    margin-bottom: 8px;
-}
-
-.actions > * {
+.btn-send-email {
     font-size: 1rem;
     padding: 2px;
-    margin: 2px;
+    margin: 4px 12px;
     min-width: 60px;
     background-color: aqua;
     outline: none;
     border: 1px solid black;
     border-radius: 8px;
+    width: 50px;
+
 }
 
-.actions > *:not([disabled]):hover {
+.btn-send-email:hover {
     cursor: pointer;
     opacity: 0.5;
     transition: all 0.2s linear;
 }
 
-select {
+.email-box select {
     padding: 4px;
     margin: 0 16px;
     text-align: center;
@@ -86,6 +81,11 @@ select {
     border-radius: 10px;
     border: 1px solid red;
     box-shadow: 0 0 10px red;
+}
+
+.email-box select:hover {
+    opacity: 0.6;
+    cursor: pointer;
 }
 
 .type-email {

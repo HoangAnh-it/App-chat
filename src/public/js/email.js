@@ -21,6 +21,8 @@ btnCancelEmail.onclick = function () {
     subject.value = '';
     emailContent.value = '';
     serviceBtn.value = '';
+    serviceBtn.style.boxShadow = '0 0 10px red';
+    serviceBtn.style.border = '1px solid red';
     btnCloseMailBox.click();
 }
 
@@ -49,6 +51,7 @@ btnSendEmail.onclick = function (e) {
             service: _service
         })
             .then(res => {
+                console.log(res);
                 if (res.data === 'successful') {
                     statusSent.textContent = 'Sent successfully';
                     statusSent.style.color = 'rgb(139, 255, 139)';

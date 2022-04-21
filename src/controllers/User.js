@@ -305,19 +305,15 @@ const UserController = {
     },
 
     // [POST] /api/v2/user/send-email
-    sendEmail: (req, res) => {
-        try {
-            const { userEmail, password, recipients, subject, message, service } = trimObj(req.body);
-            const isSent = sendEmail(userEmail, password, recipients, subject, message, service);
-            if (isSent) {
+    sendEmail: async (req, res) => {
+        const { userEmail, password, recipients, subject, message, service } = req.body;
+        sendEmail(userEmail, password, recipients, subject, message, service)
+            .then(data => {
                 return res.send('successful');
-            } else {
+            }).catch(err => {
+                console.log(err);
                 return res.send('failed');
-            }
-        } catch (error) {
-            console.log(error);
-            return res.sendStatus(StatusCodes.INTERNAL_SERVER_ERROR);
-        }
+            })
     },
 }
 

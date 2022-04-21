@@ -2,7 +2,10 @@
     <div class="title flex">
         <span>New Email</span>
         <p class="status"></p>
-        <i class="close fas fa-minus"></i>
+        <div class="actions">
+            <i class="close fas fa-minus"></i>
+            <i class="btn-cancel-email fas fa-times"></i>
+        </div>
     </div>
     <div class="type-email flex">
         <input class="user-email" required type="email" placeholder="Your email" name="userEmail">
@@ -15,8 +18,5 @@
     <input class="recipients" type="email" placeholder="Recipients" name="recipients">
     <input class="subject" type="text" placeholder="Subject" name="subject">
     <textarea  class="email-content" name="message" placeholder="Your message"></textarea>
-    <div class="actions flex">
-        <button class="btn-send-email">Send</button>
-        <div class="btn-cancel-email">Cancel</div>
-    </div>
+    <button class="btn-send-email">Send</button>
 </div>
